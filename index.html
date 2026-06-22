@@ -421,7 +421,7 @@ footer a:hover { color: var(--text); }
 <!-- STATS BAR -->
 <div class="stats-bar">
   <div class="stat-item">
-    <div class="stat-num">2<span>+</span></div>
+    <div class="stat-num">7<span>+</span></div>
     <div class="stat-desc">Writeups publicados</div>
   </div>
   <div class="stat-item">
@@ -575,6 +575,161 @@ footer a:hover { color: var(--text); }
   </div>
 
   <div class="writeups-wrapper">
+
+
+    <!-- Forest -->
+    <a class="writeup-card" href="forest.html">
+      <div class="writeup-card-inner">
+        <div class="writeup-card-body">
+          <div class="writeup-meta">
+            <span class="writeup-badge htb">HackTheBox</span>
+            <span class="writeup-badge">Active Directory</span>
+            <span class="writeup-badge">Windows Server 2016</span>
+            <span class="writeup-date">22 Jun 2026</span>
+          </div>
+          <div class="writeup-title">Forest — Domain Admin via AS-REP Roasting + Exchange WriteDACL + DCSync</div>
+          <p class="writeup-subtitle">
+            De usuario SMB nulo a Domain Admin v&iacute;a AS-REP Roasting sobre svc-alfresco. Shell WinRM, 
+            abuso de Account Operators para entrar en Exchange Windows Permissions &rarr; WriteDACL sobre el dominio 
+            &rarr; derechos DCSync &rarr; volcado completo del NTDS.dit con impacket-secretsdump.
+          </p>
+          <div class="writeup-findings">
+            <span class="finding-pill pill-critical">1 Critical</span>
+            <span class="finding-pill pill-high">2 High</span>
+            <span class="finding-pill pill-info">1 Info</span>
+          </div>
+          <div class="tool-footer">
+            <span class="tag">AS-REP Roasting</span><span class="tag">Exchange Abuse</span>
+            <span class="tag">DCSync</span><span class="tag">bloodyad</span>
+            <span class="tag">impacket-secretsdump</span>
+          </div>
+        </div>
+        <div class="writeup-card-arrow">&rarr;</div>
+      </div>
+    </a>
+
+    <!-- Checkpoint -->
+    <a class="writeup-card" href="checkpoint.html">
+      <div class="writeup-card-inner">
+        <div class="writeup-card-body">
+          <div class="writeup-meta">
+            <span class="writeup-badge htb">HackTheBox</span>
+            <span class="writeup-badge">Active Directory</span>
+            <span class="writeup-badge">Windows Server 2025</span>
+            <span class="writeup-date">21 Jun 2026</span>
+          </div>
+          <div class="writeup-title">Checkpoint — BadSuccessor dMSA + VSCode VSIX RCE + Volatility3 Memory Forensics</div>
+          <p class="writeup-subtitle">
+            Objeto de AD eliminado restaurable &rarr; WRITE en DevDrop &rarr; extensi&oacute;n VSCode maliciosa &rarr; shell como ryan.brooks.
+            Escalada via BadSuccessor en Windows Server 2025: dMSA + enlace inverso via ADSI &rarr; NTLM de svc_deploy
+            &rarr; VMBackups PtH &rarr; Volatility3 sobre snapshot de VM.
+          </p>
+          <div class="writeup-findings">
+            <span class="finding-pill pill-critical">1 Critical</span>
+            <span class="finding-pill pill-high">2 High</span>
+            <span class="finding-pill pill-med">1 Medium</span>
+          </div>
+          <div class="tool-footer">
+            <span class="tag">BadSuccessor</span><span class="tag">dMSA</span>
+            <span class="tag">VSIX RCE</span><span class="tag">Volatility3</span>
+            <span class="tag">bloodyad</span><span class="tag">Memory Forensics</span>
+          </div>
+        </div>
+        <div class="writeup-card-arrow">&rarr;</div>
+      </div>
+    </a>
+
+    <!-- Active -->
+    <a class="writeup-card" href="active.html">
+      <div class="writeup-card-inner">
+        <div class="writeup-card-body">
+          <div class="writeup-meta">
+            <span class="writeup-badge htb">HackTheBox</span>
+            <span class="writeup-badge">Active Directory</span>
+            <span class="writeup-badge">Windows Server 2008 R2</span>
+            <span class="writeup-date">18 Jun 2026</span>
+          </div>
+          <div class="writeup-title">Active — Domain Admin via GPP Passwords (MS14-025) + Kerberoasting</div>
+          <p class="writeup-subtitle">
+            Cl&aacute;sico de AD: sesi&oacute;n nula SMB &rarr; Replication share &rarr; Groups.xml con cpassword AES cifrada
+            (clave p&uacute;blica de Microsoft) &rarr; gpp-decrypt &rarr; SVC_TGS creds &rarr; Kerberoasting del
+            Administrator (SPN activo) &rarr; hashcat TGS-REP &rarr; impacket-psexec SYSTEM.
+          </p>
+          <div class="writeup-findings">
+            <span class="finding-pill pill-critical">1 Critical</span>
+            <span class="finding-pill pill-high">2 High</span>
+            <span class="finding-pill pill-info">1 Info</span>
+          </div>
+          <div class="tool-footer">
+            <span class="tag">GPP Passwords</span><span class="tag">MS14-025</span>
+            <span class="tag">Kerberoasting</span><span class="tag">hashcat</span>
+            <span class="tag">impacket-psexec</span>
+          </div>
+        </div>
+        <div class="writeup-card-arrow">&rarr;</div>
+      </div>
+    </a>
+
+    <!-- Escape -->
+    <a class="writeup-card" href="escape.html">
+      <div class="writeup-card-inner">
+        <div class="writeup-card-body">
+          <div class="writeup-meta">
+            <span class="writeup-badge htb">HackTheBox</span>
+            <span class="writeup-badge">Active Directory</span>
+            <span class="writeup-badge">Windows Server 2019</span>
+            <span class="writeup-date">18 Jun 2026</span>
+          </div>
+          <div class="writeup-title">Escape — Domain Admin via MSSQL NTLMv2 Capture + ERRORLOG Creds + ESC1 ADCS</div>
+          <p class="writeup-subtitle">
+            SMB guest &rarr; PDF con creds MSSQL en share p&uacute;blico &rarr; forced auth NTLMv2 de sql_svc &rarr;
+            hashcat &rarr; WinRM &rarr; ERRORLOG.BAK filtra contrase&ntilde;a de Ryan.Cooper &rarr; certipy-ad ESC1
+            (UserAuthentication EnrolleeSuppliesSubject) &rarr; certificado de Administrator &rarr; hash NTLM &rarr; Domain Admin.
+          </p>
+          <div class="writeup-findings">
+            <span class="finding-pill pill-critical">1 Critical</span>
+            <span class="finding-pill pill-high">3 High</span>
+            <span class="finding-pill pill-med">1 Medium</span>
+          </div>
+          <div class="tool-footer">
+            <span class="tag">ADCS ESC1</span><span class="tag">certipy-ad</span>
+            <span class="tag">MSSQL NTLMv2</span><span class="tag">SMB Anon</span>
+            <span class="tag">hashcat</span><span class="tag">Log Disclosure</span>
+          </div>
+        </div>
+        <div class="writeup-card-arrow">&rarr;</div>
+      </div>
+    </a>
+
+    <!-- Busqueda -->
+    <a class="writeup-card" href="busqueda.html">
+      <div class="writeup-card-inner">
+        <div class="writeup-card-body">
+          <div class="writeup-meta">
+            <span class="writeup-badge htb">HackTheBox</span>
+            <span class="writeup-badge">Linux</span>
+            <span class="writeup-badge">Ubuntu 22.04</span>
+            <span class="writeup-date">17 Jun 2026</span>
+          </div>
+          <div class="writeup-title">B&uacute;squeda — root via CVE-2023-43364 Searchor RCE + CVE-2026-41651 PackageKit LPE</div>
+          <p class="writeup-subtitle">
+            Searchor 2.4.0 pasa el input directamente a eval() &rarr; inyecci&oacute;n de c&oacute;digo Python &rarr; reverse shell como svc.
+            Escalada a root mediante CVE-2026-41651: race condition TOCTOU en PackageKit crea un SUID bash
+            sin autenticaci&oacute;n. Dos CVEs encadenadas, acceso completo.
+          </p>
+          <div class="writeup-findings">
+            <span class="finding-pill pill-critical">1 Critical</span>
+            <span class="finding-pill pill-high">1 High</span>
+          </div>
+          <div class="tool-footer">
+            <span class="tag">CVE-2023-43364</span><span class="tag">CVE-2026-41651</span>
+            <span class="tag">Python eval()</span><span class="tag">PackageKit</span>
+            <span class="tag">TOCTOU</span><span class="tag">SUID bash</span>
+          </div>
+        </div>
+        <div class="writeup-card-arrow">&rarr;</div>
+      </div>
+    </a>
 
     <!-- Overwatch -->
     <a class="writeup-card" href="overwatch.html">
